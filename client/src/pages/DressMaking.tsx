@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
+import Axios from 'axios'
+// INTERFACES
+interface IReference{
+  referencia: number,
+  id_talla: number,
+  descripcion: string,
+  color: string,
+  nombre_imagen: string,
+}
 
-const DressMaking = () => {
+const DressMaking: React.FC = () => {
 
-  const [references, setReferences] = useState([]);
-  const [amount, setAmount] = useState('');
-  const [selectReference, setSelectReference] = useState('');
+  const [references, setReferences] = useState<IReference[]>([]);
+  const [amount, setAmount] = useState<string>('');
+  const [selectReference, setSelectReference] = useState<string>('');
 
-
-  const dbReferencesURL = 'http://localhost:10000/api/references';
-  const dbSuppliesURL = 'http://localhost:10000/api/suppliesrequest';
+  const dbReferencesURL:string = 'http://localhost:10000/api/references';
+  const dbSuppliesURL:string = 'http://localhost:10000/api/suppliesrequest';
 
   useEffect(() => {
     Axios.get(dbReferencesURL)
-    .then((response) => {
+    .then((response: any) => {
     setReferences(response.data)
     });
   }, []);
@@ -31,11 +38,11 @@ const DressMaking = () => {
   return (<>
 
     <h1>Taller de confección</h1>
-    <select name = 'referenceSelection' onChange = {(e) => {
+    <select name = 'referenceSelection' onChange = {(e: any) => {
       setSelectReference(e.target.value)
     }}>
       <option value = '0'  >Seleccione la referencia</option>
-      {references.map((reference) => {
+      {references.map((reference: IReference) => {
         return (
           <option key = { reference.referencia } value = { reference.referencia } >
             { reference.referencia }
