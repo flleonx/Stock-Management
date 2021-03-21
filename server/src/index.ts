@@ -26,3 +26,5 @@ app.use(postRoutes)
 app.listen(10000, () => {
   console.log("Running on port 10000");
 });
+
+//HOLA
