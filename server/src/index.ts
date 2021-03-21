@@ -13,6 +13,8 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//OTRO COMENTARIO
+
 // ROUTES
 import getRoutes from "./querys/getRequest";
 import postRoutes from "./querys/postRequest";
