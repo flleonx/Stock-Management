@@ -61,21 +61,28 @@ const Register = () => {
             Axios.post(postRegisterURL, {
               user: newUser,
             })
-              .then(() => {
-                alert('Succesful POST');
+              .then((response) => {
+                const validationUsername: string = response.data;
+                //VALIDATION IF THE USER EXIST OR NOT:
+                if (validationUsername === '1') {
+                  //THE USERNAME EXIST
+                  dispatch({type: 'USERNAME_EXIST'});
+                } else if (validationUsername === '2') {
+                  //THE USERNAME DOESN'T EXIST
+                  setUsername('');
+                  setPasswordForm('');
+                  setValidatePasswordForm('');
+                  setIdRol('');
+                  usernameInput.value = '';
+                  passwordInput.value = '';
+                  validatePasswordInput.value = '';
+                  idRolInput.value = '0';
+                  dispatch({type: 'SUCCESFUL_POST'});
+                }
               })
               .catch((error) => {
                 console.log(error);
               });
-            setUsername('');
-            setPasswordForm('');
-            setValidatePasswordForm('');
-            setIdRol('');
-            usernameInput.value = '';
-            passwordInput.value = '';
-            validatePasswordInput.value = '';
-            idRolInput.value = '0';
-            dispatch({type: 'SUCCESFUL_POST'});
           } else {
             dispatch({type: 'PASSWORDS_DO_NOT_MATCH'});
           }
