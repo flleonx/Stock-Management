@@ -1,0 +1,14 @@
+.ErrorModal {
+  border: 1px solid #f5c2c7;
+  border-radius: 5px;
+  margin-left: 10%;
+  padding-left: 2%;
+  padding-top: 0.2%;
+  background-color: #f8d7da;
+  color: #842029;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 90%;
+  height: 20px;
+  width: 80%;
+  font-weight: 500;
+}
