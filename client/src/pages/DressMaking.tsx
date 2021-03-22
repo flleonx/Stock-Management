@@ -14,9 +14,9 @@ const DressMaking: React.FC = () => {
   const [references, setReferences] = useState<IReference[]>([]);
   const [amount, setAmount] = useState<string>('');
   const [selectReference, setSelectReference] = useState<string>('');
-
   const dbReferencesURL:string = 'http://localhost:10000/api/references';
   const dbSuppliesURL:string = 'http://localhost:10000/api/suppliesrequest';
+
 
   useEffect(() => {
     Axios.get(dbReferencesURL)
@@ -24,12 +24,13 @@ const DressMaking: React.FC = () => {
     setReferences(response.data)
     });
   }, []);
-
+  
   const suppliesRequest = () => {
     Axios.post(dbSuppliesURL, {
       actualAmount: amount,
       referenceSelection: selectReference
-    }).then(() => {
+    }).then((response: any) => {
+      console.log(response)
       alert('Succesful Insert');
     });
   };
