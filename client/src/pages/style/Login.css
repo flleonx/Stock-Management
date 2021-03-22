@@ -1,0 +1,112 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.body-container {
+  display: flex;
+  background-color: #f0f2f5;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.body-container .image-container {
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  z-index: 1;
+}
+
+.body-container .image-container .image-container__img {
+  width: 69.5%;
+  height: 500px;
+}
+
+.body-container .div-effect {
+  position: absolute;
+  background-color: rgba(100, 214, 197, 0.6);
+  z-index: 10;
+  left: 5%;
+  top: 10%;
+  width: 45.3%;
+  height: 500px;
+}
+
+.body-container .login-container {
+  position: absolute;
+  background: linear-gradient(to bottom, #35475d, #0f1d34);
+  z-index: 200;
+  left: 50%;
+  top: 10%;
+  width: 45%;
+  height: 500px;
+}
+
+.body-container .login-container .login-image-container img {
+  width: 8%;
+  height: 8%;
+  margin-left: 46.1%;
+  margin-top: 10%;
+}
+
+.body-container .login-container h3 {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #989797;
+  font-size: 180%;
+  font-weight: 400;
+  margin-left: 42.5%;
+}
+
+.body-container .login-container form {
+  display: grid;
+  grid-template-rows: repeat(1fr, 5);
+  height: 45%;
+  margin-top: 4%;
+  margin-bottom: 6%;
+}
+
+.body-container .login-container form label {
+  margin-left: 5%;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 500;
+}
+
+.body-container .login-container form input {
+  background-color: transparent;
+  width: 86%;
+  margin-bottom: 7%;
+  margin-left: 5%;
+  padding-bottom: 1%;
+  border-bottom: 1px solid rgb(145, 145, 145);
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  padding-left: 1%;
+  font-family: 'Montserrat', sans-serif;
+  color: #8a8a8a;
+}
+
+.body-container .login-container form input:focus {
+  outline: none;
+}
+
+.body-container .login-container button {
+  width: 25%;
+  height: 120%;
+  margin-left: 40%;
+  margin-top: 1%;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #64d6c5;
+  color: white;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.body-container .login-container button:focus {
+  outline: 0;
+}

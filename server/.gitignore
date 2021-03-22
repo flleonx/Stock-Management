@@ -1,2 +1,2 @@
 node_modules
-config/Credenciales.ts
+src/config/Credenciales.ts

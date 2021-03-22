@@ -1,0 +1,149 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.body-register-container {
+  display: flex;
+  background-color: #f0f2f5;
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.body-register-container .img-container {
+  position: absolute;
+  left: 5%;
+  top: 10%;
+  z-index: 1;
+}
+
+.body-register-container .img-container .img-container__img {
+  width: 69.5%;
+  height: 500px;
+}
+
+.body-register-container .background-effect-img-container {
+  position: absolute;
+  background-color: rgba(100, 214, 197, 0.6);
+  z-index: 10;
+  left: 5%;
+  top: 10%;
+  width: 45.3%;
+  height: 500px;
+}
+
+.body-register-container .register-container {
+  position: absolute;
+  background: linear-gradient(to bottom, #35465d, #0f1d34);
+  z-index: 200;
+  left: 50%;
+  top: 10%;
+  width: 45%;
+  height: 500px;
+}
+
+.body-register-container .register-container .register-img-container img {
+  width: 8%;
+  height: 8%;
+  margin-left: 46.1%;
+  margin-top: 3%;
+}
+
+.body-register-container .register-container h3 {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: #989797;
+  font-size: 160%;
+  font-weight: 400;
+  margin-left: 40%;
+}
+
+.body-register-container .register-container form {
+  display: grid;
+  grid-template-rows: repeat(1fr, 9);
+  height: 45%;
+  margin-top: 2.5%;
+  margin-bottom: 16%;
+}
+
+.body-register-container .register-container form label {
+  margin-left: 5%;
+  margin-bottom: 1%;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  color: white;
+  font-weight: 400;
+  font-size: 90%;
+}
+
+.body-register-container .register-container form input {
+  background-color: transparent;
+  width: 86%;
+  margin-bottom: 5%;
+  margin-left: 5%;
+  padding-bottom: 1%;
+  border-bottom: 1px solid rgb(145, 145, 145);
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  padding-left: 0.5%;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 73%;
+  color: #8a8a8a;
+}
+
+.body-register-container .register-container form #username {
+  margin-bottom: 3%;
+}
+
+.body-register-container .register-container form #validPassword {
+  margin-bottom: 3%;
+}
+
+.body-register-container .register-container form input:focus {
+  outline: none;
+}
+
+.body-register-container .register-container form .passwordInfo {
+  margin-top: -4.5%;
+  margin-bottom: 0;
+  margin-left: 5.5%;
+  font-size: 65%;
+  font-family: 'Monserrat', sans-serif;
+  color: rgb(189, 189, 189);
+  font-weight: 100;
+}
+
+.body-register-container .register-container form select {
+  font-family: 'Montserrat', sans-serif;
+  width: 88%;
+  height: 50%;
+  margin-top: 1%;
+  margin-left: 5%;
+  margin-bottom: 3%;
+  padding-left: 1%;
+  border: 0;
+  border-radius: 50px;
+}
+
+.body-register-container .register-container form select:focus {
+  outline: none;
+}
+
+.body-register-container .register-container button {
+  width: 25%;
+  height: 120%;
+  margin-left: 40%;
+  margin-top: 1%;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #64d6c5;
+  color: white;
+  font-weight: bold;
+  border: 0px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.body-register-container .register-container button:focus {
+  outline: none;
+}
