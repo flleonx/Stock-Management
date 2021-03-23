@@ -8,11 +8,19 @@ interface IActions {
 }
 
 export const reducer = (state: IState, action: IActions) => {
-  if (action.type === 'ERROR_LOGIN') {
+  if (action.type === 'LOGIN_INFORMATION_INCOMPLETE') {
     return {
       ...state,
       isModalOpen: true,
       modalContent: 'Error: No ha digitado todos los campos',
+    };
+  }
+
+  if (action.type === 'ERROR_AUTH') {
+    return {
+      ...state,
+      isModalOpen: true,
+      modalContent: 'Error: El Usuario y/o la contraseña son incorrectos',
     };
   }
 

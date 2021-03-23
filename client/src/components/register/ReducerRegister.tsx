@@ -41,6 +41,14 @@ export const reducer = (state: IState, action: IActions) => {
     };
   }
 
+  if (action.type === 'USERNAME_EXIST') {
+    return {
+      ...state,
+      isModalErrorOpen: true,
+      modalContent: 'Error: el usuario ya existe',
+    };
+  }
+
   if (action.type === 'SUCCESFUL_POST') {
     return {
       ...state,
