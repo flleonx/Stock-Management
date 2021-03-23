@@ -1,0 +1,14 @@
+.SuccessfulModalDressMaking {
+    border: 1px solid #badbcc;
+    border-radius: 5px;
+    margin-left: 10%;
+    padding-left: 2%;
+    padding-top: 0.2%;
+    background-color: #d1e7dd;
+    color: #0f5132;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 90%;
+    height: 20px;
+    width: 80%;
+    font-weight: 500;
+  }

@@ -22,8 +22,8 @@ router.post("/api/suppliesrequest", (req, res) => {
       }
       let data: string[] = result[0].codigoycantidad.split(",");
 
-      var suppliesCodes: string[] = [];
-      var amountProduction: number[] = [];
+      var suppliesCodes: string[] = []; // CODES OF REQUIRES ITEMS.
+      var amountProduction: number[] = []; // AMOUT FOR EACH ITEM 1-->1 RELATION.
 
       data.map((dato: string) => {
         if (enable) {
@@ -50,25 +50,25 @@ router.post("/api/suppliesrequest", (req, res) => {
             }
             const diff: number =
               parseFloat(result[0].metros) - amountProduction[i];
-
             if (diff < 0) {
               checkSupplies = false;
               insufficientCodes.push(code);
             }
             if (i + 1 == suppliesCodes.length && checkSupplies == true) {
+              let x: number = 0;
               suppliesCodes.map((code: string) => {
                 // SAVE THE DIFFERENCE BETWEEN THE REQUIRE COMPONENTS AND THE ACTUAL AMOUNT OF COMPONENTS IN "BODEGA_INSUMOS'"
                 let suppliesQuery = `SELECT metros FROM InventoryManagement.BODEGA_INSUMOS WHERE codigo = ${code}`;
-                i = 0;
                 database.query(
                   suppliesQuery,
                   async (err: MysqlError | null, result: any) => {
                     if (err) {
                       throw err;
                     }
+
                     const diff: number =
-                      parseFloat(result[0].metros) - amountProduction[i];
-                    i = i + 1;
+                      parseFloat(result[0].metros) - amountProduction[x];
+
                     let saveDifference = `UPDATE InventoryManagement.BODEGA_INSUMOS SET metros = ${diff} WHERE codigo = ${code}`;
                     database.query(
                       saveDifference,
@@ -78,9 +78,14 @@ router.post("/api/suppliesrequest", (req, res) => {
                         }
                       }
                     );
+                    if (x + 1 == suppliesCodes.length) {
+                      res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
+                    }
+                    x = x + 1;
                   }
                 );
               });
+              // res.end(JSON.stringify('SUCCESSFUL_REQUEST'));
             } else if (
               i + 1 == suppliesCodes.length &&
               checkSupplies == false
@@ -94,7 +99,7 @@ router.post("/api/suppliesrequest", (req, res) => {
                 nombre_imagen: string;
                 timestamp: string;
               }
-              let j: number= 0;
+              let j: number = 0;
               let insufficientSupplies: IInsufficientSupplies[] = [];
               insufficientCodes.map((code: string) => {
                 let queryInsufficientSupplies = `SELECT * FROM InventoryManagement.BODEGA_INSUMOS WHERE codigo = ${code}`;
@@ -105,7 +110,7 @@ router.post("/api/suppliesrequest", (req, res) => {
                       throw err;
                     }
                     insufficientSupplies.push(result[0]);
-                    if (j + 1 == insufficientCodes.length){
+                    if (j + 1 == insufficientCodes.length) {
                       res.end(JSON.stringify(insufficientSupplies));
                     }
                     j += 1;
