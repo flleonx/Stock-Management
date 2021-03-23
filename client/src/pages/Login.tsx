@@ -1,4 +1,5 @@
 import React, {useState, useReducer} from 'react';
+import Axios from 'axios';
 
 //CSS:
 import './style/Login.css';
@@ -18,11 +19,6 @@ interface IDefaultState {
   modalContent: string;
 }
 
-interface IUser {
-  username: string;
-  password: string;
-}
-
 const defaultState: IDefaultState = {
   isModalOpen: false,
   modalContent: '',
@@ -32,14 +28,26 @@ const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
+  const loginAPIURL: string = 'http://localhost:10000/api/login';
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (username && password) {
-      const newUserLogin: IUser = {username, password};
-      console.log(newUserLogin);
+      Axios.post(loginAPIURL, {
+        username,
+        password,
+      })
+        .then((response) => {
+          const isAuth: string = response.data;
+          if (isAuth === 'ERROR') {
+            dispatch({type: 'ERROR_AUTH'});
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
-      dispatch({type: 'ERROR_LOGIN'});
+      dispatch({type: 'LOGIN_INFORMATION_INCOMPLETE'});
     }
   };
 
