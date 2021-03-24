@@ -1,4 +1,5 @@
 import React, {useState, useReducer} from 'react';
+import {Redirect} from 'react-router-dom';
 import Axios from 'axios';
 
 //CSS:
@@ -41,6 +42,8 @@ const Login = () => {
           const isAuth: string = response.data;
           if (isAuth === 'ERROR') {
             dispatch({type: 'ERROR_AUTH'});
+          } else {
+            window.location.href = '/';
           }
         })
         .catch((err) => {

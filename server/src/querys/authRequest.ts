@@ -66,15 +66,15 @@ router.post('/api/login', (req: any, res: any, next: any) => {
     } else {
       res.end(JSON.stringify('ERROR'));
     }
-    console.log(err);
-    console.log(user);
   })(req, res, next);
 });
 
 //ROUTE TO KNOW IF THE USER IS AUTH OR NOT:
 router.get('/api/isAuth', (req: any, res: any) => {
   console.log(req.isAuthenticated());
-  res.end(JSON.stringify(req.isAuthenticated()));
+  console.log(req.user);
+  res.end(JSON.stringify(req.user));
+  // res.end(JSON.stringify(req.isAuthenticated()));
 });
 
 //LOG OUT

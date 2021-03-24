@@ -21,7 +21,12 @@ passport.use(
         [username],
         async (err, result) => {
           if (err) throw err;
-          const user = await result[0];
+          const userInfo = await result[0];
+          const user = {
+            id: userInfo.id,
+            user: userInfo.user,
+            idRol: userInfo.idRol,
+          };
           if (result[0] == null) {
             console.log('Ese usuario NO existe');
             done(null, false);
@@ -46,7 +51,7 @@ passport.use(
 );
 
 passport.serializeUser(function (user: any, done) {
-  done(null, user.id);
+  done(null, user);
 });
 
 passport.deserializeUser(function (user: any, done) {

@@ -1,13 +1,13 @@
 import React from 'react';
 import {withRouter, Link} from 'react-router-dom';
 
-function Bodega() {
+function TallerDesign() {
   return (
     <div>
-      <h1>Bodega</h1>
+      <h1>Taller diseño</h1>
       <Link to="/">Home</Link>
     </div>
   );
 }
 
-export default withRouter(Bodega);
+export default withRouter(TallerDesign);
