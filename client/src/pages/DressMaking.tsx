@@ -3,6 +3,7 @@ import Axios, { AxiosResponse } from "axios";
 import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
 // REDUCER
 import { reducer } from "../components/dressmaking/ReducerDressMaking";
+import "../components/dressmaking/style/buttonStyle.css";
 
 // INTERFACES
 interface IReference {
@@ -74,13 +75,6 @@ const DressMaking: React.FC = () => {
   return (
     <>
       <h1>Taller de confección</h1>
-      {state.isModalOpen && (
-        <SuccessfulModalDressMaking
-          modalContent={state.modalContent}
-          closeModal={closeModal}
-          checkNumber={state.checkNumber}
-        />
-      )}
       <select
         name="referenceSelection"
         onChange={(e: any) => {
@@ -106,9 +100,16 @@ const DressMaking: React.FC = () => {
           setAmount(e.target.value);
         }}
       />
-      <button type="button" onClick={suppliesRequest}>
-        Enviar
-      </button>
+        <button className="btn" type="button" onClick={suppliesRequest}>
+          Enviar
+        </button>
+      {state.isModalOpen && (
+        <SuccessfulModalDressMaking
+          modalContent={state.modalContent}
+          closeModal={closeModal}
+          checkNumber={state.checkNumber}
+        />
+      )}
     </>
   );
 };

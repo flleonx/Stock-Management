@@ -1,10 +1,10 @@
-import React from 'react';
-import Axios from 'axios';
-import cookies from 'react-cookie';
+import React from "react";
+import Axios from "axios";
+
 // import {withRouter} from 'react-router-dom';
 
 const Home = () => {
-  const logoutAPIURL: string = 'http://localhost:10000/api/logout';
+  const logoutAPIURL: string = "http://localhost:10000/api/logout";
 
   const handleClick = (e: any) => {
     e.preventDefault();

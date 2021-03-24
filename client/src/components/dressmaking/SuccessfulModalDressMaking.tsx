@@ -12,12 +12,15 @@ interface IWareHouseElements {
   timestamp: string;
 }
 
-const SuccessfulModalDressMaking = ({ modalContent, checkNumber, closeModal }: any) => {
-
+const SuccessfulModalDressMaking = ({
+  modalContent,
+  checkNumber,
+  closeModal,
+}: any) => {
   useEffect(() => {
     setTimeout(() => {
       closeModal();
-    }, 5000);
+    }, 40000);
   });
   if (checkNumber == 1 || checkNumber == 2) {
     return <AnotherMessages modalContent={modalContent} />;
@@ -43,23 +46,31 @@ const NotSuccessfulRequest = (modalContent: any) => {
     }
     return props.metros;
   };
-  console.log(modalContent)
+  console.log(modalContent.modalContent);
 
   return (
     <>
-      {modalContent.modalContent.map((props: IWareHouseElements) => {
-        return (
-          <div key={props.codigo} className="SuccessfulModalDressMaking">
-            <p>
-              La referencia: {props.codigo} de color: {props.color} con
-              descripción:
-              {props.descripcion} no tiene suficientes existencias en bodega:
-              existencias {showAmount(props)}
-            </p>
-            <img src={props.nombre_imagen} />
-          </div>
-        );
-      })}
+      <div className="container_table">
+        <div className="table_title">Información</div>
+        <div className="table_header">Insumo insuficiente</div>
+        <div className="table_header">Imagen</div>
+        {modalContent.modalContent.map((props: IWareHouseElements) => {
+          return (
+            <div className="items_container" key={props.codigo}>
+              <div className="sub_items_container">
+                <div className="sub_sub_items_container">
+                <div className="table_item">Item: {props.codigo}</div>
+                <div className="table_item">Descripción: {props.descripcion}</div>
+                <div className="table_item">Existencias: {props.metros}</div>
+                </div>
+                <div className="table_item">
+                  <img className="table_img" src={props.nombre_imagen} />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };
