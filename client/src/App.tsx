@@ -11,6 +11,7 @@ import TallerDesign from './pages/TallerDesign';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error from './pages/Error';
+import Navbar from './components/Navbar';
 
 //PERSONAL MODULES:
 import ProtectedRoute from './components/app/ProtectedRoute';
@@ -68,6 +69,12 @@ function App(): any {
           )}
           <ProtectedRoute exact path="/" component={Home} isAuth={isAuth} />
           <Route exact path="/dressmaking" component={DressMaking} />
+          <ProtectedRoute
+            exact
+            path="/navbar"
+            component={Navbar}
+            isAuth={isAuth}
+          />
           <ProtectedRoute path="/bodega" component={Bodega} isAuth={isAuth} />
           <LoginRedirect path="/login" component={Login} isAuth={isAuth} />
           <Route path="*" component={Error} />

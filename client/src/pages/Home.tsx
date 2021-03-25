@@ -3,15 +3,10 @@ import {Redirect, Link, withRouter} from 'react-router-dom';
 import Axios from 'axios';
 import {myContext} from '../components/Context';
 
-
-// import {withRouter} from 'react-router-dom';
-
 const Home = () => {
-
-
   const logoutAPIURL: string = 'http://localhost:10000/api/logout';
-  // const ctx = useContext(myContext);
-  // console.log(ctx);
+  const ctx = useContext(myContext);
+  console.log(ctx);
 
   const handleClick = (e: any) => {
     Axios.post(logoutAPIURL)
