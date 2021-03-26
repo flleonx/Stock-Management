@@ -3,6 +3,7 @@ import Axios, { AxiosResponse } from "axios";
 import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
 // REDUCER
 import { reducer } from "../components/dressmaking/ReducerDressMaking";
+import "./style/DressMaking.css";
 import "../components/dressmaking/style/buttonStyle.css";
 
 // INTERFACES
@@ -44,13 +45,35 @@ const DressMaking: React.FC = () => {
   useEffect(() => {
     Axios.get(dbReferencesURL).then((response: AxiosResponse) => {
       setReferences(response.data);
+      triggerListeners();
     });
+
+    const triggerListeners = () => {
+      var selectedOption: any = document.querySelector(".selected-option");
+      var options: any = document.querySelectorAll(".option");
+
+      selectedOption.addEventListener("click", () => {
+        selectedOption.parentElement.classList.toggle("active");
+      });
+
+      options.forEach((option: any) => {
+        option.addEventListener("click", () => {
+          setTimeout(() => {
+            selectedOption.innerHTML = option.innerHTML;
+            // SET CURRENT REFERENCE VALUE
+            setSelectedReference(option.innerHTML);
+          }, 300);
+
+          selectedOption.parentElement.classList.remove("active");
+        });
+      });
+    };
   }, []);
 
   const suppliesRequest = () => {
     const correctAmount = parseFloat(amount);
     console.log(Number.isInteger(correctAmount) && correctAmount > 0);
-    console.log(correctAmount);
+    console.log(selectedReference);
     if (Number.isInteger(correctAmount) && correctAmount > 0) {
       Axios.post(dbSuppliesURL, {
         actualAmount: amount,
@@ -74,35 +97,50 @@ const DressMaking: React.FC = () => {
 
   return (
     <>
-      <h1>Taller de confección</h1>
-      <select
-        name="referenceSelection"
-        onChange={(e: any) => {
-          setSelectedReference(e.target.value);
-        }}
-      >
-        <option value="0">Seleccione la referencia</option>
-        {references.map((reference: IReference) => {
-          return (
-            <option key={reference.referencia} value={reference.referencia}>
-              {reference.referencia}
-            </option>
-          );
-        })}
-      </select>
-      <label>Cantidad: </label>
-      <input
-        ref={refContainer}
-        name="actualAmount"
-        type="number"
-        autoComplete="off"
-        onChange={(e) => {
-          setAmount(e.target.value);
-        }}
-      />
-        <button className="btn" type="button" onClick={suppliesRequest}>
-          Enviar
-        </button>
+      <h2>Taller de confección</h2>
+      <div className="external_options_container">
+        <div className="options_container">
+          <div className="select_box_center">
+            <div className="container">
+              <div className="title">Seleccione la referencia:</div>
+              <div className="select-container">
+                <p className="selected-option">Select a language</p>
+                <ul className="options-container">
+                  {references.map((reference: IReference) => {
+                    return <li className="option">{reference.referencia}</li>;
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="select_box_center">
+            <div className="select_box_grid_numberinput">
+              <div className="select_box_flex_titleinput">
+                <div className="title">Cantidad:</div>
+              </div>
+              <div className="select_box_flex_numberinput">
+                <input
+                  ref={refContainer}
+                  id="actualAmount"
+                  name="actualAmount"
+                  className="actualAmount"
+                  type="number"
+                  autoComplete="off"
+                  onChange={(e) => {
+                    setAmount(e.target.value);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          {/* <label htmlFor='acualAmout' className="amount_label">Cantidad: </label> */}
+          <div className="select_box_center">
+            <button className="btn" type="button" onClick={suppliesRequest}>
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
       {state.isModalOpen && (
         <SuccessfulModalDressMaking
           modalContent={state.modalContent}
@@ -115,3 +153,49 @@ const DressMaking: React.FC = () => {
 };
 
 export default DressMaking;
+
+// <div className="static_container">
+//   <div className="container">
+//     <div className="select_box_center">
+//       <div className="select_box">
+//         <div className="codes_container">
+//           {references.map((reference: IReference) => {
+//             return (
+//               <div className="option">
+//                 <input
+//                   type="radio"
+//                   className="radio"
+//                   id="reference_item"
+//                   name="category"
+//                 />
+//                 <label htmlFor="reference_item">
+//                   {reference.referencia}
+//                 </label>
+//               </div>
+//             );
+//           })}
+//         </div>
+//         <div className="selected">Seleccione la referencia</div>
+//       </div>
+//     </div>
+//   </div>
+// </div>
+
+{
+  /* <select
+            className='select_reference'
+            name="referenceSelection"
+            onChange={(e: any) => {
+              setSelectedReference(e.target.value);
+            }}
+          >
+            <option value="0">Seleccione la referencia</option>
+            {references.map((reference: IReference) => {
+              return (
+                <option key={reference.referencia} value={reference.referencia}>
+                  {reference.referencia}
+                </option>
+              );
+            })}
+          </select> */
+}
