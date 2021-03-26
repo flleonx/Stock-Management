@@ -3,7 +3,7 @@ import {Switch, Route} from 'react-router-dom';
 
 import Home from '../pages/Home';
 import DressMaking from '../pages/DressMaking';
-import Bodega from '../pages/Bodega';
+import WareHouse from '../pages/WareHouse';
 import Diseño from '../pages/Design';
 import Register from '../pages/Register';
 import Error from '../pages/Error';
@@ -28,7 +28,11 @@ const Routes = ({rol, isAuth, enableRoutes}: any) => {
           )} */}
           <ProtectedRoute exact path="/" component={Home} isAuth={isAuth} />
           <Route exact path="/dressmaking" component={DressMaking} />
-          <ProtectedRoute path="/bodega" component={Bodega} isAuth={isAuth} />
+          <ProtectedRoute
+            path="/warehouse"
+            component={WareHouse}
+            isAuth={isAuth}
+          />
           <ProtectedRoute path="/diseño" component={Diseño} isAuth={isAuth} />
           <ProtectedRoute path="/logout" component={Logout} isAuth={isAuth} />
           <Route path="*" component={Error} />

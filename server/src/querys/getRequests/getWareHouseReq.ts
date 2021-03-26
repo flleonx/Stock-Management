@@ -16,7 +16,7 @@ interface IInvetoryBodega {
   timestamp: any;
 }
 
-router.get('/api/invetorybodega', (req: any, res: any) => {
+router.get('/api/invetorywarehouse', (req: any, res: any) => {
   //COMENT
   let inventoryBodegaQuery = 'SELECT * FROM InventoryManagement.BODEGA_INSUMOS';
 

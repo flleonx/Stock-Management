@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 import ModalDesign from '../components/design/ModalDesign';
 import {reducer} from '../components/design/ReducerDesign';
 import './style/Design.css';
+import {baseURL} from '../components/app/baseURL';
 
 interface ISupplyInformation {
   supplyCode: string;
@@ -27,14 +28,8 @@ const defaultState: any = {
 };
 
 const Design = () => {
-  const dbWareHouseCodesURL: string =
-    'http://3.91.114.60:10000/api/warehousecodes';
-  // const dbWareHouseCodesURL: string =
-  //   'http://localhost:10000/api/warehousecodes';
-  const dbSaveNewReference: string =
-    'http://3.91.114.60:10000/savenewreference';
-  // const dbSaveNewReference: string =
-  //   'http://localhost:10000/api/savenewreference';
+  const dbWareHouseCodesURL: string = baseURL + 'api/warehousecodes';
+  const dbSaveNewReference: string = baseURL + 'api/savenewreference';
   const [dBWareHouseSupplies, setdBWareHouseSupplies] = useState<
     IWareHouseSupplies[]
   >([]);

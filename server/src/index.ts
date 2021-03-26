@@ -49,13 +49,13 @@ app.use((req: any, res: any, next) => {
 import getRoutesDesignReq from './querys/getRequests/getDesignReq';
 import getRoutesDressMakingReq from './querys/getRequests/getDressMakingReq';
 
-import getBodegaReq from './querys/getRequests/getBodegaReq';
+import getBodegaReq from './querys/getRequests/getWareHouseReq';
 
 //POST
 import postRoutesDressMakingReq from './querys/postRequests/postDressMakingReq';
 import postRoutesDesignReq from './querys/postRequests/postDesignReq';
 
-import postBodegaReq from './querys/postRequests/postBodega';
+import postBodegaReq from './querys/postRequests/postWareHouseReq';
 
 // AUTH ROUTES
 import authRoutes from './querys/authRequest';

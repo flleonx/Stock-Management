@@ -5,6 +5,7 @@ import SuccessfulModalDressMaking from '../components/dressmaking/SuccessfulModa
 import {reducer} from '../components/dressmaking/ReducerDressMaking';
 import './style/DressMaking.css';
 import '../components/dressmaking/style/buttonStyle.css';
+import {baseURL} from '../components/app/baseURL';
 
 // INTERFACES
 interface IReference {
@@ -25,10 +26,8 @@ const DressMaking: React.FC = () => {
   const [references, setReferences] = useState<IReference[]>([]);
   const [amount, setAmount] = useState<string>('');
   const [selectedReference, setSelectedReference] = useState<string>('');
-  const dbReferencesURL: string = 'http://3.91.114.60:10000/api/references';
-  // const dbReferencesURL: string = 'http://localhost:10000/api/references';
-  const dbSuppliesURL: string = 'http://3.91.114.60:10000/api/suppliesrequest';
-  // const dbSuppliesURL: string = 'http://localhost:10000/api/suppliesrequest';
+  const dbReferencesURL: string = baseURL + 'api/references';
+  const dbSuppliesURL: string = baseURL + 'api/suppliesrequest';
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
 

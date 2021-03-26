@@ -7,6 +7,7 @@ import './style/Register.css';
 //MyModuls:
 import ErrorModal from '../components/ErrorModal';
 import SuccessfulModal from '../components/SuccessfulModal';
+import {baseURL} from '../components/app/baseURL';
 
 //Assets:
 import model_img from '../assets/model-photo.jpeg';
@@ -40,8 +41,7 @@ const Register = () => {
   const [validatePasswordForm, setValidatePasswordForm] = useState<string>('');
   const [idRol, setIdRol] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const postRegisterURL: string = 'http://3.91.114.60:10000/api/register';
-  // const postRegisterURL: string = 'http://localhost:10000/api/register';
+  const postRegisterURL: string = baseURL + 'api/register';
 
   //DOM:
   const usernameInput = document.getElementById('username') as HTMLInputElement;

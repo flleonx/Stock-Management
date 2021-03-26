@@ -7,6 +7,7 @@ import './style/Login.css';
 
 //My_modules:
 import ErrorModal from '../components/ErrorModal';
+import {baseURL} from '../components/app/baseURL';
 
 //Assets:
 import model_photo from '../assets/model-photo.jpeg';
@@ -29,8 +30,8 @@ const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const loginAPIURL: string = 'http://3.91.114.60:10000/api/login';
-  // const loginAPIURL: string = 'http://localhost:10000/api/login';
+  const loginAPIURL: string = baseURL + 'api/login';
+  console.log(loginAPIURL);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
