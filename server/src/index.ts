@@ -62,6 +62,7 @@ app.use(getRoutesDressMakingReq);
 
 // POST APP.USE
 app.use(postRoutesDressMakingReq);
+app.use(postRoutesDesignReq);
 
 // AUTH ROUTES APP.USE
 app.use(authRoutes);
