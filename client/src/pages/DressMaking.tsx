@@ -105,7 +105,7 @@ const DressMaking: React.FC = () => {
       </p>
       <div className="external_options_container">
         <div className="options_container">
-          <div className="select_box_center">
+          <div className="select_box_center-reference">
             <div className="references-container">
               <div className="title">Seleccione la referencia:</div>
               <div className="select-container">
@@ -118,28 +118,22 @@ const DressMaking: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="select_box_center">
-            <div className="select_box_grid_numberinput">
-              <div className="select_box_flex_titleinput">
-                <div className="title">Cantidad:</div>
-              </div>
-              <div className="select_box_flex_numberinput">
-                <input
-                  ref={refContainer}
-                  id="actualAmount"
-                  name="actualAmount"
-                  className="actualAmount"
-                  type="number"
-                  autoComplete="off"
-                  onChange={(e) => {
-                    setAmount(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
+          <div className="select_box_center-amount">
+            <div className="title">Cantidad:</div>
+            <input
+              ref={refContainer}
+              id="actualAmount"
+              name="actualAmount"
+              className="actualAmount"
+              type="number"
+              autoComplete="off"
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
+            />
           </div>
           {/* <label htmlFor='acualAmout' className="amount_label">Cantidad: </label> */}
-          <div className="select_box_center">
+          <div className="select_box_center-button">
             <button className="btn" type="button" onClick={suppliesRequest}>
               Enviar
             </button>
