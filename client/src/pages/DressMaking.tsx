@@ -74,7 +74,9 @@ const DressMaking: React.FC = () => {
     const correctAmount = parseFloat(amount);
     console.log(Number.isInteger(correctAmount) && correctAmount > 0);
     console.log(selectedReference);
-    if (Number.isInteger(correctAmount) && correctAmount > 0) {
+    const inputOption = document.querySelector('.selected-option');
+    let enableInput = inputOption?.innerHTML !== 'Seleccionar';
+    if (Number.isInteger(correctAmount) && correctAmount > 0 && enableInput) {
       Axios.post(dbSuppliesURL, {
         actualAmount: amount,
         referenceSelection: selectedReference,

@@ -19,7 +19,7 @@ export const reducer = (state: any, action: any) => {
   if (action.type === 'WRONG_INPUT') {
     return {
       ...state,
-      modalContent: ['Porfavor Ingrese correctamente La cantidad.'],
+      modalContent: ['Porfavor Ingrese correctamente los campos.'],
       isModalOpen: true,
       checkNumber: 2,
     };
