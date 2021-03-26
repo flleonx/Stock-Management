@@ -1,0 +1,103 @@
+.title {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1da597;
+  margin-right: 20px;
+}
+
+.select-container {
+  width: 300px;
+  margin: 15px auto;
+  margin-top: -2px;
+  position: relative;
+}
+
+.selected-option-size {
+  background: white;
+  border-radius: 5px;
+  padding: 3px 15px;
+  cursor: pointer;
+  border: 1px solid #9ba9af;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  width: 250px;
+  height: 27px;
+  color: #9ba9af;
+}
+
+.selected-option-size::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 60px;
+  width: 6px;
+  height: 6px;
+  border-left: 2px solid #1da597;
+  border-top: 2px solid #1da597;
+  transform: rotate(-135deg);
+  transition: all 0.4s ease-in-out;
+}
+
+.active .selected-option-size::after {
+  top: 12px;
+  transform: rotate(45deg);
+}
+
+.options-container {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 84%;
+  background: white;
+  border-radius: 5px;
+  max-height: 240px;
+  overflow-y: scroll;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  transition: transform 0.3s ease-in-out;
+  color: #9ba9af;
+}
+
+.options-container::-webkit-scrollbar {
+  width: 10px;
+  background: #e7f7f2;
+  border-radius: 0 8px 8px 0;
+}
+
+.options-container::-webkit-scrollbar-thumb {
+  background: #1da597;
+  border-radius: 0 5px 5px 0;
+}
+
+.active .options-container {
+  transform: rotateX(0);
+}
+
+.option-size {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+}
+
+.option-size:hover {
+  background: #e7f7f2;
+}
+
+.select_box_center-button {
+  margin-left: 40px;
+  margin-top: 3px;
+}
+
+.select_box_center-button button {
+  font-family: 'Ubuntu', sans-serif;
+  width: 100px;
+  height: 27px;
+  letter-spacing: normal;
+  font-size: 0.8rem;
+}
+
+.select_box_center-button button:focus {
+  outline: none;
+}

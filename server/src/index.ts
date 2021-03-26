@@ -68,6 +68,7 @@ app.use(getBodegaReq);
 
 // POST APP.USE
 app.use(postRoutesDressMakingReq);
+app.use(postRoutesDesignReq);
 
 app.use(postBodegaReq);
 
