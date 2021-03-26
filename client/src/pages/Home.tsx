@@ -5,8 +5,6 @@ import {myContext} from '../components/Context';
 
 const Home = () => {
   const logoutAPIURL: string = 'http://localhost:10000/api/logout';
-  const ctx = useContext(myContext);
-  console.log(ctx);
 
   const handleClick = (e: any) => {
     Axios.post(logoutAPIURL)

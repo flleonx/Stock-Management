@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useReducer, useRef } from "react";
-import Axios, { AxiosResponse } from "axios";
-import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
+import React, {useState, useEffect, useReducer, useRef} from 'react';
+import Axios, {AxiosResponse} from 'axios';
+import SuccessfulModalDressMaking from '../components/dressmaking/SuccessfulModalDressMaking';
 // REDUCER
-import { reducer } from "../components/dressmaking/ReducerDressMaking";
-import "./style/DressMaking.css";
-import "../components/dressmaking/style/buttonStyle.css";
+import {reducer} from '../components/dressmaking/ReducerDressMaking';
+import './style/DressMaking.css';
+import '../components/dressmaking/style/buttonStyle.css';
 
 // INTERFACES
 interface IReference {
@@ -23,21 +23,21 @@ const defaultState: any = {
 
 const DressMaking: React.FC = () => {
   const [references, setReferences] = useState<IReference[]>([]);
-  const [amount, setAmount] = useState<string>("");
-  const [selectedReference, setSelectedReference] = useState<string>("");
-  const dbReferencesURL: string = "http://localhost:10000/api/references";
-  const dbSuppliesURL: string = "http://localhost:10000/api/suppliesrequest";
+  const [amount, setAmount] = useState<string>('');
+  const [selectedReference, setSelectedReference] = useState<string>('');
+  const dbReferencesURL: string = 'http://localhost:10000/api/references';
+  const dbSuppliesURL: string = 'http://localhost:10000/api/suppliesrequest';
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
 
   // HANDLE AMOUNT INPUT
   const handleInput = (input: any) => {
     setAmount(input);
-    if (input.includes(".") || input.includes("-") || input.includes("!")) {
-      const amountInputHTML: any = document.getElementById("amountInput");
-      amountInputHTML.value = "";
+    if (input.includes('.') || input.includes('-') || input.includes('!')) {
+      const amountInputHTML: any = document.getElementById('amountInput');
+      amountInputHTML.value = '';
       // refContainer.current.value = "";
-      setAmount("");
+      setAmount('');
     }
   };
 
@@ -49,22 +49,22 @@ const DressMaking: React.FC = () => {
     });
 
     const triggerListeners = () => {
-      var selectedOption: any = document.querySelector(".selected-option");
-      var options: any = document.querySelectorAll(".option");
+      var selectedOption: any = document.querySelector('.selected-option');
+      var options: any = document.querySelectorAll('.option');
 
-      selectedOption.addEventListener("click", () => {
-        selectedOption.parentElement.classList.toggle("active");
+      selectedOption.addEventListener('click', () => {
+        selectedOption.parentElement.classList.toggle('active');
       });
 
       options.forEach((option: any) => {
-        option.addEventListener("click", () => {
+        option.addEventListener('click', () => {
           setTimeout(() => {
             selectedOption.innerHTML = option.innerHTML;
             // SET CURRENT REFERENCE VALUE
             setSelectedReference(option.innerHTML);
           }, 300);
 
-          selectedOption.parentElement.classList.remove("active");
+          selectedOption.parentElement.classList.remove('active');
         });
       });
     };
@@ -79,32 +79,37 @@ const DressMaking: React.FC = () => {
         actualAmount: amount,
         referenceSelection: selectedReference,
       }).then((response: AxiosResponse): void => {
-        if (response.data === "SUCCESSFUL_REQUEST") {
-          dispatch({ type: "SUCCESSFUL_REQUEST" });
+        if (response.data === 'SUCCESSFUL_REQUEST') {
+          dispatch({type: 'SUCCESSFUL_REQUEST'});
         } else {
-          dispatch({ type: "INSUFFICIENT_SUPPLIES", payload: response.data });
+          dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
         }
       });
     } else {
-      dispatch({ type: "WRONG_INPUT" });
-      refContainer.current.value = "";
+      dispatch({type: 'WRONG_INPUT'});
+      refContainer.current.value = '';
     }
   };
 
   const closeModal = () => {
-    dispatch({ tpye: "CLOSE_MODAL" });
+    dispatch({tpye: 'CLOSE_MODAL'});
   };
 
   return (
-    <>
-      <h2>Taller de confección</h2>
+    <div className="general-container-dressmaking">
+      <h2 className="general-container-dressmaking__h2">
+        Taller de confección
+      </h2>
+      <p className="general-container-dressmaking__p">
+        ¡Hola!, ¿qué insumos quieres pedir hoy?
+      </p>
       <div className="external_options_container">
         <div className="options_container">
           <div className="select_box_center">
-            <div className="container">
+            <div className="references-container">
               <div className="title">Seleccione la referencia:</div>
               <div className="select-container">
-                <p className="selected-option">Select a language</p>
+                <p className="selected-option">Seleccionar</p>
                 <ul className="options-container">
                   {references.map((reference: IReference) => {
                     return <li className="option">{reference.referencia}</li>;
@@ -148,54 +153,8 @@ const DressMaking: React.FC = () => {
           checkNumber={state.checkNumber}
         />
       )}
-    </>
+    </div>
   );
 };
 
 export default DressMaking;
-
-// <div className="static_container">
-//   <div className="container">
-//     <div className="select_box_center">
-//       <div className="select_box">
-//         <div className="codes_container">
-//           {references.map((reference: IReference) => {
-//             return (
-//               <div className="option">
-//                 <input
-//                   type="radio"
-//                   className="radio"
-//                   id="reference_item"
-//                   name="category"
-//                 />
-//                 <label htmlFor="reference_item">
-//                   {reference.referencia}
-//                 </label>
-//               </div>
-//             );
-//           })}
-//         </div>
-//         <div className="selected">Seleccione la referencia</div>
-//       </div>
-//     </div>
-//   </div>
-// </div>
-
-{
-  /* <select
-            className='select_reference'
-            name="referenceSelection"
-            onChange={(e: any) => {
-              setSelectedReference(e.target.value);
-            }}
-          >
-            <option value="0">Seleccione la referencia</option>
-            {references.map((reference: IReference) => {
-              return (
-                <option key={reference.referencia} value={reference.referencia}>
-                  {reference.referencia}
-                </option>
-              );
-            })}
-          </select> */
-}

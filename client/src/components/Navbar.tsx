@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './style/Navbar.css';
-import {withRouter} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 import Axios from 'axios';
+import App from '../App';
 
-function Navbar() {
+function Navbar({switchActive}: any) {
   const [enable, setEnable] = useState<boolean>(false);
   const [user, setUser] = useState<string>('');
   const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
@@ -21,6 +22,7 @@ function Navbar() {
   }, [enable]);
 
   if (enable) {
+    switchActive();
     return (
       <div className="navbar-user-container">
         <NavbarContainer />
@@ -36,12 +38,20 @@ const NavbarContainer = () => {
   return (
     <div className="navbar-container">
       <Brand />
-      <NavbarOption classIcon="gg-chart" title="Dashboard" />
-      <NavbarOption classIcon="gg-pen" title="Taller Diseño" />
-      <NavbarOption classIcon="gg-box" title="Bodega" />
-      <NavbarOption classIcon="gg-shape-half-circle" title="Confección" />
-      <NavbarOption classIcon="gg-add-r" title="Registrar" />
-      <NavbarOption classIcon="gg-log-out" title="Cerrar Sesion" />
+      <NavbarOption classIcon="gg-chart" title="Dashboard" url="/" />
+      <NavbarOption classIcon="gg-pen" title="Taller Diseño" url="/diseño" />
+      <NavbarOption classIcon="gg-box" title="Bodega" url="/bodega" />
+      <NavbarOption
+        classIcon="gg-shape-half-circle"
+        title="Confección"
+        url="/dressmaking"
+      />
+      <NavbarOption classIcon="gg-add-r" title="Registrar" url="/register" />
+      <NavbarOption
+        classIcon="gg-log-out"
+        title="Cerrar Sesion"
+        url="/logout"
+      />
     </div>
   );
 };
@@ -60,17 +70,20 @@ const Brand = () => {
 interface INavbarOption {
   classIcon: string;
   title: string;
+  url: string;
 }
 
 const NavbarOption = (props: INavbarOption) => {
-  const {classIcon, title} = props;
+  const {classIcon, title, url} = props;
   return (
-    <div className="navbar-option">
-      <div className="navbar-option__icon">
-        <i className={classIcon}></i>
+    <Link to={url} className="click_navbar-option">
+      <div className="navbar-option">
+        <div className="navbar-option__icon">
+          <i className={classIcon}></i>
+        </div>
+        <h5 className="navbar-option__h5">{title}</h5>
       </div>
-      <h5 className="navbar-option__h5">{title}</h5>
-    </div>
+    </Link>
   );
 };
 
