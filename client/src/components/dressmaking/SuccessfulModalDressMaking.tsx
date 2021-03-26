@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import "./style/SuccessfulModalDressMaking.css";
+import React, {useEffect} from 'react';
+import './style/SuccessfulModalDressMaking.css';
 
 // INTERFACES
 interface IWareHouseElements {
@@ -59,9 +59,11 @@ const NotSuccessfulRequest = (modalContent: any) => {
             <div className="items_container" key={props.codigo}>
               <div className="sub_items_container">
                 <div className="sub_sub_items_container">
-                <div className="table_item">Item: {props.codigo}</div>
-                <div className="table_item">Descripción: {props.descripcion}</div>
-                <div className="table_item">Existencias: {props.metros}</div>
+                  <div className="table_item">Item: {props.codigo}</div>
+                  <div className="table_item">
+                    Descripción: {props.descripcion}
+                  </div>
+                  <div className="table_item">Existencias: {props.metros}</div>
                 </div>
                 <div className="table_item">
                   <img className="table_img" src={props.nombre_imagen} />

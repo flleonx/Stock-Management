@@ -1,0 +1,18 @@
+.general-container-bodega {
+  width: 78rem;
+}
+
+.general-container-bodega__h2 {
+  font-size: 1.1rem;
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: normal;
+  color: #374663;
+  margin: 25px 0px 0px 37px;
+}
+
+.general-container-bodega__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.9rem;
+  color: #9ba9af;
+  margin: 12px 0px 0px 37px;
+}

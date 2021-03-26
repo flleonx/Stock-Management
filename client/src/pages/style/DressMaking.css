@@ -29,63 +29,60 @@
 .options_container {
   display: flex;
   width: 95%;
-  height: 100%;
+  height: 47%;
+  margin-top: -70px;
   background: rgb(255, 255, 255);
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
 }
 
 /* INPUT */
 
+.select_box_center-amount {
+  display: flex;
+  margin-top: 15px;
+}
+
+.select_box_center-amount input {
+  width: 180px;
+  height: 27px;
+  border: 1px solid #9ba9af;
+  border-radius: 5px;
+  margin-top: -2px;
+  padding-left: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #9ba9af;
+}
+
+.select_box_center-amount input:focus {
+  outline: none;
+}
+
 .actualAmount {
-  width: 70%;
+  width: 150px;
   height: 40%;
 }
 
-.select_box_center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Poppins', sans-serif;
-}
-.select_box_grid_numberinput {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  grid-template-rows: 30% 70%;
-  grid-auto-columns: auto;
-  font-family: 'Poppins', sans-serif;
-}
-
-.select_box_flex_numberinput {
-  padding-top: 10px;
-  display: flex;
-  /* align-items: center; */
-  justify-content: center;
-}
-
-.select_box_flex_titleinput {
-  display: flex;
-  /* align-items: center; */
-  justify-content: center;
+.select_box_center-reference {
+  margin-left: 130px;
+  margin-top: 15px;
 }
 
 .references-container {
-  /* transform: translateY(-50px); */
-  border: 1px solid lightcoral;
   display: flex;
 }
 
 .title {
   font-family: 'Ubuntu', sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   font-size: 0.9rem;
-  /* color: #1da597; */
-  color: #a5bac2;
+  color: #1da597;
+  margin-right: 20px;
 }
 
 .select-container {
   width: 300px;
   margin: 15px auto;
+  margin-top: -2px;
   position: relative;
 }
 
@@ -94,36 +91,37 @@
   border-radius: 5px;
   padding: 3px 15px;
   cursor: pointer;
-  border: 1px solid #1da597;
+  border: 1px solid #9ba9af;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.8rem;
   width: 250px;
   height: 27px;
+  color: #9ba9af;
 }
 
 .selected-option::after {
   content: '';
   position: absolute;
   top: 10px;
-  right: 18px;
+  right: 60px;
   width: 6px;
   height: 6px;
-  border-left: 2px solid black;
-  border-top: 2px solid black;
+  border-left: 2px solid #1da597;
+  border-top: 2px solid #1da597;
   transform: rotate(-135deg);
   transition: all 0.4s ease-in-out;
 }
 
 .active .selected-option::after {
-  top: 20px;
+  top: 12px;
   transform: rotate(45deg);
 }
 
 .options-container {
   position: absolute;
-  top: 55px;
+  top: 28px;
   left: 0;
-  width: 100%;
+  width: 84%;
   background: white;
   border-radius: 5px;
   max-height: 240px;
@@ -131,6 +129,7 @@
   transform: rotateX(90deg);
   transform-origin: top;
   transition: transform 0.3s ease-in-out;
+  color: #9ba9af;
 }
 
 .options-container::-webkit-scrollbar {
@@ -157,4 +156,21 @@
 
 .option:hover {
   background: #e7f7f2;
+}
+
+.select_box_center-button {
+  margin-left: 40px;
+  margin-top: 3px;
+}
+
+.select_box_center-button button {
+  font-family: 'Ubuntu', sans-serif;
+  width: 100px;
+  height: 27px;
+  letter-spacing: normal;
+  font-size: 0.8rem;
+}
+
+.select_box_center-button button:focus {
+  outline: none;
 }

@@ -26,7 +26,8 @@
 .navbar-brand__h5 {
   font-size: 1rem;
   color: #a8b0be;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .navbar-option {
@@ -68,8 +69,8 @@
 
 .navbar-option__h5 {
   color: #a3b1ba;
-  font-weight: 500;
-  font-family: 'monserrat', sans-serif;
+  font-weight: 400;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 .navbar-option:hover .navbar-option__h5 {
@@ -98,6 +99,7 @@
 .user-section__h4 {
   margin-right: 1.5%;
   margin-top: 1%;
+  font-family: 'Ubuntu', sans-serif;
 }
 
 /* Atlasian Icon */

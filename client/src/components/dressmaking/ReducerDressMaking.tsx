@@ -1,5 +1,5 @@
 export const reducer = (state: any, action: any) => {
-  if (action.type === "INSUFFICIENT_SUPPLIES") {
+  if (action.type === 'INSUFFICIENT_SUPPLIES') {
     const warningMissingSupplies = action.payload;
     return {
       ...state,
@@ -8,25 +8,25 @@ export const reducer = (state: any, action: any) => {
       checkNumber: 0,
     };
   }
-  if (action.type === "SUCCESSFUL_REQUEST") {
+  if (action.type === 'SUCCESSFUL_REQUEST') {
     return {
       ...state,
-      modalContent: ["PETICIÓN EXITOSA"],
+      modalContent: ['Petición Realizada con Exito'],
       isModalOpen: true,
       checkNumber: 1,
     };
   }
-  if (action.type === "WRONG_INPUT") {
+  if (action.type === 'WRONG_INPUT') {
     return {
       ...state,
-      modalContent: ["PORFAVOR INGRESE CORRECTAMENTE LA CANTIDAD"],
+      modalContent: ['Porfavor Ingrese correctamente La cantidad.'],
       isModalOpen: true,
       checkNumber: 2,
     };
   }
-  if (action.type === "CLOSE_MODAL") {
-    return { ...state, isModalOpen: false };
+  if (action.type === 'CLOSE_MODAL') {
+    return {...state, isModalOpen: false};
   }
 
-  return { ...state, isModalOpen: false };
+  return {...state, isModalOpen: false};
 };

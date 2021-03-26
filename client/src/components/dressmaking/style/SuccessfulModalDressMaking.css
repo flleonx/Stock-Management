@@ -1,17 +1,3 @@
-/* .SuccessfulModalDressMaking {
-    border: 1px solid #badbcc;
-    border-radius: 5px;
-    margin-left: 10%;
-    padding-left: 2%;
-    padding-top: 0.2%;
-    background-color: #d1e7dd;
-    color: #0f5132;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 90%;
-    height: 20px;
-    width: 80%;
-    font-weight: 500;
-  } */
 /*
 =============== 
 Variables
@@ -337,37 +323,39 @@ p {
 .container_table {
   width: 70%;
   background: white;
-  margin: 50px auto;
-  box-shadow: 0 0 20px #333;
-
+  margin: 0 auto;
+  margin-top: -40px;
+  box-shadow: 4px 0px 15px rgb(192, 188, 188);
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  /* grid-auto-rows: 40px; */
   overflow-y: scroll;
   max-height: 500px;
+  height: 390px;
 }
 
 .container_table::-webkit-scrollbar {
   width: 8px;
-  background: #e7f7f2;
+  background: #daf7ee;
   border-radius: 0 8px 8px 0;
 }
 
 .container_table::-webkit-scrollbar-thumb {
-  background: #1da597;
+  background: #daf7ee;
   border-radius: 0 3px 3px 0;
 }
 
 .table_title {
   grid-column-start: 1;
   grid-column-end: 3;
-  background: #1da597;
-  color: white;
+  height: 38px;
+  background: #daf7ee;
+  color: #1da597;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
-  font-size: 1.9em;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
 }
 
 .table_header,
@@ -378,16 +366,19 @@ p {
 }
 
 .table_header {
-  font-weight: bold;
-  font-size: 1.5em;
+  font-weight: 500;
+  font-size: 1em;
   color: #1da597;
-  border: 3px solid #1da597;
+  font-family: 'Ubuntu', sans-serif;
+  border: 2px solid #daf7ee;
   border-style: hidden hidden solid hidden;
 }
 
 .table_item {
   padding: 10px;
-  font-size: 1.2em;
+  font-size: 0.9em;
+  font-family: 'Ubuntu', sans-serif;
+  color: #374663;
 }
 
 .table_img {
@@ -398,7 +389,7 @@ p {
 .items_container {
   grid-column-start: 1;
   grid-column-end: 3;
-  border: 3px solid #1da597;
+  border: 2px solid #daf7ee;
   border-style: hidden hidden solid hidden;
 }
 
@@ -410,4 +401,25 @@ p {
 .sub_sub_items_container {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
+}
+
+.SuccessfulModalDressMaking {
+  background-color: white;
+  font-family: 'Ubuntu', sans-serif;
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+  text-transform: capitalize;
+  font-size: 1rem;
+  height: 55px;
+  width: 95.3%;
+  font-weight: 500;
+  margin-left: 35px;
+  margin-top: -40px;
+  padding-top: 15px;
+  padding-left: 25px;
+  font-weight: 500;
+}
+
+.SuccessfulModalDressMaking p {
+  /* color: #1da597; */
+  color: #254268;
 }

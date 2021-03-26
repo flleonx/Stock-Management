@@ -71,8 +71,6 @@ router.post('/api/login', (req: any, res: any, next: any) => {
 
 //ROUTE TO KNOW IF THE USER IS AUTH OR NOT:
 router.get('/api/isAuth', (req: any, res: any) => {
-  console.log(req.isAuthenticated());
-  console.log(req.user);
   res.end(JSON.stringify(req.user));
   // res.end(JSON.stringify(req.isAuthenticated()));
 });
