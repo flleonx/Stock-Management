@@ -4,7 +4,6 @@ import {Switch, Route} from 'react-router-dom';
 import Home from '../pages/Home';
 import DressMaking from '../pages/DressMaking';
 import Bodega from '../pages/Bodega';
-import TallerDesign from '../pages/TallerDesign';
 import Diseño from '../pages/Design';
 import Register from '../pages/Register';
 import Error from '../pages/Error';

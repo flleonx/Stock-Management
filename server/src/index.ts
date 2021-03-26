@@ -44,12 +44,26 @@ app.use((req: any, res: any, next) => {
 });
 
 // ROUTES
-import getRoutes from './querys/getRequest';
-import postRoutes from './querys/postRequest';
+
+// GET
+import getRoutesDesignReq from './querys/getRequests/getDesignReq';
+import getRoutesDressMakingReq from './querys/getRequests/getDressMakingReq';
+
+//POST
+import postRoutesDressMakingReq from './querys/postRequests/postDressMakingReq';
+import postRoutesDesignReq from './querys/postRequests/postDesignReq';
+
+// AUTH ROUTES
 import authRoutes from './querys/authRequest';
 
-app.use(getRoutes);
-app.use(postRoutes);
+// GET APP.USE
+app.use(getRoutesDesignReq);
+app.use(getRoutesDressMakingReq);
+
+// POST APP.USE
+app.use(postRoutesDressMakingReq);
+
+// AUTH ROUTES APP.USE
 app.use(authRoutes);
 
 // PORT STATEMENT

@@ -1,7 +1,7 @@
 import routerStatement from "express";
 import { MysqlError } from "mysql";
 const router = routerStatement.Router();
-import database from "../config/dbConfig";
+import database from "../../config/dbConfig";
 
 interface IReference {
   referencia: number;
@@ -24,5 +24,6 @@ router.get("/api/references", (req, res) => {
     }
   );
 });
+
 
 export default router;
