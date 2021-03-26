@@ -17,7 +17,8 @@ const App = () => {
   const [isAuth, setIsAuth] = useState<Boolean>(false);
   const [enable, setEnable] = useState<Boolean>(false);
   const [enableRoutes, setEnableRoutes] = useState<Boolean>(false);
-  const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
+  const isAuthAPIURL: string = 'http://3.91.114.60:10000/api/isAuth';
+  // const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
   const ctx = useContext(myContext);
   let rol = {
     idRol: 0,

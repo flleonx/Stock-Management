@@ -1,54 +1,115 @@
-.title {
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: #1da597;
-  margin-right: 20px;
+.general-container-design {
+  width: 79rem;
+  margin-left: 3px;
 }
 
-.select-container {
-  width: 300px;
+.general-container-design__h2 {
+  font-size: 1.1rem;
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: normal;
+  color: #374663;
+  margin: 20px 0px 0px 37px;
+}
+
+.general-container-design__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  color: #9ba9af;
+  margin: 12px 0px 0px 37px;
+}
+
+.ingreso-referencia-container {
+  display: flex;
+}
+
+.design-form {
+  width: 36%;
+  height: 470px;
+  background-color: white;
+  margin: 15px 0px 0px 37px;
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+  border: 1px solid transparent;
+}
+
+.design-form h2 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.9rem;
+  color: #374663;
+  margin-left: 30%;
+  margin-top: 3%;
+}
+
+.border-design-div {
+  border-bottom: 1.5px solid #374663;
+  width: 90%;
+  margin: 0px auto;
+  margin-bottom: 4%;
+}
+
+.design-form input {
+  display: flex;
+  margin: 0px auto;
+  margin-bottom: 3%;
+  width: 90%;
+  height: 7%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.75rem;
+  padding-left: 3%;
+  border: 1px solid #9ba9af;
+  color: #9ba9af;
+}
+
+.design-form input:focus {
+  outline: none;
+}
+
+.select-container-design {
+  width: 90%;
   margin: 15px auto;
+  margin-bottom: -5px;
   margin-top: -2px;
   position: relative;
 }
 
-.selected-option-size {
+.selected-option-size,
+.selected-option {
   background: white;
   border-radius: 5px;
-  padding: 3px 15px;
+  padding: 5px 15px;
   cursor: pointer;
   border: 1px solid #9ba9af;
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.8rem;
-  width: 250px;
-  height: 27px;
-  color: #9ba9af;
+  font-size: 0.75rem;
+  width: 100%;
+  height: 30px;
+  color: #6f797c;
 }
 
-.selected-option-size::after {
+.selected-option-size::after,
+.selected-option::after {
   content: '';
   position: absolute;
   top: 10px;
-  right: 60px;
-  width: 6px;
-  height: 6px;
-  border-left: 2px solid #1da597;
-  border-top: 2px solid #1da597;
+  right: 20px;
+  width: 8px;
+  height: 8px;
+  border-left: 3px solid #1da597;
+  border-top: 3px solid #1da597;
   transform: rotate(-135deg);
   transition: all 0.4s ease-in-out;
 }
 
-.active .selected-option-size::after {
+.active .selected-option-size::after,
+.active .selected-option::after {
   top: 12px;
   transform: rotate(45deg);
 }
 
-.options-container {
+.options-container-design {
   position: absolute;
-  top: 28px;
+  top: 32px;
   left: 0;
-  width: 84%;
+  width: 100%;
   background: white;
   border-radius: 5px;
   max-height: 240px;
@@ -57,47 +118,95 @@
   transform-origin: top;
   transition: transform 0.3s ease-in-out;
   color: #9ba9af;
+  z-index: 20;
+  height: 100px;
 }
 
-.options-container::-webkit-scrollbar {
+.options-container-design::-webkit-scrollbar {
   width: 10px;
   background: #e7f7f2;
   border-radius: 0 8px 8px 0;
 }
 
-.options-container::-webkit-scrollbar-thumb {
+.options-container-design::-webkit-scrollbar-thumb {
   background: #1da597;
   border-radius: 0 5px 5px 0;
 }
 
-.active .options-container {
+.active .options-container-design {
   transform: rotateX(0);
 }
 
-.option-size {
+.option-size-design {
   padding: 10px 20px;
   cursor: pointer;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.8rem;
 }
 
-.option-size:hover {
-  background: #e7f7f2;
-}
-
-.select_box_center-button {
-  margin-left: 40px;
-  margin-top: 3px;
-}
-
-.select_box_center-button button {
+.option-design {
+  padding: 10px 20px;
+  cursor: pointer;
   font-family: 'Ubuntu', sans-serif;
-  width: 100px;
-  height: 27px;
-  letter-spacing: normal;
   font-size: 0.8rem;
 }
 
-.select_box_center-button button:focus {
+.option-size-design:hover,
+.option-design:hover {
+  background: #e7f7f2;
+}
+
+.design-form button {
+  width: 90%;
+  margin-left: 5%;
+  height: 7%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  margin-top: -0.1%;
+}
+
+.design-form button:focus {
   outline: none;
+}
+
+.design-form #insumoBTN {
+  margin-top: -30%;
+}
+
+.design-form #saveBTN {
+  background-color: #0ebf87;
+  color: white;
+  border: 1px solid #007c55;
+}
+
+.insumosAgregados {
+  margin-top: 1.2%;
+  height: 470px;
+  width: 55%;
+  margin-left: 3%;
+  background-color: transparent;
+}
+
+.insumo-add {
+  display: flex;
+  background-color: white;
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+  height: 7%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.91rem;
+  color: #6c818a;
+  font-weight: 400;
+  padding-left: 27%;
+  padding-top: 0.6%;
+  margin-bottom: 3%;
+  word-spacing: 0.5rem;
+}
+
+.insumo-add h2 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1rem;
+  color: #1da597;
+  font-weight: 500;
+  margin-right: 5%;
+  margin-top: 0.4%;
 }

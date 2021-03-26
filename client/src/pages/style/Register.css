@@ -12,8 +12,8 @@
 
 .body-register-container .img-container {
   position: absolute;
-  left: 5%;
-  top: 10%;
+  left: 8%;
+  top: 13%;
   z-index: 1;
 }
 
@@ -26,8 +26,8 @@
   position: absolute;
   background-color: rgba(100, 214, 197, 0.6);
   z-index: 10;
-  left: 5%;
-  top: 10%;
+  left: 8%;
+  top: 13%;
   width: 45.3%;
   height: 500px;
 }
@@ -37,7 +37,7 @@
   background: linear-gradient(to bottom, #35465d, #0f1d34);
   z-index: 200;
   left: 50%;
-  top: 10%;
+  top: 13%;
   width: 45%;
   height: 500px;
 }

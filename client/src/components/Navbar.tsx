@@ -7,7 +7,8 @@ import App from '../App';
 function Navbar({switchActive}: any) {
   const [enable, setEnable] = useState<boolean>(false);
   const [user, setUser] = useState<string>('');
-  const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
+  // const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
+  const isAuthAPIURL: string = 'http://3.91.114.60:10000/api/isAuth';
 
   useEffect(() => {
     Axios.get(isAuthAPIURL)

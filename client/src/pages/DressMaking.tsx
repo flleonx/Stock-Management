@@ -25,8 +25,10 @@ const DressMaking: React.FC = () => {
   const [references, setReferences] = useState<IReference[]>([]);
   const [amount, setAmount] = useState<string>('');
   const [selectedReference, setSelectedReference] = useState<string>('');
-  const dbReferencesURL: string = 'http://localhost:10000/api/references';
-  const dbSuppliesURL: string = 'http://localhost:10000/api/suppliesrequest';
+  const dbReferencesURL: string = 'http://3.91.114.60:10000/api/references';
+  // const dbReferencesURL: string = 'http://localhost:10000/api/references';
+  const dbSuppliesURL: string = 'http://3.91.114.60:10000/api/suppliesrequest';
+  // const dbSuppliesURL: string = 'http://localhost:10000/api/suppliesrequest';
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
 

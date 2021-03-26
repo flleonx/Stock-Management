@@ -42,9 +42,12 @@ function Bodega() {
   const [img, setImg] = useState<string>('');
   const [type, setType] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const saveClothAPIURL: string = 'http://localhost:10000/api/savecloth';
+  // const saveClothAPIURL: string = 'http://localhost:10000/api/savecloth';
+  const saveClothAPIURL: string = 'http://3.91.114.60:10000/api/savecloth';
   const invetoryBodegaAPIURL: string =
-    'http://localhost:10000/api/invetorybodega';
+    'http://3.91.114.60:10000/api/invetorybodega';
+  // const invetoryBodegaAPIURL: string =
+  //   'http://localhost:10000/api/invetorybodega';
 
   useEffect(() => {
     triggerListeners(setType);

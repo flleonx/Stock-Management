@@ -29,7 +29,8 @@ const Login = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const loginAPIURL: string = 'http://localhost:10000/api/login';
+  const loginAPIURL: string = 'http://3.91.114.60:10000/api/login';
+  // const loginAPIURL: string = 'http://localhost:10000/api/login';
 
   const handleSubmit = (e: any) => {
     e.preventDefault();

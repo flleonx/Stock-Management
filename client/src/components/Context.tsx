@@ -11,7 +11,8 @@ import Axios from 'axios';
 export const myContext = createContext<any>({});
 function Context(props: PropsWithChildren<any>) {
   const [user, setUser] = useState<any>();
-  const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
+  // const isAuthAPIURL: string = 'http://localhost:10000/api/isAuth';
+  const isAuthAPIURL: string = 'http://3.91.114.60:10000/api/isAuth';
 
   useEffect(() => {
     Axios.get(isAuthAPIURL)
