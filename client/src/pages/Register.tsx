@@ -5,13 +5,12 @@ import Axios from 'axios';
 import './style/Register.css';
 
 //MyModuls:
-import ErrorModal from '../components/ErrorModal';
-import SuccessfulModal from '../components/SuccessfulModal';
+import RegisterErrorModal from '../components/register/RegisterErrorModal';
+import RegisterSuccessfulModal from '../components/register/RegisterSuccessfulModal';
 import {baseURL} from '../components/app/baseURL';
 
 //Assets:
-import model_img from '../assets/model-photo.jpeg';
-import user_register from '../assets/user.png';
+import registerImg from '../assets/register.svg';
 
 //Reducer:
 
@@ -103,68 +102,60 @@ const Register = () => {
   };
 
   return (
-    <div className="body-register-container">
-      <div className="img-container">
-        <img src={model_img} alt="model" className="img-container__img" />
-      </div>
-      <div className="background-effect-img-container"></div>
-      <div className="register-container">
-        <div className="register-img-container">
-          <img src={user_register} alt="user" />
-        </div>
-        <h3>Register</h3>
-        <form>
-          <label>Usuario:</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Digete aquí el usuario"
-            autoComplete="off"
-            id="username"
-            onChange={(e: any) => setUsername(e.target.value)}
-          />
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Digite aquí la contraseña"
-            autoComplete="off"
-            id="password"
-            onChange={(e: any) => setPasswordForm(e.target.value)}
-          />
-          <span className="passwordInfo">
-            Ingrese una contraseña de al menos 8 caracteres
-          </span>
-          <label>Confirmar contraseña:</label>
-          <input
-            type="password"
-            name="validPassword"
-            id="validPassword"
-            placeholder="Digite aquí nuevamente la contraseña"
-            autoComplete="off"
-            onChange={(e: any) => setValidatePasswordForm(e.target.value)}
-          />
-          <label>Rol:</label>
-          <select id="idRol" onChange={(e: any) => setIdRol(e.target.value)}>
-            <option value="0">Seleccionar rol</option>
-            <option value="1">Administrador</option>
-            <option value="2">Trabajador</option>
-          </select>
-          <button onClick={handleSubmit}>Registrarse</button>
-        </form>
+    <div className="general-register-container">
+      <form className="register-form">
+        <h2>Registrar usuario</h2>
+        <div className="border-div"></div>
+        <input
+          type="text"
+          name="username"
+          placeholder="Usuario"
+          autoComplete="off"
+          id="username"
+          onChange={(e: any) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          autoComplete="off"
+          id="password"
+          onChange={(e: any) => setPasswordForm(e.target.value)}
+        />
+        <p className="passwordInfo">
+          Ingrese una contraseña de al menos 8 caracteres
+        </p>
+        <input
+          type="password"
+          name="validPassword"
+          id="validPassword"
+          placeholder="Contraseña nuevamente"
+          autoComplete="off"
+          onChange={(e: any) => setValidatePasswordForm(e.target.value)}
+        />
+        <select id="idRol" onChange={(e: any) => setIdRol(e.target.value)}>
+          <option value="0">Seleccionar rol</option>
+          <option value="1">Administrador</option>
+          <option value="2">Trabajador</option>
+        </select>
+        <button onClick={handleSubmit} className="btn">
+          Registrarse
+        </button>
         {state.isModalErrorOpen && (
-          <ErrorModal
+          <RegisterErrorModal
             closeModal={closeModal}
             modalContent={state.modalContent}
           />
         )}
         {state.isModalSuccessfulOpen && (
-          <SuccessfulModal
+          <RegisterSuccessfulModal
             closeModal={closeModal}
             modalContent={state.modalContent}
           />
         )}
-        ;
+      </form>
+      <div className="img-register-container">
+        <img src={registerImg} alt="register" />
       </div>
     </div>
   );

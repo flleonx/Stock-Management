@@ -50,7 +50,9 @@ const DressMaking: React.FC = () => {
     });
 
     const triggerListeners = () => {
-      var selectedOption: any = document.querySelector('.selected-option');
+      var selectedOption: any = document.querySelector(
+        '.selected-option-dressmaking'
+      );
       var options: any = document.querySelectorAll('.option');
 
       selectedOption.addEventListener('click', () => {
@@ -75,7 +77,7 @@ const DressMaking: React.FC = () => {
     const correctAmount = parseFloat(amount);
     console.log(Number.isInteger(correctAmount) && correctAmount > 0);
     console.log(selectedReference);
-    const inputOption = document.querySelector('.selected-option');
+    const inputOption = document.querySelector('.selected-option-dressmaking');
     let enableInput = inputOption?.innerHTML !== 'Seleccionar';
     if (Number.isInteger(correctAmount) && correctAmount > 0 && enableInput) {
       Axios.post(dbSuppliesURL, {
@@ -112,7 +114,7 @@ const DressMaking: React.FC = () => {
             <div className="references-container">
               <div className="title">Seleccione la referencia:</div>
               <div className="select-container">
-                <p className="selected-option">Seleccionar</p>
+                <p className="selected-option-dressmaking">Seleccionar</p>
                 <ul className="options-container">
                   {references.map((reference: IReference) => {
                     return <li className="option">{reference.referencia}</li>;

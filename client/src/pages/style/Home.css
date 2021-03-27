@@ -1,0 +1,22 @@
+.general-container-home {
+  width: 79rem;
+  margin-left: 3px;
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 91vh;
+}
+
+.general-container-home__h2 {
+  font-size: 1.1rem;
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: normal;
+  color: #374663;
+  margin: 20px 0px 0px 37px;
+}
+
+.general-container-home__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  color: #9ba9af;
+  margin: 12px 0px 0px 37px;
+}

@@ -3,110 +3,78 @@
   padding: 0;
 }
 
-.body-container {
-  display: flex;
-  background-color: #f0f2f5;
+.general-login-container {
   width: 100vw;
-  min-height: 100vh;
+  height: 100vh;
 }
 
-.body-container .image-container {
-  position: absolute;
-  left: 5%;
-  top: 10%;
-  z-index: 1;
+.login-form {
+  width: 30%;
+  height: 50vh;
+  background-color: white;
+  margin-top: 11%;
+  margin-left: 13%;
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+  border: 1px solid transparent;
 }
 
-.body-container .image-container .image-container__img {
-  width: 69.5%;
-  height: 500px;
+.login-form h2 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.2rem;
+  color: #374663;
+  margin-left: 43%;
+  margin-top: 3%;
 }
 
-.body-container .div-effect {
-  position: absolute;
-  background-color: rgba(100, 214, 197, 0.6);
-  z-index: 10;
-  left: 5%;
-  top: 10%;
-  width: 45.3%;
-  height: 500px;
-}
-
-.body-container .login-container {
-  position: absolute;
-  background: linear-gradient(to bottom, #35475d, #0f1d34);
-  z-index: 200;
-  left: 50%;
-  top: 10%;
-  width: 45%;
-  height: 500px;
-}
-
-.body-container .login-container .login-image-container img {
-  width: 8%;
-  height: 8%;
-  margin-left: 46.1%;
-  margin-top: 10%;
-}
-
-.body-container .login-container h3 {
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  color: #989797;
-  font-size: 180%;
-  font-weight: 400;
-  margin-left: 42.5%;
-}
-
-.body-container .login-container form {
-  display: grid;
-  grid-template-rows: repeat(1fr, 5);
-  height: 45%;
-  margin-top: 4%;
-  margin-bottom: 6%;
-}
-
-.body-container .login-container form label {
+.login-form .border-div {
+  border-bottom: 1.5px solid #374663;
+  height: 10px;
   margin-left: 5%;
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  color: white;
-  font-weight: 500;
+  width: 90%;
+  margin-top: -1%;
 }
 
-.body-container .login-container form input {
-  background-color: transparent;
-  width: 86%;
-  margin-bottom: 7%;
+.login-form input {
+  width: 90%;
+  height: 13%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.75rem;
+  padding-left: 3%;
+  border: 1px solid #9ba9af;
+  color: #9ba9af;
   margin-left: 5%;
-  padding-bottom: 1%;
-  border-bottom: 1px solid rgb(145, 145, 145);
-  border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-  padding-left: 1%;
-  font-family: 'Montserrat', sans-serif;
-  color: #8a8a8a;
 }
 
-.body-container .login-container form input:focus {
+.login-form input:focus {
   outline: none;
 }
 
-.body-container .login-container button {
-  width: 25%;
-  height: 120%;
-  margin-left: 40%;
-  margin-top: 1%;
-  font-family: 'Montserrat', sans-serif;
-  background-color: #64d6c5;
-  color: white;
-  font-weight: bold;
-  border: 0px;
-  border-radius: 50px;
-  cursor: pointer;
+.login-form #username {
+  margin-top: 7%;
+}
+.login-form #password {
+  margin-top: 7%;
 }
 
-.body-container .login-container button:focus {
-  outline: 0;
+.login-form button {
+  width: 90%;
+  height: 13%;
+  margin-left: 5%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  margin-top: 6%;
+}
+
+.login-form button:focus {
+  outline: none;
+}
+
+.img-login-container img {
+  position: absolute;
+  width: 40vw;
+  height: 60vh;
+  z-index: 20;
+  margin-left: 15%;
+  left: 36%;
+  top: 17%;
 }

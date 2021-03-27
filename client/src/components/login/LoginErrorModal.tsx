@@ -1,17 +1,17 @@
 import React, {useEffect} from 'react';
-import './style/SuccessfulModal.css';
+import './style/LoginErrorModal.css';
 
-const SuccessfulModal = ({modalContent, closeModal}: any) => {
+const LoginErrorModal = ({modalContent, closeModal}: any) => {
   useEffect(() => {
     setTimeout(() => {
       closeModal();
     }, 5000);
   });
   return (
-    <div className="SuccessfulModal ">
+    <div className="LoginErrorModal">
       <p>{modalContent}</p>
     </div>
   );
 };
 
-export default SuccessfulModal;
+export default LoginErrorModal;

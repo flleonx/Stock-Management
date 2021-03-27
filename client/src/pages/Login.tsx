@@ -6,12 +6,11 @@ import Axios from 'axios';
 import './style/Login.css';
 
 //My_modules:
-import ErrorModal from '../components/ErrorModal';
+import LoginErrorModal from '../components/login/LoginErrorModal';
 import {baseURL} from '../components/app/baseURL';
+import loginIMG from '../assets/Securelogin.svg';
 
 //Assets:
-import model_photo from '../assets/model-photo.jpeg';
-import user_img from '../assets/user.png';
 
 //Reducer
 import {reducer} from '../components/login/ReducerLogin';
@@ -44,6 +43,14 @@ const Login = () => {
           const isAuth: string = response.data;
           if (isAuth === 'ERROR') {
             dispatch({type: 'ERROR_AUTH'});
+            const usernameInput = document.getElementById(
+              'username'
+            ) as HTMLInputElement;
+            const passwordInput = document.getElementById(
+              'password'
+            ) as HTMLInputElement;
+            usernameInput.value = '';
+            passwordInput.value = '';
           } else {
             window.location.href = '/';
           }
@@ -61,42 +68,38 @@ const Login = () => {
   };
 
   return (
-    <div className="body-container">
-      <div className="image-container">
-        <img src={model_photo} alt="model" className="image-container__img" />
-      </div>
-      <div className="div-effect"></div>
-      <div className="login-container">
-        <div className="login-image-container">
-          <img src={user_img} alt="login" />
-        </div>
-        <h3>Login</h3>
-        <form>
-          <label>Usuario:</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Digite aquí el usuario"
-            autoComplete="off"
-            onChange={(e: any) => setUsername(e.target.value)}
-          />
-          <label>Contraseña:</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Digite aquí la contraseña"
-            autoComplete="off"
-            onChange={(e: any) => setPassword(e.target.value)}
-          />
-          <button onClick={handleSubmit}>Iniciar sesión </button>
-        </form>
-        {state.isModalOpen && (
-          <ErrorModal
-            closeModal={closeModal}
-            modalContent={state.modalContent}
-          />
-        )}
-        ;
+    <div className="general-login-container">
+      <form className="login-form">
+        <h2>Login</h2>
+        <div className="border-div"></div>
+        <input
+          type="text"
+          name="username"
+          placeholder="Usuario"
+          id="username"
+          autoComplete="off"
+          onChange={(e: any) => setUsername(e.target.value)}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          autoComplete="off"
+          id="password"
+          onChange={(e: any) => setPassword(e.target.value)}
+        />
+        <button onClick={handleSubmit} className="btn">
+          Iniciar sesión
+        </button>
+      </form>
+      {state.isModalOpen && (
+        <LoginErrorModal
+          closeModal={closeModal}
+          modalContent={state.modalContent}
+        />
+      )}
+      <div className="img-login-container">
+        <img src={loginIMG} alt="login" />
       </div>
     </div>
   );

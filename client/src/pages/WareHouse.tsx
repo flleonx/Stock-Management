@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {withRouter, Link} from 'react-router-dom';
 import Axios from 'axios';
-import './style/Bodega.css';
+import './style/Warehouse.css';
 import ModalInvetoryBodega from '../components/bodega/ModalInventoryBodega';
 import ModalBodegaForm from '../components/bodega/ModalBodegaForm';
 import {baseURL} from '../components/app/baseURL';

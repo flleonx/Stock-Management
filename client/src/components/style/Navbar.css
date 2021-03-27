@@ -3,6 +3,10 @@
   width: 100px;
 }
 
+.click_navbar-option:visited navbar-option {
+  background-color: red;
+}
+
 .navbar-container {
   background-color: white;
   width: 100%;

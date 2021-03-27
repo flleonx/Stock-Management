@@ -1,0 +1,20 @@
+.RegisterErrorModal {
+  position: absolute;
+  border: 1px solid #842029;
+  border-radius: 3px;
+  margin-left: 10%;
+  padding-left: 1%;
+  padding-top: 0.3%;
+  background-color: #f8d7da;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  height: 5%;
+  width: 27.8%;
+  font-weight: 500;
+  top: 75.5%;
+  left: 10%;
+}
+
+.RegisterErrorModal p {
+  color: #842029;
+}

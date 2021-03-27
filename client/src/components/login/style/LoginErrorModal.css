@@ -1,0 +1,20 @@
+.LoginErrorModal {
+  position: absolute;
+  border: 1px solid #842029;
+  border-radius: 3px;
+  margin-left: 10%;
+  padding-left: 1%;
+  padding-top: 0.5%;
+  background-color: #f8d7da;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.9rem;
+  height: 6%;
+  width: 27.2%;
+  font-weight: 500;
+  top: 68%;
+  left: 4.8%;
+}
+
+.LoginErrorModal p {
+  color: #842029;
+}

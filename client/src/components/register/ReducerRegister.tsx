@@ -53,7 +53,7 @@ export const reducer = (state: IState, action: IActions) => {
     return {
       ...state,
       isModalSuccessfulOpen: true,
-      modalContent: '¡GENIAL! ¡Se ha registrado correctamente!',
+      modalContent: '¡Genial! ¡Se ha registrado correctamente!',
     };
   }
 

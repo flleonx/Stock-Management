@@ -1,5 +1,6 @@
 .general-container-dressmaking {
-  width: 78rem;
+  /* width: 78rem; */
+  width: 120%;
 }
 
 .general-container-dressmaking__h2 {
@@ -23,12 +24,12 @@
   height: 120px;
   align-items: center;
   justify-content: center;
-  margin: 20px 0px 0px 7px;
+  margin: 20px 0px 0px 20px;
 }
 
 .options_container {
   display: flex;
-  width: 95%;
+  width: 97%;
   height: 47%;
   margin-top: -70px;
   background: rgb(255, 255, 255);
@@ -57,6 +58,10 @@
   outline: none;
 }
 
+.select_box_center-amount .title {
+  margin-left: -3%;
+}
+
 .actualAmount {
   width: 150px;
   height: 40%;
@@ -69,6 +74,12 @@
 
 .references-container {
   display: flex;
+  width: 120%;
+  margin-left: -13%;
+}
+
+.references-container .title {
+  margin-right: 0;
 }
 
 .title {
@@ -76,7 +87,8 @@
   font-weight: 500;
   font-size: 0.9rem;
   color: #1da597;
-  margin-right: 20px;
+  margin-right: 8%;
+  margin-left: 5%;
 }
 
 .select-container {
@@ -86,7 +98,7 @@
   position: relative;
 }
 
-.selected-option {
+.selected-option-dressmaking {
   background: white;
   border-radius: 5px;
   padding: 3px 15px;
@@ -99,20 +111,20 @@
   color: #9ba9af;
 }
 
-.selected-option::after {
+.selected-option-dressmaking::after {
   content: '';
   position: absolute;
-  top: 10px;
+  top: 8px;
   right: 60px;
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-left: 2px solid #1da597;
   border-top: 2px solid #1da597;
   transform: rotate(-135deg);
   transition: all 0.4s ease-in-out;
 }
 
-.active .selected-option::after {
+.active .selected-option-dressmaking::after {
   top: 12px;
   transform: rotate(45deg);
 }

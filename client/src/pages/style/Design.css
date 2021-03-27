@@ -1,6 +1,9 @@
 .general-container-design {
   width: 79rem;
   margin-left: 3px;
+  overflow: hidden;
+  overflow-y: scroll;
+  max-height: 91vh;
 }
 
 .general-container-design__h2 {
@@ -16,6 +19,29 @@
   font-size: 0.85rem;
   color: #9ba9af;
   margin: 12px 0px 0px 37px;
+}
+
+.switch-design-container {
+  width: 95%;
+  background-color: white;
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+  margin: 0 auto;
+  margin-top: 1%;
+  height: 50px;
+}
+
+.switch-design-container button {
+  width: 20%;
+  height: 27px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  padding: 0 auto;
+  margin-left: 19%;
+  padding-top: -0.7%;
+}
+
+.switch-design-container button:focus {
+  outline: none;
 }
 
 .ingreso-referencia-container {
@@ -209,4 +235,88 @@
   font-weight: 500;
   margin-right: 5%;
   margin-top: 0.4%;
+}
+
+.container_table-design {
+  width: 55%;
+  background: white;
+  margin: 0 auto;
+  margin-top: -40px;
+  box-shadow: 4px 0px 15px rgb(192, 188, 188);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  overflow-y: scroll;
+  max-height: 500px;
+  height: 390px;
+  margin-top: 2%;
+}
+
+.container_table-design::-webkit-scrollbar {
+  width: 8px;
+  background: #daf7ee;
+  border-radius: 0 8px 8px 0;
+}
+
+.container_table-design::-webkit-scrollbar-thumb {
+  background: #daf7ee;
+  border-radius: 0 3px 3px 0;
+}
+
+.table_title-design {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  height: 38px;
+  background: #daf7ee;
+  color: #1da597;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.table_header-design,
+.table_item-design {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_header-design {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: 'Ubuntu', sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.table_item-design {
+  padding: 10px;
+  font-size: 0.9em;
+  font-family: 'Ubuntu', sans-serif;
+  color: #374663;
+}
+
+.table_img-design {
+  width: 100px;
+  height: 100px;
+}
+
+.items_container-design {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.sub_items_container-design {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.sub_sub_items_container-design {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
 }
