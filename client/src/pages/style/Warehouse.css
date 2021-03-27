@@ -68,14 +68,14 @@
   height: 10%;
 }
 
-.select-container-bodega {
+.select-container-bodega, .select-update-inventory {
   width: 90%;
   margin: 15px auto;
   margin-top: -2px;
   position: relative;
 }
 
-.selected-option-bodega {
+.selected-option-bodega, .selected-update-inventory {
   background: white;
   border-radius: 5px;
   padding: 5px 15px;
@@ -88,7 +88,7 @@
   color: #6f797c;
 }
 
-.selected-option-bodega::after {
+.selected-option-bodega::after, .selected-update-inventory::after {
   content: '';
   position: absolute;
   top: 10px;
@@ -101,12 +101,12 @@
   transition: all 0.4s ease-in-out;
 }
 
-.active-bodega .selected-option-bodega::after {
+.active-bodega .selected-option-bodega::after, .active-bodega .selected-update-inventory::after {
   top: 12px;
   transform: rotate(45deg);
 }
 
-.options-container-bodega {
+.options-container-bodega, .options-update-inventory {
   position: absolute;
   top: 32px;
   left: 0;
@@ -122,29 +122,29 @@
   z-index: 20;
 }
 
-.options-container-bodega::-webkit-scrollbar {
+.options-container-bodega::-webkit-scrollbar, .options-update-inventory::-webkit-scrollbar {
   width: 10px;
   background: #e7f7f2;
   border-radius: 0 8px 8px 0;
 }
 
-.options-container-bodega::-webkit-scrollbar-thumb {
+.options-container-bodega::-webkit-scrollbar-thumb, .options-update-inventory::-webkit-scrollbar-thumb {
   background: #1da597;
   border-radius: 0 5px 5px 0;
 }
 
-.active-bodega .options-container-bodega {
+.active-bodega .options-container-bodega, .active-bodega .options-update-inventory {
   transform: rotateX(0);
 }
 
-.option-bodega {
+.option-bodega, .option-update-inventory{
   padding: 10px 20px;
   cursor: pointer;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.75rem;
 }
 
-.option-bodega:hover {
+.option-bodega:hover, .option-update-inventory:hover {
   background: #e7f7f2;
 }
 
