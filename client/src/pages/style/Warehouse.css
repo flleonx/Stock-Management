@@ -207,7 +207,7 @@
 
 .container_table-bodega {
   position: absolute;
-  width: 55%;
+  width: 49%;
   background: white;
   margin: 0 auto;
   margin-top: -40px;
@@ -219,7 +219,7 @@
   height: 390px;
   z-index: 30;
   top: 250px;
-  left: 580px;
+  left: 635px;
 }
 
 .container_table-bodega::-webkit-scrollbar {
