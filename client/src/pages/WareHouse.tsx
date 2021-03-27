@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import {withRouter, Link} from 'react-router-dom';
 import Axios, {AxiosResponse} from 'axios';
-import './style/Bodega.css';
+import './style/Warehouse.css';
 import ModalInvetoryWareHouse from '../components/warehouse/ModalInventoryWareHouse';
 import ModalWareHouseForm from '../components/warehouse/ModalWareHouseForm';
+import ModalUpdateWareHouse from '../components/warehouse/ModalUpdateWareHouse';
 import {baseURL} from '../components/app/baseURL';
 
 const reducer = (state: any, action: any) => {
@@ -24,8 +25,8 @@ const reducer = (state: any, action: any) => {
   if (action.type === 'SUCCESSFUL_UPDATE') {
     return {
       ...state,
-      modalFormContent: 'Inventario añadido exitosamente',
-      isFormModalOpen: true,
+      modalUpdateContent: 'Inventario añadido exitosamente',
+      isModalUpdateOpen: true,
     };
   }
 
@@ -48,22 +49,30 @@ const reducer = (state: any, action: any) => {
   if (action.type === 'WRONG_INPUT') {
     return {
       ...state,
-      modalFormContent: 'Por favor ingrese correctamente todos los campos',
-      isFormModalOpen: true,
+      modalUpdateContent:
+        'OJO: Por favor ingrese correctamente todos los campos',
+      isModalUpdateOpen: true,
     };
   }
 
   if (action.type === 'CLOSE_MODAL') {
     return {...state, isModalOpen: false};
   }
-  return {...state, isModalOpen: false, isFormModalOpen: false};
+  return {
+    ...state,
+    isModalOpen: false,
+    isFormModalOpen: false,
+    isModalUpdateOpen: false,
+  };
 };
 
 const defaultState: any = {
   isModalOpen: false,
   isFormModalOpen: false,
+  isModalUpdateOpen: false,
   modalContent: [],
   modalFormContent: '',
+  modalUpdateContent: '',
   checkNumber: 0,
 };
 
@@ -265,28 +274,40 @@ function WareHouse() {
             Desplegar
           </button>
         </div>
-        <div className="select-update-inventory">
-          <p className="selected-update-inventory">Seleccionar código</p>
-          <ul className="options-update-inventory">
-            {queryData.map((data: any) => {
-              return (
-                <li key={data.codigo} className="option-update-inventory">
-                  {data.codigo}
-                </li>
-              );
-            })}
-          </ul>
+      </div>
+      <div className="update-container">
+        <h2>Actualizar Insumo</h2>
+        <div className="update-container-form">
+          <div className="select-update-inventory">
+            <p className="selected-update-inventory">Seleccionar código</p>
+            <ul className="options-update-inventory">
+              {queryData.map((data: any) => {
+                return (
+                  <li key={data.codigo} className="option-update-inventory">
+                    {data.codigo}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <input
+            type="number"
+            id="amount-update-inventory"
+            placeholder="Cantidad"
+            className="amount-update-inventory"
+            onChange={(e: any) => setUpdateAmount(e.target.value)}
+          />
+          <button className="btn" onClick={handleUpdateInventory}>
+            {' '}
+            Actualizar
+          </button>
         </div>
-        <input
-          type="number"
-          id="amount-update-inventory"
-          placeholder="Cantidad"
-          className="amount-update-inventory"
-          onChange={(e: any) => setUpdateAmount(e.target.value)}
-        />
-        <button className="btn" onClick={handleUpdateInventory}>
-          Actualizar
-        </button>
+        {state.isModalUpdateOpen && (
+          <ModalUpdateWareHouse
+            closeModal={closeModal}
+            modalContent={state.modalUpdateContent}
+          />
+        )}
       </div>
       {state.isModalOpen && (
         <ModalInvetoryWareHouse
