@@ -219,14 +219,9 @@
   margin: 0 auto;
   margin-top: 5%;
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
   overflow-y: scroll;
-  max-height: 500px;
-  height: 390px;
-  z-index: 30;
-  top: 250px;
-  left: 635px;
+  max-height: 390px;
 }
 
 .container_table-bodega::-webkit-scrollbar {
@@ -254,6 +249,33 @@
   font-size: 1.2em;
 }
 
+.search-filter-design-warehouse {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  padding-left: 2%;
+  height: 38px;
+  background: white;
+  border: 2px solid #daf7ee;
+  border-right: 0;
+  border-left: 0;
+  color: #374663;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+.search-filter-design-warehouse:focus {
+  outline: none;
+  border: 2px solid #daf7ee;
+  border-right: 0;
+  border-left: 0;
+}
+
+.table-header-container-warehouse {
+  display: flex;
+}
+
 .table_header-bodega,
 .table_item-bodega {
   display: flex;
@@ -264,6 +286,7 @@
 .table_header-bodega {
   font-weight: 500;
   font-size: 1em;
+  width: 100%;
   color: #1da597;
   font-family: 'Ubuntu', sans-serif;
   border: 2px solid #daf7ee;
@@ -396,4 +419,8 @@
 .modalWarehouseImg {
   width: 350px;
   height: 350px;
+}
+
+.notFoundImgWarehouse {
+  margin-left: 17%;
 }

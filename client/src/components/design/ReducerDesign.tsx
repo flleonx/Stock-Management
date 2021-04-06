@@ -6,6 +6,7 @@ export const reducer = (state: any, action: any) => {
       modalContent: warningMissingSupplies,
       isModalOpen: true,
       checkNumber: 0,
+      imgCheckNumber: 2,
     };
   }
   if (action.type === 'SUCCESSFUL_REQUEST') {
@@ -14,6 +15,7 @@ export const reducer = (state: any, action: any) => {
       modalContent: ['La referencia se ha guardado correctamente'],
       isModalOpen: true,
       checkNumber: 1,
+      imgCheckNumber: 1,
     };
   }
   if (action.type === 'FAILED_REQUEST') {
@@ -22,6 +24,7 @@ export const reducer = (state: any, action: any) => {
       modalContent: ['La petición no ha tenido exito'],
       isModalOpen: true,
       checkNumber: 2,
+      imgCheckNumber: 2,
     };
   }
   if (action.type === 'INVALID_REFERENCE') {
@@ -30,6 +33,7 @@ export const reducer = (state: any, action: any) => {
       modalContent: ['Ya existe la referencia que desea ingresar'],
       isModalOpen: true,
       checkNumber: 3,
+      imgCheckNumber: 2,
     };
   }
   if (action.type === 'WRONG_INPUT') {
@@ -38,6 +42,7 @@ export const reducer = (state: any, action: any) => {
       modalContent: ['Ingrese correctamente los campos'],
       isModalOpen: true,
       checkNumber: 4,
+      imgCheckNumber: 2,
     };
   }
 
@@ -51,8 +56,18 @@ export const reducer = (state: any, action: any) => {
   }
 
   if (action.type === 'CLOSE_MODAL') {
-    return {...state, isModalOpen: false, isInventoryModalOpen: false};
+    return {
+      ...state,
+      isModalOpen: false,
+      isInventoryModalOpen: false,
+      imgCheckNumber: 0,
+    };
   }
 
-  return {...state, isModalOpen: false, isInventoryModalOpen: false};
+  return {
+    ...state,
+    isModalOpen: false,
+    isInventoryModalOpen: false,
+    imgCheckNumber: 0,
+  };
 };

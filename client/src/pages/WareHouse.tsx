@@ -39,7 +39,7 @@ const reducer = (state: any, action: any) => {
     return {
       ...state,
       modalFormContent:
-        'Este codigo ya existe en el inventario. Por favor dirigirse a la sección de abajo para agregar cantidad del insumo existente',
+        'Este codigo ya existe en el inventario. Por favor dirigirse a la sección Añadir a Insumo registrado',
       isFormModalOpen: true,
       isModalOpen: false,
       imgCheckNumber: 2,
@@ -232,7 +232,7 @@ function WareHouse() {
       </p>
       <div className="body-bodega-information">
         <form className="bodega-form">
-          <h2>Agregar telas o insumos</h2>
+          <h2>Registrar nuevos insumos</h2>
           <div className="border-div"></div>
           <input
             type="text"
@@ -290,7 +290,7 @@ function WareHouse() {
         )}
       </div>
       <div className="update-container">
-        <h2>Actualizar Insumo</h2>
+        <h2>Añadir a Insumo registrado </h2>
         <div className="update-container-form">
           <div className="select-update-inventory">
             <p className="selected-update-inventory">Seleccionar código</p>

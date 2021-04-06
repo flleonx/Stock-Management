@@ -1,17 +1,18 @@
-import bodyParser from "body-parser";
-import e from "express";
-import routerStatement from "express";
-import { MysqlError } from "mysql";
-import { stringify } from "node:querystring";
+import bodyParser from 'body-parser';
+import e from 'express';
+import routerStatement from 'express';
+import {MysqlError} from 'mysql';
+import {stringify} from 'node:querystring';
 const router = routerStatement.Router();
-import database from "../../config/dbConfig";
+import database from '../../config/dbConfig';
 
-router.post("/api/getreferenceconsumption", (req, res) => {
+router.post('/api/getreferenceconsumption', (req, res) => {
   const reference = req.body.referenceSelection;
+  console.log(reference);
   var enable = true;
   // RETURN CODES AND AMOUNT OF GOODS IN "CONSUMO_DE_INSUMOS"
   let consumptionQuery =
-    "SELECT codigoycantidad FROM InventoryManagement.MUESTRAS_PRODUCCION WHERE referencia = ?";
+    'SELECT codigoycantidad FROM InventoryManagement.MUESTRAS_PRODUCCION WHERE referencia = ?';
   // ROW DATA PACKET ? TPYE
   database.query(
     consumptionQuery,
@@ -20,7 +21,7 @@ router.post("/api/getreferenceconsumption", (req, res) => {
       if (err) {
         throw err;
       }
-      let data: string[] = result[0].codigoycantidad.split(",");
+      let data: string[] = result[0].codigoycantidad.split(',');
 
       var suppliesCodes: string[] = []; // CODES OF REQUIRES ITEMS.
       var amountConsumption: number[] = []; // AMOUT FOR EACH ITEM 1-->1 RELATION.
@@ -46,7 +47,6 @@ router.post("/api/getreferenceconsumption", (req, res) => {
         consumptionAmount: string;
       }
 
-
       let j: number = 0;
       let consumptionSupplies: ISuppliesConsumption[] = [];
       suppliesCodes.map((code: string) => {
@@ -57,7 +57,10 @@ router.post("/api/getreferenceconsumption", (req, res) => {
             if (err) {
               throw err;
             }
-            consumptionSupplies.push({...result[0], consumptionAmount: amountConsumption[j]});
+            consumptionSupplies.push({
+              ...result[0],
+              consumptionAmount: amountConsumption[j],
+            });
             if (j + 1 == suppliesCodes.length) {
               res.end(JSON.stringify(consumptionSupplies));
             }

@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
-const ModalInvetoryBodega = ({ modalContent, closeModal }: any) => {
+import notFoundImage from '../../assets/Not Found.svg';
+
+const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
   useEffect(() => {
     setTimeout(() => {
       closeModal();
     }, 40000);
   });
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   let iterator = 0;
   let enableEmpty = true;
   let showEmptySearch = false;
@@ -25,15 +27,17 @@ const ModalInvetoryBodega = ({ modalContent, closeModal }: any) => {
       <input
         type="search"
         placeholder="Buscar..."
-        className="search-filter-design"
+        className="search-filter-design-warehouse"
         onChange={(e: any) => handlerSearch(e.target.value)}
       ></input>
-      <div className="table_header-bodega">Insumo</div>
-      <div className="table_header-bodega">Imagen</div>
+      <div className="table-header-container-warehouse">
+        <div className="table_header-bodega">Insumo</div>
+        <div className="table_header-bodega">Imagen</div>
+      </div>
       {modalContent
         .filter((val: any) => {
           iterator += 1;
-          if (searchTerm === "") {
+          if (searchTerm === '') {
             return val;
           } else if (
             val.codigo
@@ -70,7 +74,11 @@ const ModalInvetoryBodega = ({ modalContent, closeModal }: any) => {
           );
         })}
       {showEmptySearch && (
-        <img src="https://poptaim.com/wp-content/uploads/2020/05/S2_002-2-900x600.jpg" />
+        <img
+          className="notFoundImgWarehouse"
+          src={notFoundImage}
+          alt="Not found"
+        />
       )}
     </div>
   );

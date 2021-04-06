@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
+import Axios from 'axios';
+import {baseURL} from '../app/baseURL';
 
-const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
+import notFoundImage from '../../assets/Not Found.svg';
+import ModalInformationDesign from './ModalInformationDesign';
+
+const ModalDesignInventory = ({modalContent, closeModal}: any) => {
   useEffect(() => {
     setTimeout(() => {
       closeModal();
     }, 40000);
   });
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [referenceNumber, setReferenceNumber] = useState<string>('');
+  const [referenceArray, setReferenceArray] = useState([]);
+  const getreferenceconsumptionURL = baseURL + 'api/getreferenceconsumption';
   let iterator = 0;
   let enableEmpty = true;
   let showEmptySearch = false;
@@ -16,7 +25,25 @@ const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
     iterator = 0;
     enableEmpty = true;
     showEmptySearch = false;
-  }
+  };
+
+  const handlerInfoModal = (payload: any) => {
+    setIsModalOpen(true);
+    setReferenceNumber(payload);
+    console.log(payload);
+    const referenceSelection = payload;
+    Axios.post(getreferenceconsumptionURL, {referenceSelection})
+      .then((response) => {
+        setReferenceArray(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const closeModalInfo = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="container_table-design">
@@ -27,12 +54,12 @@ const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
         className="search-filter-design"
         onChange={(e: any) => handlerSearch(e.target.value)}
       ></input>
-      <div className="table_header-design">Muestra</div>
-      <div className="table_header-design">Imagen</div>
+      <div className="table_header-design-sample">Muestra</div>
+      <div className="table_header-design-img">Imagen</div>
       {modalContent
         .filter((val: any) => {
           iterator += 1;
-          if (searchTerm === "") {
+          if (searchTerm === '') {
             return val;
           } else if (
             val.referencia
@@ -63,13 +90,26 @@ const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
                 <div className="table_item-design">
                   <img className="table_img-design" src={props.nombre_imagen} />
                 </div>
+                <button
+                  className="btn"
+                  id="handleInfoModal"
+                  onClick={() => handlerInfoModal(props.referencia)}
+                >
+                  Información de consumo
+                </button>
               </div>
             </div>
           );
         })}
-        {showEmptySearch && (
-          <img src="https://poptaim.com/wp-content/uploads/2020/05/S2_002-2-900x600.jpg"/>
-        )}
+      {showEmptySearch && (
+        <img className="notfoundImg" src={notFoundImage} alt="Not Found" />
+      )}
+      <ModalInformationDesign
+        isOpen={isModalOpen}
+        closeModal={closeModalInfo}
+        reference={referenceNumber}
+        referenceArray={referenceArray}
+      />
     </div>
   );
 };

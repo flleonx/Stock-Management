@@ -6,6 +6,9 @@ import {reducer} from '../components/design/ReducerDesign';
 import './style/Design.css';
 import ModalDesignInventory from '../components/design/ModalDesignInventory';
 import {baseURL} from '../components/app/baseURL';
+import Modal from '../components/Modal';
+import completeImage from '../assets/complete.svg';
+import errorImage from '../assets/error.svg';
 
 interface ISupplyInformation {
   supplyCode: string;
@@ -28,6 +31,7 @@ const defaultState: any = {
   isInventoryModalOpen: false,
   modalInventoryContent: [],
   checkNumber: 0,
+  imgCheckNumber: 0,
 };
 
 const Design = () => {
@@ -219,7 +223,8 @@ const Design = () => {
     <div className="general-container-design">
       <h2 className="general-container-design__h2">Taller diseño</h2>
       <p className="general-container-design__p">
-        ¡Hola!, Siempre es importante saber cuanto insumo consume una muestra.
+        ¡Hola!, Aqui puedes agregar nuevas referencias y observar la inforamción
+        de estas.
       </p>
       <div className="switch-design-container">
         <button className="btn addButton" onClick={handleForm}>
@@ -324,13 +329,19 @@ const Design = () => {
           modalContent={state.modalInventoryContent}
         />
       )}
-      {state.isModalOpen && (
-        <ModalDesign
-          modalContent={state.modalContent}
-          closeModal={closeModal}
-          checkNumber={state.checkNumber}
-        />
-      )}
+      <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
+        <h1 className="modalWarehouseh1">{state.modalContent}</h1>
+        {state.imgCheckNumber === 1 && (
+          <img
+            className="modalWarehouseImg"
+            src={completeImage}
+            alt="modalImg"
+          />
+        )}
+        {state.imgCheckNumber === 2 && (
+          <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
+        )}
+      </Modal>
     </div>
   );
 };
