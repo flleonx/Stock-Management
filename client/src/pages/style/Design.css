@@ -276,8 +276,27 @@
   font-size: 1.2em;
 }
 
+.search-filter-design {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  height: 38px;
+  background: #8ebdc9;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.filter{
+  display: none;
+}
+
 .table_header-design,
-.table_item-design {
+.table_item-design,
+.table_item-design-ref {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -292,7 +311,8 @@
   border-style: hidden hidden solid hidden;
 }
 
-.table_item-design {
+.table_item-design,
+.table_item-design-ref {
   padding: 10px;
   font-size: 0.9em;
   font-family: 'Ubuntu', sans-serif;
