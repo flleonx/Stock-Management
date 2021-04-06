@@ -6,6 +6,9 @@ import {reducer} from '../components/dressmaking/ReducerDressMaking';
 import './style/DressMaking.css';
 import '../components/dressmaking/style/buttonStyle.css';
 import {baseURL} from '../components/app/baseURL';
+import Modal from '../components/Modal';
+import completeImage from '../assets/complete.svg';
+import errorImage from '../assets/error.svg';
 
 // INTERFACES
 interface IReference {
@@ -20,7 +23,9 @@ interface IReference {
 const defaultState: any = {
   modalContent: [],
   isModalOpen: false,
+  isInsufficientModalOpen: false,
   checkNumber: 0,
+  imgCheckNumber: 0,
 };
 
 const DressMaking: React.FC = () => {
@@ -105,7 +110,8 @@ const DressMaking: React.FC = () => {
         Taller de confección
       </h2>
       <p className="general-container-dressmaking__p">
-        ¡Hola!, ¿qué insumos quieres pedir hoy?
+        ¡Hola!, Aquí puedes digitar la cantidad a producir de una o varias
+        referencias.
       </p>
       <div className="external_options_container">
         <div className="options_container">
@@ -116,7 +122,11 @@ const DressMaking: React.FC = () => {
                 <p className="selected-option-dressmaking">Seleccionar</p>
                 <ul className="options-container">
                   {references.map((reference: IReference) => {
-                    return <li key={reference.referencia} className="option">{reference.referencia}</li>;
+                    return (
+                      <li key={reference.referencia} className="option">
+                        {reference.referencia}
+                      </li>
+                    );
                   })}
                 </ul>
               </div>
@@ -144,13 +154,26 @@ const DressMaking: React.FC = () => {
           </div>
         </div>
       </div>
-      {state.isModalOpen && (
+      {state.isInsufficientModalOpen && (
         <SuccessfulModalDressMaking
           modalContent={state.modalContent}
           closeModal={closeModal}
           checkNumber={state.checkNumber}
         />
       )}
+      <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
+        <h1 className="modalWarehouseh1">{state.modalContent}</h1>
+        {state.imgCheckNumber === 1 && (
+          <img
+            className="modalWarehouseImg"
+            src={completeImage}
+            alt="modalImg"
+          />
+        )}
+        {state.imgCheckNumber === 2 && (
+          <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
+        )}
+      </Modal>
     </div>
   );
 };
