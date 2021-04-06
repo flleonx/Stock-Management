@@ -14,6 +14,7 @@ interface IReference {
   descripcion: string;
   color: string;
   nombre_imagen: string;
+  codigoycantidad: string;
 }
 
 const defaultState: any = {
@@ -75,8 +76,6 @@ const DressMaking: React.FC = () => {
 
   const suppliesRequest = () => {
     const correctAmount = parseFloat(amount);
-    console.log(Number.isInteger(correctAmount) && correctAmount > 0);
-    console.log(selectedReference);
     const inputOption = document.querySelector('.selected-option-dressmaking');
     let enableInput = inputOption?.innerHTML !== 'Seleccionar';
     if (Number.isInteger(correctAmount) && correctAmount > 0 && enableInput) {
@@ -117,7 +116,7 @@ const DressMaking: React.FC = () => {
                 <p className="selected-option-dressmaking">Seleccionar</p>
                 <ul className="options-container">
                   {references.map((reference: IReference) => {
-                    return <li className="option">{reference.referencia}</li>;
+                    return <li key={reference.referencia} className="option">{reference.referencia}</li>;
                   })}
                 </ul>
               </div>
