@@ -10,6 +10,7 @@ interface IWareHouseElements {
   descripcion: string;
   nombre_imagen: string;
   timestamp: string;
+  remainingAmount: string;
 }
 
 const SuccessfulModalDressMaking = ({
@@ -46,7 +47,6 @@ const NotSuccessfulRequest = (modalContent: any) => {
     }
     return props.metros;
   };
-  console.log(modalContent.modalContent);
 
   return (
     <>
@@ -64,6 +64,7 @@ const NotSuccessfulRequest = (modalContent: any) => {
                     Descripción: {props.descripcion}
                   </div>
                   <div className="table_item">Existencias: {props.metros}</div>
+                  <div className="table_item">Remanente: {props.remainingAmount}</div>
                 </div>
                 <div className="table_item">
                   <img className="table_img" src={props.nombre_imagen} />

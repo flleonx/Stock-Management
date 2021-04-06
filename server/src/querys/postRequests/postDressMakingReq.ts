@@ -11,7 +11,7 @@ router.post("/api/suppliesrequest", (req, res) => {
   var enable = true;
   // RETURN CODES AND AMOUNT OF GOODS IN "CONSUMO_DE_INSUMOS"
   let consumptionQuery =
-    "SELECT codigoycantidad FROM InventoryManagement.CONSUMO_DE_INSUMO WHERE referencia = ?";
+    "SELECT codigoycantidad FROM InventoryManagement.MUESTRAS_PRODUCCION WHERE referencia = ?";
   // ROW DATA PACKET ? TPYE
   database.query(
     consumptionQuery,
@@ -39,6 +39,7 @@ router.post("/api/suppliesrequest", (req, res) => {
       var x: number = 0;
       let checkSupplies: boolean = true;
       let insufficientCodes: string[] = [];
+      let remainingAmount: string[] = [];
       // RETURN THE AMOUNT FOR EACH CODE IN "BODEGA_INSUMOS"
       suppliesCodes.map((code: string) => {
         let suppliesQuery = `SELECT metros FROM InventoryManagement.BODEGA_INSUMOS WHERE codigo = ${code}`;
@@ -53,6 +54,7 @@ router.post("/api/suppliesrequest", (req, res) => {
             if (diff < 0) {
               checkSupplies = false;
               insufficientCodes.push(code);
+              remainingAmount.push((diff*-1).toString())
             }
             if (i + 1 == suppliesCodes.length && checkSupplies == true) {
               let x: number = 0;
@@ -109,7 +111,7 @@ router.post("/api/suppliesrequest", (req, res) => {
                     if (err) {
                       throw err;
                     }
-                    insufficientSupplies.push(result[0]);
+                    insufficientSupplies.push({...result[0], remainingAmount: remainingAmount[j]});
                     if (j + 1 == insufficientCodes.length) {
                       res.end(JSON.stringify(insufficientSupplies));
                     }
