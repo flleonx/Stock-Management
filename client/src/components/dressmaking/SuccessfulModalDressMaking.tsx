@@ -23,22 +23,22 @@ const SuccessfulModalDressMaking = ({
       closeModal();
     }, 40000);
   });
-  if (checkNumber == 1 || checkNumber == 2) {
-    return <AnotherMessages modalContent={modalContent} />;
-  }
+  // if (checkNumber == 1 || checkNumber == 2) {
+  //   return <AnotherMessages modalContent={modalContent} />;
+  // }
 
   return <NotSuccessfulRequest modalContent={modalContent} />;
 };
 
-const AnotherMessages = (modalContent: any, index: number) => {
-  return (
-    <>
-      <div key={index} className="SuccessfulModalDressMaking">
-        <p>AVISO: {modalContent.modalContent}</p>
-      </div>
-    </>
-  );
-};
+// const AnotherMessages = (modalContent: any, index: number) => {
+//   return (
+//     <>
+//       <div key={index} className="SuccessfulModalDressMaking">
+//         <p>AVISO: {modalContent.modalContent}</p>
+//       </div>
+//     </>
+//   );
+// };
 
 const NotSuccessfulRequest = (modalContent: any) => {
   const showAmount = (props: IWareHouseElements): number | undefined => {
@@ -64,7 +64,9 @@ const NotSuccessfulRequest = (modalContent: any) => {
                     Descripción: {props.descripcion}
                   </div>
                   <div className="table_item">Existencias: {props.metros}</div>
-                  <div className="table_item">Remanente: {props.remainingAmount}</div>
+                  <div className="table_item">
+                    Remanente: {props.remainingAmount}
+                  </div>
                 </div>
                 <div className="table_item">
                   <img className="table_img" src={props.nombre_imagen} />

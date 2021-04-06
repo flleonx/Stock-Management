@@ -3,9 +3,10 @@ import {withRouter, Link} from 'react-router-dom';
 import Axios, {AxiosResponse} from 'axios';
 import './style/Warehouse.css';
 import ModalInvetoryWareHouse from '../components/warehouse/ModalInventoryWareHouse';
-import ModalWareHouseForm from '../components/warehouse/ModalWareHouseForm';
-import ModalUpdateWareHouse from '../components/warehouse/ModalUpdateWareHouse';
 import {baseURL} from '../components/app/baseURL';
+import Modal from '../components/Modal';
+import completeImage from '../assets/complete.svg';
+import errorImage from '../assets/error.svg';
 
 const reducer = (state: any, action: any) => {
   if (action.type === 'INVENTORY_BODEGA') {
@@ -19,6 +20,8 @@ const reducer = (state: any, action: any) => {
       modalFormContent:
         '¡Felicitaciones! Se ha agregado un nuevo insumo correctamente',
       isFormModalOpen: true,
+      isModalOpen: false,
+      imgCheckNumber: 1,
     };
   }
 
@@ -27,14 +30,19 @@ const reducer = (state: any, action: any) => {
       ...state,
       modalUpdateContent: 'Inventario añadido exitosamente',
       isModalUpdateOpen: true,
+      isModalOpen: false,
+      imgCheckNumber: 1,
     };
   }
 
   if (action.type === 'EXISTING_CODE') {
     return {
       ...state,
-      modalFormContent: 'Este codigo ya existe en el inventario',
+      modalFormContent:
+        'Este codigo ya existe en el inventario. Por favor dirigirse a la sección de abajo para agregar cantidad del insumo existente',
       isFormModalOpen: true,
+      isModalOpen: false,
+      imgCheckNumber: 2,
     };
   }
 
@@ -42,6 +50,7 @@ const reducer = (state: any, action: any) => {
     return {
       ...state,
       modalFormContent: 'Insumo añadido correctamente',
+      isModalOpen: false,
       isFormModalOpen: true,
     };
   }
@@ -52,11 +61,13 @@ const reducer = (state: any, action: any) => {
       modalUpdateContent:
         'OJO: Por favor ingrese correctamente todos los campos',
       isModalUpdateOpen: true,
+      isModalOpen: false,
+      imgCheckNumber: 2,
     };
   }
 
   if (action.type === 'CLOSE_MODAL') {
-    return {...state, isModalOpen: false};
+    return {...state, isModalOpen: false, imgCheckNumber: 0};
   }
   return {
     ...state,
@@ -74,6 +85,7 @@ const defaultState: any = {
   modalFormContent: '',
   modalUpdateContent: '',
   checkNumber: 0,
+  imgCheckNumber: 0,
 };
 
 function WareHouse() {
@@ -214,7 +226,9 @@ function WareHouse() {
     <div className="general-container-bodega">
       <h2 className="general-container-bodega__h2">Bodega</h2>
       <p className="general-container-bodega__p">
-        ¡Hola!, ¿Hay insumos nuevos que agregar o solo echarás un vistazo?
+        ¡Hola!, Aquí podrás agregar nuevas telas e insumos, actualizar la
+        cantidad de telas o insumos ya registrados y desplegar el inventario que
+        hay en Bodega.
       </p>
       <div className="body-bodega-information">
         <form className="bodega-form">
@@ -261,12 +275,6 @@ function WareHouse() {
           <button className="btn" onClick={handleSubmit}>
             Enviar
           </button>
-          {state.isFormModalOpen && (
-            <ModalWareHouseForm
-              modalContent={state.modalFormContent}
-              closeModal={closeModal}
-            />
-          )}
         </form>
         <div className="bodega-inventory">
           <h2>Click aquí para desplegar el inventario en Bodega:</h2>
@@ -274,6 +282,12 @@ function WareHouse() {
             Desplegar
           </button>
         </div>
+        {state.isModalOpen && (
+          <ModalInvetoryWareHouse
+            modalContent={state.modalContent}
+            closeModal={closeModal}
+          />
+        )}
       </div>
       <div className="update-container">
         <h2>Actualizar Insumo</h2>
@@ -302,19 +316,39 @@ function WareHouse() {
             Actualizar
           </button>
         </div>
-        {state.isModalUpdateOpen && (
-          <ModalUpdateWareHouse
-            closeModal={closeModal}
-            modalContent={state.modalUpdateContent}
-          />
-        )}
       </div>
-      {state.isModalOpen && (
+      {/* {state.isModalOpen && (
         <ModalInvetoryWareHouse
           modalContent={state.modalContent}
           closeModal={closeModal}
         />
-      )}
+      )} */}
+      <Modal isOpen={state.isFormModalOpen} closeModal={closeModal}>
+        <h1 className="modalWarehouseh1">{state.modalFormContent}</h1>
+        {state.imgCheckNumber === 1 && (
+          <img
+            className="modalWarehouseImg"
+            src={completeImage}
+            alt="modalImg"
+          />
+        )}
+        {state.imgCheckNumber === 2 && (
+          <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
+        )}
+      </Modal>
+      <Modal isOpen={state.isModalUpdateOpen} closeModal={closeModal}>
+        <h1 className="modalWarehouseh1">{state.modalUpdateContent}</h1>
+        {state.imgCheckNumber === 1 && (
+          <img
+            className="modalWarehouseImg"
+            src={completeImage}
+            alt="modalImg"
+          />
+        )}
+        {state.imgCheckNumber === 2 && (
+          <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
+        )}
+      </Modal>
     </div>
   );
 }
