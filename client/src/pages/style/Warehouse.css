@@ -189,6 +189,7 @@
   height: 50px;
   width: 750px;
   margin-top: 3%;
+  margin-left: 4%;
 }
 
 .bodega-inventory h2 {
@@ -235,9 +236,35 @@
   border-radius: 0 3px 3px 0;
 }
 
+.container-bodega-top {
+  display: flex;
+}
+
+.ModalWarehouseComponent__close-button {
+  top: 2px;
+  right: 0;
+  border: 0;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+}
+
+.ModalWarehouseComponent__close-button:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+}
+
+.ModalWarehouseComponent__close-button:focus {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
 .table_title-bodega {
   grid-column-start: 1;
   grid-column-end: 3;
+  width: 94%;
   height: 38px;
   background: #daf7ee;
   color: #1da597;
@@ -254,11 +281,11 @@
   grid-column-end: 3;
   padding-left: 2%;
   height: 38px;
-  background: white;
+  background: #8a97b1;
   border: 2px solid #daf7ee;
   border-right: 0;
   border-left: 0;
-  color: #374663;
+  color: #ffffff;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 500;
   font-size: 1.2rem;
@@ -344,7 +371,7 @@
   width: 93%;
   height: 30%;
   margin-left: 3%;
-  margin-top: 1%;
+  margin-top: 4%;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
 }
@@ -352,7 +379,12 @@
 .update-container h2 {
   font-family: 'Ubuntu', sans-serif;
   font-size: 1rem;
-  margin-left: 43%;
+  margin-left: 38%;
+  border: 5px solid transparent;
+}
+
+.update-container__p {
+  margin-left: 30%;
 }
 
 .select-update-inventory {
@@ -365,6 +397,7 @@
   display: flex;
   width: 100%;
   height: 40%;
+  margin-top: -1%;
 }
 
 .update-container-form input {
@@ -423,4 +456,71 @@
 
 .notFoundImgWarehouse {
   margin-left: 17%;
+}
+
+.dressmakingReqContainer {
+  border: 1px solid transparent;
+  margin-left: 3%;
+  width: 85vw;
+  display: inline-flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.requestWarehouseContainer {
+  border: 1px solid transparent;
+  margin-top: 1.5%;
+  width: 25%;
+  height: 25%;
+  background-color: white;
+  margin-left: 6%;
+}
+
+.requestWarehouseContainer__h4 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  margin-left: 4%;
+  margin-top: 3%;
+}
+
+.requestWarehouseContainer__reference {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  margin-left: 4%;
+}
+
+.btn.requestWarehouseContainer__accept {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  height: 20%;
+  background-color: #d1e7dd;
+  border: 1px solid #0f5132;
+  color: #0f5132;
+}
+
+.btn.requestWarehouseContainer__accept:hover {
+  background-color: #009751;
+  color: white;
+}
+
+.btn.requestWarehouseContainer__accept:focus {
+  outline: none;
+}
+
+.btn.requestWarehouseContainer__reject {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  height: 20%;
+  background-color: #f8d7da;
+  border: 1px solid #842029;
+  color: #842029;
+}
+
+.btn.requestWarehouseContainer__reject:hover {
+  background-color: rgb(253, 76, 76);
+  color: white;
+}
+
+.btn.requestWarehouseContainer__reject:focus {
+  outline: none;
 }

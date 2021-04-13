@@ -3,11 +3,9 @@ import React, {useEffect, useState} from 'react';
 import notFoundImage from '../../assets/Not Found.svg';
 
 const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
-  useEffect(() => {
-    setTimeout(() => {
-      closeModal();
-    }, 40000);
-  });
+  const handleClose = () => {
+    closeModal();
+  };
 
   const [searchTerm, setSearchTerm] = useState('');
   let iterator = 0;
@@ -23,7 +21,15 @@ const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
 
   return (
     <div className="container_table-bodega">
-      <div className="table_title-bodega">Información</div>
+      <div className="container-bodega-top">
+        <div className="table_title-bodega">Información</div>
+        <button
+          onClick={handleClose}
+          className="ModalWarehouseComponent__close-button"
+        >
+          X
+        </button>
+      </div>
       <input
         type="search"
         placeholder="Buscar..."

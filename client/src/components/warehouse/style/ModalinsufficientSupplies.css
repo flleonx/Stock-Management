@@ -1,0 +1,132 @@
+.ModalNoSuppliesComponent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ModalNoSuppliesComponent__container {
+  position: relative;
+  top: 3rem;
+  height: 85%;
+  background-color: #ffffff;
+  padding: 1rem;
+  width: 60vw;
+  border-radius: 10px;
+}
+
+.ModalNoSuppliesComponent__close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+.ModalNoSuppliesComponent__close-button:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.ModalNoSuppliesComponent__close-button:focus {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+}
+
+/*MODAL:*/
+
+.containerNoSupplies_table {
+  width: 90%;
+  background: white;
+  margin: 0 auto;
+  margin-top: 2%;
+  box-shadow: 4px 0px 15px rgb(192, 188, 188);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  overflow-y: scroll;
+  max-height: 80%;
+  /* height: 390px; */
+}
+
+.containerNoSupplies_table::-webkit-scrollbar {
+  width: 8px;
+  background: #daf7ee;
+  border-radius: 0 8px 8px 0;
+}
+
+.containerNoSupplies_table::-webkit-scrollbar-thumb {
+  background: #daf7ee;
+  border-radius: 0 3px 3px 0;
+}
+
+.tableNoSupplies_title {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  height: 38px;
+  background: #daf7ee;
+  color: #1da597;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.tableNoSupplies_header,
+.tableNoSupplies_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tableNoSupplies_header {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: 'Ubuntu', sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.tableNoSupplies_item {
+  padding: 10px;
+  font-size: 0.9em;
+  font-family: 'Ubuntu', sans-serif;
+  color: #374663;
+}
+
+.tableNoSupplies_img {
+  width: 100px;
+  height: 100px;
+}
+
+.itemsNoSupplies_container {
+  grid-column-start: 1;
+  grid-column-end: 3;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.sub_itemsNoSupplies_container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.sub_sub_itemsNoSupplies_container {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+}

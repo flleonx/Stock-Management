@@ -186,3 +186,76 @@
 .select_box_center-button button:focus {
   outline: none;
 }
+
+.dressMakingReqProcessContainer {
+  border: 1px solid transparent;
+  margin-top: -5%;
+  margin-left: 3%;
+  width: 85vw;
+  display: inline-flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.requestDressmakingContainer {
+  border: 1px solid transparent;
+  margin-top: 1.5%;
+  width: 25%;
+  height: 25%;
+  background-color: white;
+  margin-left: 6%;
+}
+
+.requestDressmakingContainer__h4 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  margin-left: 4%;
+  margin-top: 3%;
+}
+
+.requestDressmakingContainer__reference {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  margin-left: 4%;
+}
+
+.requestDressmakingContainer__amount {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  margin-left: 4%;
+}
+
+.requestDressmakingContainer__timestamp {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.95rem;
+  margin-left: 4%;
+}
+
+#requestDressmakingContainer__amountInput {
+  margin-left: 4%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8;
+  padding-left: 1%;
+}
+
+#requestDressmakingContainer__amountInput:focus {
+  outline: none;
+}
+
+.btn.requestDressmakingContainer__accept {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  height: 20%;
+  background-color: #d1e7dd;
+  border: 1px solid #0f5132;
+  color: #0f5132;
+}
+
+.btn.requestDressmakingContainer__accept:hover {
+  background-color: #009751;
+  color: white;
+}
+
+.btn.requestDressmakingContainer__accept:focus {
+  outline: none;
+}
