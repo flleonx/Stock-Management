@@ -1,14 +1,15 @@
-import React, {useState, useEffect, useReducer, useRef} from 'react';
-import Axios, {AxiosResponse} from 'axios';
-import SuccessfulModalDressMaking from '../components/dressmaking/SuccessfulModalDressMaking';
+import React, { useState, useEffect, useReducer, useRef } from "react";
+import Axios, { AxiosResponse } from "axios";
+import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
 // REDUCER
-import {reducer} from '../components/dressmaking/ReducerDressMaking';
-import './style/DressMaking.css';
-import '../components/dressmaking/style/buttonStyle.css';
-import {baseURL} from '../components/app/baseURL';
-import Modal from '../components/Modal';
-import completeImage from '../assets/complete.svg';
-import errorImage from '../assets/error.svg';
+import { reducer } from "../components/dressmaking/ReducerDressMaking";
+import "./style/DressMaking.css";
+import "../components/dressmaking/style/buttonStyle.css";
+import { baseURL } from "../components/app/baseURL";
+import Modal from "../components/Modal";
+import completeImage from "../assets/complete.svg";
+import errorImage from "../assets/error.svg";
+import { updateSourceFile } from "typescript";
 
 // INTERFACES
 interface IReference {
@@ -30,21 +31,27 @@ const defaultState: any = {
 
 const DressMaking: React.FC = () => {
   const [references, setReferences] = useState<IReference[]>([]);
-  const [amount, setAmount] = useState<string>('');
-  const [selectedReference, setSelectedReference] = useState<string>('');
-  const dbReferencesURL: string = baseURL + 'api/references';
-  const dbSuppliesURL: string = baseURL + 'api/suppliesrequest';
+  const [amount, setAmount] = useState<string>("");
+  const [selectedReference, setSelectedReference] = useState<string>("");
   const [state, dispatch] = useReducer(reducer, defaultState);
+  const [approvedRequests, setApprovedRequests] = useState<any>([]);
+  const [numberInput, setNumberInput] = useState<string>("");
   const refContainer: any = useRef(null);
+  const dbReferencesURL: string = baseURL + "api/references";
+  const dbSuppliesURL: string = baseURL + "api/suppliesrequest";
+  const dbWareHouseRequest: string = baseURL + "api/requesttowarehouse";
+  const dbApprovedRequests: string = baseURL + "api/getapprovedrequests";
+  const dbUpdateDressMakingProcess: string =
+    baseURL + "api/updatedressmakingprocess";
 
   // HANDLE AMOUNT INPUT
   const handleInput = (input: any) => {
     setAmount(input);
-    if (input.includes('.') || input.includes('-') || input.includes('!')) {
-      const amountInputHTML: any = document.getElementById('amountInput');
-      amountInputHTML.value = '';
+    if (input.includes(".") || input.includes("-") || input.includes("!")) {
+      const amountInputHTML: any = document.getElementById("amountInput");
+      amountInputHTML.value = "";
       // refContainer.current.value = "";
-      setAmount('');
+      setAmount("");
     }
   };
 
@@ -55,25 +62,29 @@ const DressMaking: React.FC = () => {
       triggerListeners();
     });
 
+    Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
+      setApprovedRequests(response.data);
+    });
+
     const triggerListeners = () => {
       var selectedOption: any = document.querySelector(
-        '.selected-option-dressmaking'
+        ".selected-option-dressmaking"
       );
-      var options: any = document.querySelectorAll('.option');
+      var options: any = document.querySelectorAll(".option");
 
-      selectedOption.addEventListener('click', () => {
-        selectedOption.parentElement.classList.toggle('active');
+      selectedOption.addEventListener("click", () => {
+        selectedOption.parentElement.classList.toggle("active");
       });
 
       options.forEach((option: any) => {
-        option.addEventListener('click', () => {
+        option.addEventListener("click", () => {
           setTimeout(() => {
             selectedOption.innerHTML = option.innerHTML;
             // SET CURRENT REFERENCE VALUE
             setSelectedReference(option.innerHTML);
           }, 300);
 
-          selectedOption.parentElement.classList.remove('active');
+          selectedOption.parentElement.classList.remove("active");
         });
       });
     };
@@ -81,27 +92,59 @@ const DressMaking: React.FC = () => {
 
   const suppliesRequest = () => {
     const correctAmount = parseFloat(amount);
-    const inputOption = document.querySelector('.selected-option-dressmaking');
-    let enableInput = inputOption?.innerHTML !== 'Seleccionar';
+    const inputOption = document.querySelector(".selected-option-dressmaking");
+    let enableInput = inputOption?.innerHTML !== "Seleccionar";
     if (Number.isInteger(correctAmount) && correctAmount > 0 && enableInput) {
-      Axios.post(dbSuppliesURL, {
+      Axios.post(dbWareHouseRequest, {
         actualAmount: amount,
         referenceSelection: selectedReference,
       }).then((response: AxiosResponse): void => {
-        if (response.data === 'SUCCESSFUL_REQUEST') {
-          dispatch({type: 'SUCCESSFUL_REQUEST'});
+        if (response.data === "SUCCESSFUL_REQUEST") {
+          dispatch({ type: "SUCCESSFUL_REQUEST" });
         } else {
-          dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
+          dispatch({ type: "INSUFFICIENT_SUPPLIES", payload: response.data });
         }
       });
     } else {
-      dispatch({type: 'WRONG_INPUT'});
-      refContainer.current.value = '';
+      dispatch({ type: "WRONG_INPUT" });
+      refContainer.current.value = "";
+    }
+  };
+
+  const handlerSubtract = (
+    referencia: any,
+    id: any,
+    amount: any,
+    HTMLElement: any
+  ) => {
+    if (
+      Number(HTMLElement.value) > 0 &&
+      Number.isInteger(parseFloat(HTMLElement.value))
+    ) {
+      let diff = amount - HTMLElement.value;
+      console.log(diff);
+      if (diff >= 0) {
+        Axios.post(dbUpdateDressMakingProcess, {
+          referencia,
+          id,
+          diff,
+          amount: Number(HTMLElement.value),
+        }).then((response: AxiosResponse) => {
+          console.log(response.data);
+
+          HTMLElement.value = null;
+          Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
+            setApprovedRequests(response.data);
+          });
+        });
+      } else {
+        console.log("HOLAS");
+      }
     }
   };
 
   const closeModal = () => {
-    dispatch({tpye: 'CLOSE_MODAL'});
+    dispatch({ tpye: "CLOSE_MODAL" });
   };
 
   return (
@@ -154,6 +197,27 @@ const DressMaking: React.FC = () => {
           </div>
         </div>
       </div>
+      {approvedRequests.map((item: any) => {
+        return (
+          <div>
+            <div>{item.referencia}</div>
+            <div>{item.cantidad}</div>
+            <div>{item.timestamp}</div>
+            <input className={"h" + item.id} type="number"></input>
+            <button
+              className="btn"
+              onClick={() =>
+                handlerSubtract(
+                  item.referencia,
+                  item.id,
+                  item.cantidad,
+                  document.querySelector(".h" + item.id)
+                )
+              }
+            ></button>
+          </div>
+        );
+      })}
       {state.isInsufficientModalOpen && (
         <SuccessfulModalDressMaking
           modalContent={state.modalContent}
