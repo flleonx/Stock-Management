@@ -1,73 +1,73 @@
-import React, {useState, useEffect, useReducer} from 'react';
-import {withRouter, Link} from 'react-router-dom';
-import Axios, {AxiosResponse} from 'axios';
-import './style/Warehouse.css';
-import ModalInvetoryWareHouse from '../components/warehouse/ModalInventoryWareHouse';
-import {baseURL} from '../components/app/baseURL';
-import Modal from '../components/Modal';
-import completeImage from '../assets/complete.svg';
-import errorImage from '../assets/error.svg';
+import React, { useState, useEffect, useReducer } from "react";
+import { withRouter, Link } from "react-router-dom";
+import Axios, { AxiosResponse } from "axios";
+import "./style/Warehouse.css";
+import ModalInvetoryWareHouse from "../components/warehouse/ModalInventoryWareHouse";
+import { baseURL } from "../components/app/baseURL";
+import Modal from "../components/Modal";
+import completeImage from "../assets/complete.svg";
+import errorImage from "../assets/error.svg";
 
 const reducer = (state: any, action: any) => {
-  if (action.type === 'INVENTORY_BODEGA') {
+  if (action.type === "INVENTORY_BODEGA") {
     const invetoryBodegaContent = action.payload;
-    return {...state, modalContent: invetoryBodegaContent, isModalOpen: true};
+    return { ...state, modalContent: invetoryBodegaContent, isModalOpen: true };
   }
 
-  if (action.type === 'SUCCESSFUL_FORM') {
+  if (action.type === "SUCCESSFUL_FORM") {
     return {
       ...state,
       modalFormContent:
-        '¡Felicitaciones! Se ha agregado un nuevo insumo correctamente',
+        "¡Felicitaciones! Se ha agregado un nuevo insumo correctamente",
       isFormModalOpen: true,
       isModalOpen: false,
       imgCheckNumber: 1,
     };
   }
 
-  if (action.type === 'SUCCESSFUL_UPDATE') {
+  if (action.type === "SUCCESSFUL_UPDATE") {
     return {
       ...state,
-      modalUpdateContent: 'Inventario añadido exitosamente',
+      modalUpdateContent: "Inventario añadido exitosamente",
       isModalUpdateOpen: true,
       isModalOpen: false,
       imgCheckNumber: 1,
     };
   }
 
-  if (action.type === 'EXISTING_CODE') {
+  if (action.type === "EXISTING_CODE") {
     return {
       ...state,
       modalFormContent:
-        'Este codigo ya existe en el inventario. Por favor dirigirse a la sección Añadir a Insumo registrado',
+        "Este codigo ya existe en el inventario. Por favor dirigirse a la sección Añadir a Insumo registrado",
       isFormModalOpen: true,
       isModalOpen: false,
       imgCheckNumber: 2,
     };
   }
 
-  if (action.type === 'SUCCESSFUL_ADDING') {
+  if (action.type === "SUCCESSFUL_ADDING") {
     return {
       ...state,
-      modalFormContent: 'Insumo añadido correctamente',
+      modalFormContent: "Insumo añadido correctamente",
       isModalOpen: false,
       isFormModalOpen: true,
     };
   }
 
-  if (action.type === 'WRONG_INPUT') {
+  if (action.type === "WRONG_INPUT") {
     return {
       ...state,
       modalUpdateContent:
-        'OJO: Por favor ingrese correctamente todos los campos',
+        "OJO: Por favor ingrese correctamente todos los campos",
       isModalUpdateOpen: true,
       isModalOpen: false,
       imgCheckNumber: 2,
     };
   }
 
-  if (action.type === 'CLOSE_MODAL') {
-    return {...state, isModalOpen: false, imgCheckNumber: 0};
+  if (action.type === "CLOSE_MODAL") {
+    return { ...state, isModalOpen: false, imgCheckNumber: 0 };
   }
   return {
     ...state,
@@ -82,33 +82,41 @@ const defaultState: any = {
   isFormModalOpen: false,
   isModalUpdateOpen: false,
   modalContent: [],
-  modalFormContent: '',
-  modalUpdateContent: '',
+  modalFormContent: "",
+  modalUpdateContent: "",
   checkNumber: 0,
   imgCheckNumber: 0,
 };
 
 function WareHouse() {
-  const [code, setCode] = useState<string>('');
-  const [color, setColor] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [img, setImg] = useState<string>('');
-  const [type, setType] = useState<string>('');
+  const [code, setCode] = useState<string>("");
+  const [color, setColor] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [img, setImg] = useState<string>("");
+  const [type, setType] = useState<string>("");
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [queryData, setQueryData] = useState<any>([]);
-  const [updateCode, setUpdateCode] = useState<string>('');
-  const [updateAmount, setUpdateAmount] = useState<string>('');
-  const saveClothAPIURL: string = baseURL + 'api/savecloth';
-  const invetoryBodegaAPIURL: string = baseURL + 'api/invetorywarehouse';
-  const invetoryWareHouseAPIURL: string = baseURL + 'api/invetorywarehouse';
+  const [updateCode, setUpdateCode] = useState<string>("");
+  const [updateAmount, setUpdateAmount] = useState<string>("");
+  const [dressMakingReq, setDressMakingReq] = useState<any>([]);
+  const saveClothAPIURL: string = baseURL + "api/savecloth";
+  const invetoryBodegaAPIURL: string = baseURL + "api/invetorywarehouse";
+  const invetoryWareHouseAPIURL: string = baseURL + "api/invetorywarehouse";
   const updateInventoryWareHouseURL: string =
-    baseURL + 'api/updatewarehouseinventory';
+    baseURL + "api/updatewarehouseinventory";
+  const getDressMakingRequest: string = baseURL + "api/dressmakingrequest";
+  const dbSuppliesURL: string = baseURL + "api/suppliesrequest";
+  const dbSaveDecision: string = baseURL + "api/savewarehousedecision";
 
   useEffect(() => {
     Axios.get(invetoryWareHouseAPIURL).then((response: AxiosResponse) => {
       setQueryData(response.data);
       triggerListeners(setType, setUpdateCode);
+    });
+
+    Axios.get(getDressMakingRequest).then((response: AxiosResponse) => {
+      setDressMakingReq(response.data);
     });
   }, []);
 
@@ -133,52 +141,52 @@ function WareHouse() {
     };
     let enableAmount = false;
 
-    if (type == 'Tela') {
+    if (type == "Tela") {
       enableAmount = parseFloat(amount) > 0;
     } else {
       enableAmount = Number.isInteger(parseInt(amount)) && parseInt(amount) > 0;
     }
     let enableItems =
-      code !== 'Codigo' &&
-      color !== 'Color' &&
-      description !== 'Descripción' &&
-      img !== 'URL de la imágen' &&
-      type !== 'Seleccionar tela o insumo';
+      code !== "Codigo" &&
+      color !== "Color" &&
+      description !== "Descripción" &&
+      img !== "URL de la imágen" &&
+      type !== "Seleccionar tela o insumo";
     if (enableAmount && enableItems) {
-      let codigoInput = document.getElementById('codigo') as HTMLInputElement;
-      let colorInput = document.getElementById('color') as HTMLInputElement;
-      let amountInput = document.getElementById('amount') as HTMLInputElement;
+      let codigoInput = document.getElementById("codigo") as HTMLInputElement;
+      let colorInput = document.getElementById("color") as HTMLInputElement;
+      let amountInput = document.getElementById("amount") as HTMLInputElement;
       let descripcionInput = document.getElementById(
-        'descripcion'
+        "descripcion"
       ) as HTMLInputElement;
-      let imgInput = document.getElementById('url-img') as HTMLInputElement;
+      let imgInput = document.getElementById("url-img") as HTMLInputElement;
       let selectedOption: any = document.querySelector(
-        '.selected-option-bodega'
+        ".selected-option-bodega"
       );
       Axios.post(saveClothAPIURL, {
         newCloth,
       })
         .then((response: AxiosResponse) => {
           console.log(response.data);
-          if (response.data == 'SUCCESSFUL_ADDING') {
-            dispatch({type: 'SUCCESSFUL_FORM'});
+          if (response.data == "SUCCESSFUL_ADDING") {
+            dispatch({ type: "SUCCESSFUL_FORM" });
             // dispatch({ type: "SUCCESSFUL_ADDING" });
-            codigoInput.value = '';
-            colorInput.value = '';
-            amountInput.value = '';
-            descripcionInput.value = '';
-            imgInput.value = '';
-            selectedOption.innerHTML = 'Seleccionar tela o insumo';
+            codigoInput.value = "";
+            colorInput.value = "";
+            amountInput.value = "";
+            descripcionInput.value = "";
+            imgInput.value = "";
+            selectedOption.innerHTML = "Seleccionar tela o insumo";
           }
-          if (response.data == 'EXISTING_CODE') {
-            dispatch({type: 'EXISTING_CODE'});
+          if (response.data == "EXISTING_CODE") {
+            dispatch({ type: "EXISTING_CODE" });
           }
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      dispatch({type: 'WRONG_INPUT'});
+      dispatch({ type: "WRONG_INPUT" });
     }
   };
 
@@ -186,7 +194,7 @@ function WareHouse() {
   const handleUpdateInventory = () => {
     let enableAmount =
       Number.isInteger(parseInt(updateAmount)) && parseInt(updateAmount) > 0;
-    let enableCode = updateCode !== 'Seleccionar código';
+    let enableCode = updateCode !== "Seleccionar código";
 
     if (enableAmount && enableCode) {
       let payloadUpdate = {
@@ -197,13 +205,13 @@ function WareHouse() {
       Axios.post(updateInventoryWareHouseURL, payloadUpdate).then(
         (response: any) => {
           console.log(response);
-          if (response.data == 'SUCCESSFUL_UPDATE') {
-            dispatch({type: 'SUCCESSFUL_UPDATE'});
+          if (response.data == "SUCCESSFUL_UPDATE") {
+            dispatch({ type: "SUCCESSFUL_UPDATE" });
           }
         }
       );
     } else {
-      dispatch({type: 'WRONG_INPUT'});
+      dispatch({ type: "WRONG_INPUT" });
     }
   };
 
@@ -211,15 +219,63 @@ function WareHouse() {
     e.preventDefault();
     const enable = Axios.get(invetoryBodegaAPIURL)
       .then((response: any) => {
-        dispatch({type: 'INVENTORY_BODEGA', payload: response.data});
+        dispatch({ type: "INVENTORY_BODEGA", payload: response.data });
       })
       .catch((error) => {
         if (error) throw error;
       });
   };
 
+  const handlerApprove = (payload: any) => {
+    let index = payload;
+    console.log(payload);
+    Axios.post(dbSuppliesURL, {
+      actualAmount: dressMakingReq[index].cantidad,
+      referenceSelection: dressMakingReq[index].referencia,
+    }).then((response: AxiosResponse): void => {
+      if (response.data === "SUCCESSFUL_REQUEST") {
+        // dispatch({ type: "SUCCESSFUL_REQUEST" });
+        console.log("TODO NICE");
+        Axios.post(dbSaveDecision, {
+          ...dressMakingReq[index],
+          idDecision: 1,
+        }).then((response: AxiosResponse): void => {
+          console.log(response.data);
+        });
+        let filterResult = dressMakingReq.filter(
+          (item: any) => item.id != dressMakingReq[index].id
+        );
+        setDressMakingReq(filterResult);
+      } else {
+        // dispatch({ type: "INSUFFICIENT_SUPPLIES", payload: response.data });
+        console.log("BARRILETE");
+      }
+    });
+  };
+
+  const handlerRefuse = (payload: any) => {
+    let index = payload;
+    console.log(index);
+    Axios.post(dbSaveDecision, {
+      ...dressMakingReq[index],
+      idDecision: 0
+    }).then((response: AxiosResponse): void => {
+      if (response.data === "SUCCESSFUL_SAVING") {
+        console.log("TODO NICE");
+        let filterResult = dressMakingReq.filter(
+          (item: any) => item.id != dressMakingReq[index].id
+        );
+        setDressMakingReq(filterResult);
+      } else {
+        console.log("BARRILETE");
+      }
+    });
+
+    // setDressMakingReq(dressMakingReq.splice[index])
+  };
+
   const closeModal = () => {
-    dispatch({tpye: 'CLOSE_MODAL'});
+    dispatch({ tpye: "CLOSE_MODAL" });
   };
 
   return (
@@ -312,7 +368,7 @@ function WareHouse() {
             onChange={(e: any) => setUpdateAmount(e.target.value)}
           />
           <button className="btn" onClick={handleUpdateInventory}>
-            {' '}
+            {" "}
             Actualizar
           </button>
         </div>
@@ -349,43 +405,62 @@ function WareHouse() {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
+      {dressMakingReq.map((req: any, index: any) => {
+        return (
+          <div>
+            <div>{req.referencia}</div>
+            <button
+              className="btn"
+              key={index}
+              data-index={index}
+              onClick={() => handlerApprove(index)}
+            ></button>
+            <button
+              className="btn"
+              key={index + 1}
+              data-index={index}
+              onClick={() => handlerRefuse(index)}
+            ></button>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 const triggerListeners = (setType: any, setUpdateCode: any) => {
-  var selectedOption: any = document.querySelector('.selected-option-bodega');
-  var options: any = document.querySelectorAll('.option-bodega');
+  var selectedOption: any = document.querySelector(".selected-option-bodega");
+  var options: any = document.querySelectorAll(".option-bodega");
 
-  selectedOption.addEventListener('click', () => {
-    selectedOption.parentElement.classList.toggle('active-bodega');
+  selectedOption.addEventListener("click", () => {
+    selectedOption.parentElement.classList.toggle("active-bodega");
   });
 
   options.forEach((option: any) => {
-    option.addEventListener('click', () => {
+    option.addEventListener("click", () => {
       setTimeout(() => {
         selectedOption.innerHTML = option.innerHTML;
         // SET CURRENT REFERENCE VALUE
         setType(option.innerHTML);
       }, 300);
 
-      selectedOption.parentElement.classList.remove('active-bodega');
+      selectedOption.parentElement.classList.remove("active-bodega");
     });
   });
 
   var selectedCodeUpdateInventory: any = document.querySelector(
-    '.selected-update-inventory'
+    ".selected-update-inventory"
   );
   var optionsUpdateInventory: any = document.querySelectorAll(
-    '.option-update-inventory'
+    ".option-update-inventory"
   );
 
-  selectedCodeUpdateInventory.addEventListener('click', () => {
-    selectedCodeUpdateInventory.parentElement.classList.toggle('active-bodega');
+  selectedCodeUpdateInventory.addEventListener("click", () => {
+    selectedCodeUpdateInventory.parentElement.classList.toggle("active-bodega");
   });
 
   optionsUpdateInventory.forEach((option: any) => {
-    option.addEventListener('click', () => {
+    option.addEventListener("click", () => {
       setTimeout(() => {
         selectedCodeUpdateInventory.innerHTML = option.innerHTML;
         // SET CURRENT REFERENCE VALUE
@@ -393,7 +468,7 @@ const triggerListeners = (setType: any, setUpdateCode: any) => {
       }, 300);
 
       selectedCodeUpdateInventory.parentElement.classList.remove(
-        'active-bodega'
+        "active-bodega"
       );
     });
   });

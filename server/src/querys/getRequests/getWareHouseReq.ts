@@ -31,4 +31,19 @@ router.get('/api/invetorywarehouse', (req: any, res: any) => {
   );
 });
 
+router.get('/api/dressmakingrequest', (req: any, res: any) => {
+  //COMENT
+  let inventoryBodegaQuery = 'SELECT * FROM InventoryManagement.PETICIONES_ACTIVAS_CONFECCION';
+
+  let dbQuery = database.query(
+    inventoryBodegaQuery,
+    async (err: MysqlError | null, inventoryBodega: IInvetoryBodega) => {
+      if (err) {
+        throw err;
+      }
+      res.end(JSON.stringify(inventoryBodega)); 
+    }
+  );
+});
+
 export default router;
