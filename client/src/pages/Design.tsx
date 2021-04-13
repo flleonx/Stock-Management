@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import Axios, {AxiosResponse} from 'axios';
 import {withRouter} from 'react-router-dom';
-import ModalDesign from '../components/design/ModalDesign';
 import {reducer} from '../components/design/ReducerDesign';
 import './style/Design.css';
 import ModalDesignInventory from '../components/design/ModalDesignInventory';
@@ -9,6 +8,7 @@ import {baseURL} from '../components/app/baseURL';
 import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
+import ModalAddSupplies from '../components/design/ModalDesignAddSupplies';
 
 interface ISupplyInformation {
   supplyCode: string;
@@ -38,49 +38,30 @@ const Design = () => {
   const dbWareHouseCodesURL: string = baseURL + 'api/warehousecodes';
   const dbSaveNewReference: string = baseURL + 'api/savenewreference';
   const productionAPIURL: string = baseURL + 'api/production';
-  const [dBWareHouseSupplies, setdBWareHouseSupplies] = useState<
-    IWareHouseSupplies[]
-  >([]);
   const [addReference, setAddReference] = useState<string>('');
   const [addSize, setAddSize] = useState<string>('');
   const [addDescription, setAddDescription] = useState<string>('');
   const [addColor, setAddColor] = useState<string>('');
   const [addImageName, setAddImageName] = useState<string>('');
-  const [inputAmount, setInputAmount] = useState<string>('');
-  const [addedInformation, setAddedInformation] = useState<
-    ISupplyInformation[]
-  >([]);
+  // const [addedInformation, setAddedInformation] = useState<
+  //   ISupplyInformation[]
+  // >([]);
+  const [
+    addedInformationFromModal,
+    setAddedInformationFromModal,
+  ] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [switchNumber, setSwitchNumber] = useState<number>(0);
   const [switchSection, setSwitchSection] = useState<boolean>(false);
+  const [modalAddSupplies, setModalAddSupplies] = useState<boolean>(false);
 
   useEffect(() => {
     Axios.get(dbWareHouseCodesURL).then((response: AxiosResponse) => {
-      setdBWareHouseSupplies(response.data);
-      console.log(response.data);
       triggerListeners();
     });
   }, [switchSection]);
 
   const triggerListeners = () => {
-    var selectedOption: any = document.querySelector('.selected-option');
-    var options: any = document.querySelectorAll('.option-design');
-
-    selectedOption.addEventListener('click', () => {
-      selectedOption.parentElement.classList.toggle('active');
-    });
-
-    options.forEach((option: any) => {
-      option.addEventListener('click', () => {
-        setTimeout(() => {
-          selectedOption.innerHTML = option.innerHTML;
-          // SET CURRENT REFERENCE VALUE
-          // setSelectedReference(option.innerHTML);
-        }, 300);
-
-        selectedOption.parentElement.classList.remove('active');
-      });
-    });
     var selectedOptionSize: any = document.querySelector(
       '.selected-option-size'
     );
@@ -104,30 +85,7 @@ const Design = () => {
   };
 
   const handlerAddSupplies = () => {
-    var selectedOption: any = document.querySelector('.selected-option');
-    var amountHTML: any = document.querySelector('.amountInput');
-    console.log(selectedOption.innerHTML);
-    console.log(amountHTML.value);
-    let enableSelector =
-      selectedOption.innerHTML !== 'Seleccionar codigo insumo' &&
-      selectedOption.innerHTML !== '';
-    let enableAmount =
-      Number.isInteger(parseInt(amountHTML.value)) &&
-      parseInt(amountHTML.value) > 0;
-    console.log(typeof amountHTML.value);
-    if (enableSelector && enableAmount) {
-      let informationObject: ISupplyInformation = {
-        supplyCode: selectedOption.innerHTML,
-        supplyAmount: inputAmount,
-      };
-      setAddedInformation([...addedInformation, informationObject]);
-
-      // SET EMPTY VALUES
-      amountHTML.value = null;
-      selectedOption.innerHTML = 'Seleccionar codigo insumo';
-    } else {
-      dispatch({type: 'WRONG_INPUT'});
-    }
+    setModalAddSupplies(true);
   };
 
   const handlerSaveNewReference = () => {
@@ -140,7 +98,7 @@ const Design = () => {
       addDescription: addDescription,
       addColor: addColor,
       addImageName: addImageName,
-      addedInformation,
+      addedInformationFromModal,
     };
 
     let enable =
@@ -149,12 +107,10 @@ const Design = () => {
       addDescription != '' &&
       addColor != '' &&
       addImageName != '' &&
-      addedInformation.length != 0;
-    console.log(requestPayload);
+      addedInformationFromModal.length != 0;
     if (enable) {
       Axios.post(dbSaveNewReference, requestPayload).then(
         (response: AxiosResponse): void => {
-          console.log(response);
           if (response.data === 'SUCCESSFUL_REQUEST') {
             setEmptyValues();
             dispatch({type: 'SUCCESSFUL_REQUEST'});
@@ -177,7 +133,6 @@ const Design = () => {
   };
 
   const setEmptyValues = () => {
-    let selectedOption: any = document.querySelector('.selected-option');
     let addReferenceOption: any = document.querySelector(
       '.add-reference-input'
     );
@@ -189,17 +144,14 @@ const Design = () => {
     let addImageNameOption: any = document.querySelector(
       '.add-imagename-input'
     );
-    let addAmountOption: any = document.querySelector('.amountInput');
     // let : any = document.querySelector(".selected-option");
 
-    selectedOption.innerHTML = 'Seleccionar';
     addReferenceOption.value = '';
     addSizeOption.innerHTML = 'Seleccionar';
     addDescriptionOption.value = '';
     addColorOption.value = '';
     addImageNameOption.value = '';
-    addAmountOption.value = null;
-    setAddedInformation([]);
+    setAddedInformationFromModal([]);
   };
 
   const handleForm = () => {
@@ -211,20 +163,21 @@ const Design = () => {
     setSwitchNumber(1);
     Axios.get(productionAPIURL)
       .then((response: any) => {
-        console.log(response.data);
         dispatch({type: 'SUCCESSFUL_SAMPLE_INVENTORY', payload: response.data});
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
+  };
+
+  const closeModalAddSupplies = () => {
+    setModalAddSupplies(false);
   };
 
   return (
     <div className="general-container-design">
       <h2 className="general-container-design__h2">Taller diseño</h2>
       <p className="general-container-design__p">
-        ¡Hola!, Aqui puedes agregar nuevas referencias y observar la inforamción
-        de estas.
+        ¡Hola!, Aqui puedes agregar nuevas referencias y observar la
+        informaconsolción de estas.
       </p>
       <div className="switch-design-container">
         <button className="btn addButton" onClick={handleForm}>
@@ -239,6 +192,10 @@ const Design = () => {
           <form className="design-form">
             <h2>Agregar referencia</h2>
             <div className="border-design-div"></div>
+            <p className="design-form__information">
+              En este formulario puedes agregar una nueva referencia. Recuerda
+              agregar los insumos que esta consume.
+            </p>
             <input
               className="add-reference-input"
               type="text"
@@ -274,47 +231,29 @@ const Design = () => {
               placeholder="URL de la imágen"
               onChange={(e) => setAddImageName(e.target.value)}
             />
-            <div className="select-container-design">
-              <p className="selected-option">Seleccionar codigo insumo</p>
-              <ul className="options-container-design">
-                {dBWareHouseSupplies.map(
-                  (suppliesInformation: IWareHouseSupplies) => {
-                    return (
-                      <li className="option-design">
-                        {suppliesInformation.codigo}
-                      </li>
-                    );
-                  }
-                )}
-              </ul>
-            </div>
-            <input
-              className="amountInput"
-              type="number"
-              placeholder="Cantidad"
-              onChange={(e) => setInputAmount(e.target.value)}
-            ></input>
             <button
               type="button"
               className="btn"
               id="insumoBTN"
               onClick={handlerAddSupplies}
             >
-              Añadir Insumo
+              Añadir/Eliminar Insumos
             </button>
-            <button
-              type="button"
-              className="btn"
-              id="saveBTN"
-              onClick={handlerSaveNewReference}
-            >
-              Guardar
-            </button>
+            {addedInformationFromModal.length !== 0 && (
+              <button
+                type="button"
+                className="btn"
+                id="saveBTN"
+                onClick={handlerSaveNewReference}
+              >
+                Guardar
+              </button>
+            )}
           </form>
           <div className="insumosAgregados">
-            {addedInformation.map((item, index) => {
+            {addedInformationFromModal.map((item: any) => {
               return (
-                <div key={index} className="insumo-add">
+                <div key={item.supplyCode} className="insumo-add">
                   <h2>Item agregado: </h2>
                   Codigo: {item.supplyCode} - Cantidad: {item.supplyAmount}
                 </div>
@@ -342,6 +281,12 @@ const Design = () => {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
+      <ModalAddSupplies
+        isOpen={modalAddSupplies}
+        // isOpen={true}
+        closeModal={closeModalAddSupplies}
+        suppliesFromDesign={(msg: any) => setAddedInformationFromModal(msg)}
+      />
     </div>
   );
 };

@@ -1,0 +1,279 @@
+.ModalAddSuppliesComponent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ModalAddSuppliesComponent__container {
+  position: relative;
+  top: 5rem;
+  background-color: #ffffff;
+  padding: 1rem;
+  width: 700px;
+  border-radius: 10px;
+  height: 75%;
+}
+
+.ModalAddSuppliesComponent__close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+.ModalAddSuppliesComponent__close-button:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.ModalAddSuppliesComponent__close-button:focus {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+}
+
+.ModalAddSuppliesComponent__p {
+  font-family: 'Ubuntu', sans-serif;
+  color: #5c7382;
+}
+
+.addSuppliesZone {
+  display: flex;
+  height: 30px;
+}
+
+.select-container-AddSupplies {
+  width: 270px;
+  margin: 15px auto;
+  margin-bottom: -5px;
+  margin-top: -2px;
+  margin-left: 3px;
+  position: relative;
+}
+
+.selected-option-AddSupplies {
+  background: white;
+  border-radius: 5px;
+  padding: 5px 15px;
+  cursor: pointer;
+  border: 1px solid #9ba9af;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.75rem;
+  width: 100%;
+  height: 30px;
+  color: #6f797c;
+}
+
+.selected-option-AddSupplies:focus {
+  outline: none;
+}
+
+.selected-option-AddSupplies::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  width: 8px;
+  height: 8px;
+  border-left: 3px solid #1da597;
+  border-top: 3px solid #1da597;
+  transform: rotate(-135deg);
+  transition: all 0.4s ease-in-out;
+}
+
+.active .selected-option-AddSupplies::after {
+  top: 12px;
+  transform: rotate(45deg);
+}
+
+.options-container-AddSupplies {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  max-height: 240px;
+  overflow-y: scroll;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  transition: transform 0.3s ease-in-out;
+  color: #9ba9af;
+  z-index: 20;
+  height: 100px;
+}
+
+.options-container-AddSupplies::-webkit-scrollbar {
+  width: 10px;
+  background: #e7f7f2;
+  border-radius: 0 8px 8px 0;
+}
+
+.options-container-AddSupplies::-webkit-scrollbar-thumb {
+  background: #1da597;
+  border-radius: 0 5px 5px 0;
+}
+
+.active .options-container-AddSupplies {
+  transform: rotateX(0);
+}
+
+.option-AddSupplies {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+}
+
+.option-AddSupplies:hover {
+  background: #e7f7f2;
+}
+
+.addSuppliesZone .amountSuppliesInput {
+  width: 170px;
+  height: 25px;
+  margin-top: 0.07rem;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  padding-left: 0.5rem;
+  margin-left: 20px;
+  margin-right: 15px;
+  border: 1px solid #9ba9af;
+  border-radius: 4px;
+}
+
+.addSuppliesZone .amountSuppliesInput:focus {
+  outline: none;
+}
+
+.addSuppliesZone button {
+  width: 150px;
+  height: 25px;
+  margin-top: 0.07rem;
+  font-size: 0.8rem;
+  font-family: 'Ubuntu', sans-serif;
+  margin-right: 40px;
+}
+
+.addSuppliesZone button {
+  outline: none;
+}
+
+.added-container-supplies {
+  margin-top: 1.2%;
+  height: 59.5%;
+  width: 95%;
+  margin-left: 1%;
+  background-color: transparent;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.supplie-add {
+  display: flex;
+  background-color: white;
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+  height: 12%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.91rem;
+  color: #6c818a;
+  font-weight: 400;
+  padding-left: 5%;
+  padding-top: 0.6%;
+  margin-bottom: 3%;
+  word-spacing: 0.5rem;
+  justify-content: space-between;
+}
+
+.supplie-add h2 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1rem;
+  color: #1da597;
+  font-weight: 500;
+  margin-right: -15%;
+  margin-top: 0.4%;
+}
+
+.removeItemAddSupplies {
+  border: 1px solid rgb(255, 4, 4);
+  border-radius: 5px;
+  width: 5%;
+  background-color: rgb(248, 191, 191);
+  font-family: 'Ubuntu', sans-serif;
+  height: 25px;
+  margin-right: 1%;
+  cursor: pointer;
+}
+
+.removeItemAddSupplies:hover {
+  background-color: rgb(253, 76, 76);
+  color: white;
+}
+
+.removeItemAddSupplies:focus {
+  outline: none;
+}
+
+.buttonAddSuppliesContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.buttonAddSuppliesContainer__ready {
+  width: 100px;
+  height: 25px;
+  border: 1px solid #0f5132;
+  border-radius: 5px;
+  background-color: #d1e7dd;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.9rem;
+  color: #0f5132;
+  cursor: pointer;
+  margin-right: 5%;
+}
+
+.buttonAddSuppliesContainer__ready:hover {
+  background-color: #009751;
+  color: white;
+}
+
+.buttonAddSuppliesContainer__ready:focus {
+  outline: none;
+}
+
+.buttonAddSuppliesContainer__cancel {
+  width: 100px;
+  height: 25px;
+  border: 1px solid #842029;
+  border-radius: 5px;
+  background-color: #f8d7da;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.9rem;
+  color: #842029;
+  cursor: pointer;
+}
+
+.buttonAddSuppliesContainer__cancel:hover {
+  background-color: #c72a37;
+  color: white;
+}
+
+.buttonAddSuppliesContainer__cancel:focus {
+  outline: none;
+}

@@ -1,0 +1,14 @@
+.ModalDesignContainer {
+  margin-top: 1%;
+  border: 1px solid 842029;
+  background-color: #f8d7da;
+  height: 6%;
+  padding-left: 1%;
+  padding-top: 0.6%;
+  width: 96%;
+}
+
+.ModalDesignContainer h4 {
+  font-family: 'Ubuntu', sans-serif;
+  color: #842029;
+}

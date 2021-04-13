@@ -36,7 +36,7 @@ const ModalInformationDesign = (props: any) => {
                     Referencia: {props.codigo}
                   </div>
                   <div className="table_item-design">
-                    Consumo: {props.consumptionAmount} metros
+                    Consumo: {props.consumptionAmount}
                   </div>
                   <div className="table_item-design">
                     Descripción: {props.descripcion}

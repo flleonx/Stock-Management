@@ -205,6 +205,24 @@
   border: 1px solid #007c55;
 }
 
+.design-form #saveBTN:hover {
+  background-color: rgb(122, 255, 193);
+  color: black;
+}
+
+.design-form #saveBTN:focus {
+  outline: none;
+}
+
+.design-form__information {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.7rem;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: -2%;
+  margin-bottom: 2%;
+}
+
 .insumosAgregados {
   margin-top: 1.2%;
   height: 470px;

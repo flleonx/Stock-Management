@@ -1,8 +1,6 @@
 .general-container-home {
   width: 79rem;
   margin-left: 3px;
-  overflow: hidden;
-  overflow-y: scroll;
   max-height: 91vh;
 }
 
