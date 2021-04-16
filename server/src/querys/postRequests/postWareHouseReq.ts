@@ -71,27 +71,29 @@ router.post("/api/savecloth", (req: any, res: any) => {
 });
 
 router.post("/api/updatewarehouseinventory", (req, res) => {
-  let queryVerifyField = `SELECT metros, cantidad FROM BODEGA_INSUMOS WHERE codigo = ${req.body.code}`;
-  let field = "";
-  database.query(queryVerifyField, (err: MysqlError | null, result: any) => {
-    if (err) {
-      throw err;
-    }
-    if (result[0].metros == null) {
-      field = "cantidad";
-    } else {
-      field = "metros";
-    }
+  interface IAmountType {
+    metros: number;
+    cantidad: number;
+  }
 
-    let queryActualAmount = `SELECT ${field} FROM BODEGA_INSUMOS WHERE codigo = ${req.body.code}`;
-    database.query(queryActualAmount, (err: MysqlError | null, result: any) => {
+  let queryVerifyField = `SELECT metros, cantidad FROM BODEGA_INSUMOS WHERE codigo = ${req.body.code}`;
+  let field: string = "";
+  let addition: number = 0;
+  database.query(
+    queryVerifyField,
+    (err: MysqlError | null, result: IAmountType[]) => {
       if (err) {
         throw err;
       }
-      let addition = req.body.amount;
-      if (result[0].metros !== 0 && result[0].metros !== null) {
-        addition = parseFloat(result[0].metros) + parseFloat(req.body.amount);
+
+      if (result[0].metros === null) {
+        field = "cantidad";
+        addition = result[0].cantidad + parseFloat(req.body.amount);
+      } else {
+        field = "metros";
+        addition = result[0].metros + parseFloat(req.body.amount);
       }
+
       let queryUpdateAmount = `UPDATE BODEGA_INSUMOS SET ${field} = ${addition} WHERE codigo = ${req.body.code}`;
       database.query(
         queryUpdateAmount,
@@ -102,8 +104,8 @@ router.post("/api/updatewarehouseinventory", (req, res) => {
           res.end(JSON.stringify("SUCCESSFUL_UPDATE"));
         }
       );
-    });
-  });
+    }
+  );
 });
 
 router.post("/api/suppliesrequest", (req, res) => {
@@ -258,8 +260,8 @@ router.post("/api/savewarehousedecision", (req, res) => {
     referencia: req.body.referencia,
     cantidad: req.body.cantidad,
     timestamp: req.body.timestamp,
-    idDecision: req.body.idDecision
-  }
+    idDecision: req.body.idDecision,
+  };
   let deleteData = req.body;
   let queryInsertDecision =
     "INSERT INTO PETICIONES_PROCESADAS_CONFECCION SET ?";
@@ -272,24 +274,23 @@ router.post("/api/savewarehousedecision", (req, res) => {
       }
     }
   );
-if(req.body.idDecision == 1){
-  let saveDataDressMaking = {
-    referencia: req.body.referencia,
-    cantidad: req.body.cantidad,
-    timestamp: req.body.timestamp,
-  }
-  let queryInsertDressMaking =
-    "INSERT INTO PROCESO_CONFECCION SET ?";
-  database.query(
-    queryInsertDressMaking,
-    [saveDataDressMaking],
-    (err: MysqlError | null, result: any) => {
-      if (err) {
-        throw err;
+  if (req.body.idDecision == 1) {
+    let saveDataDressMaking = {
+      referencia: req.body.referencia,
+      cantidad: req.body.cantidad,
+      timestamp: req.body.timestamp,
+    };
+    let queryInsertDressMaking = "INSERT INTO PROCESO_CONFECCION SET ?";
+    database.query(
+      queryInsertDressMaking,
+      [saveDataDressMaking],
+      (err: MysqlError | null, result: any) => {
+        if (err) {
+          throw err;
+        }
       }
-    }
-  )
-};
+    );
+  }
 
   let queryDeleteApproval = `DELETE FROM PETICIONES_ACTIVAS_CONFECCION WHERE id = ${deleteData.id}`;
   database.query(queryDeleteApproval, (err: MysqlError | null, result: any) => {

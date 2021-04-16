@@ -205,13 +205,16 @@ const DressMaking: React.FC = () => {
                 Referencia en proceso
               </h4>
               <div className="requestDressmakingContainer__reference">
+                Petición: #{item.id}
+              </div>
+              <div className="requestDressmakingContainer__reference">
                 Referencia: {item.referencia}
               </div>
               <div className="requestDressmakingContainer__amount">
                 Cantidad en proceso: {item.cantidad}
               </div>
               <div className="requestDressmakingContainer__timestamp">
-                Fecha: {item.timestamp}
+                Fecha: {item.timestamp.replace("T", " ").slice(0,16)}
               </div>
               <input
                 className={'h' + item.id}
