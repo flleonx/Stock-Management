@@ -1,0 +1,157 @@
+
+.external_options_container {
+  display: flex;
+  width: 100%;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0px 0px 20px;
+}
+
+.options_container {
+  display: flex;
+  width: 97%;
+  height: 47%;
+  margin-top: -70px;
+  background: rgb(255, 255, 255);
+  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+}
+
+/* INPUT */
+
+.select_box_center-amount {
+  display: flex;
+  margin-top: 15px;
+}
+
+.select_box_center-amount input {
+  width: 180px;
+  height: 27px;
+  border: 1px solid #9ba9af;
+  border-radius: 5px;
+  margin-top: -2px;
+  padding-left: 10px;
+  font-family: 'Ubuntu', sans-serif;
+  color: #9ba9af;
+}
+
+.select_box_center-amount input:focus {
+  outline: none;
+}
+
+.select_box_center-amount .title {
+  margin-left: -3%;
+}
+
+.actualAmount {
+  width: 150px;
+  height: 40%;
+}
+
+.select_box_center-reference {
+  margin-left: 130px;
+  margin-top: 15px;
+}
+
+.references-container {
+  display: flex;
+  width: 120%;
+  margin-left: -13%;
+}
+
+.references-container .title {
+  margin-right: 0;
+}
+
+.title {
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1da597;
+  margin-right: 8%;
+  margin-left: 5%;
+}
+
+.select-container {
+  width: 300px;
+  margin: 15px auto;
+  margin-top: -2px;
+  position: relative;
+}
+
+.selected-option-shops,
+.selected-option-shopsinfo{
+  background: white;
+  border-radius: 5px;
+  padding: 3px 15px;
+  cursor: pointer;
+  border: 1px solid #9ba9af;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  width: 250px;
+  height: 27px;
+  color: #9ba9af;
+}
+
+.selected-option-shops::after,
+.selected-option-shopsinfo::after{
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 60px;
+  width: 7px;
+  height: 7px;
+  border-left: 2px solid #1da597;
+  border-top: 2px solid #1da597;
+  transform: rotate(-135deg);
+  transition: all 0.4s ease-in-out;
+}
+
+.active .selected-option-shops::after,
+.active .selected-option-shopsinfo::after{
+  top: 12px;
+  transform: rotate(45deg);
+}
+
+.options-container {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  width: 84%;
+  background: white;
+  border-radius: 5px;
+  max-height: 240px;
+  overflow-y: scroll;
+  transform: rotateX(90deg);
+  transform-origin: top;
+  transition: transform 0.3s ease-in-out;
+  color: #9ba9af;
+}
+
+.options-container::-webkit-scrollbar {
+  width: 10px;
+  background: #e7f7f2;
+  border-radius: 0 8px 8px 0;
+}
+
+.options-container::-webkit-scrollbar-thumb {
+  background: #1da597;
+  border-radius: 0 5px 5px 0;
+}
+
+.active .options-container {
+  transform: rotateX(0);
+}
+
+.option,
+.option-shopsinfo {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+}
+
+.option:hover,
+.option-shopsinfo::hover {
+  background: #e7f7f2;
+}

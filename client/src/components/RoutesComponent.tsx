@@ -11,6 +11,7 @@ import Logout from '../pages/Logout';
 
 import ProtectedRoute from './app/ProtectedRoute';
 import WareHouseProducts from '../pages/WareHouseProducts';
+import Shops from '../pages/Shops';
 
 const Routes = ({rol, isAuth, enableRoutes}: any) => {
   if (enableRoutes) {
@@ -37,6 +38,7 @@ const Routes = ({rol, isAuth, enableRoutes}: any) => {
           <ProtectedRoute path="/diseño" component={Diseño} isAuth={isAuth} />
           <ProtectedRoute path="/logout" component={Logout} isAuth={isAuth} />
           <ProtectedRoute path="/warehouseproducts" component={WareHouseProducts} isAuth={isAuth} />
+          <ProtectedRoute path="/shops" component={Shops} isAuth={isAuth} />
           <Route path="*" component={Error} />
         </Switch>
       </div>

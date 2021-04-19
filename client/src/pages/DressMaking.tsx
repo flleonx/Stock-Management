@@ -84,6 +84,7 @@ const DressMaking: React.FC = () => {
           setTimeout(() => {
             selectedOption.innerHTML = option.innerHTML;
             // SET CURRENT REFERENCE VALUE
+            console.log(option);
             setSelectedReference(option.innerHTML);
           }, 300);
 
@@ -109,6 +110,7 @@ const DressMaking: React.FC = () => {
         if (response.data === 'SUCCESSFUL_REQUEST') {
           setAmount('');
           inputOption.innerHTML = 'Seleccionar';
+          refContainer.current.value = '';
           dispatch({type: 'SUCCESSFUL_REQUEST'});
         } else {
           dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});

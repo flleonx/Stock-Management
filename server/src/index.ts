@@ -49,12 +49,15 @@ app.use((req: any, res: any, next) => {
 import getRoutesDesignReq from './querys/getRequests/getDesignReq';
 import getRoutesDressMakingReq from './querys/getRequests/getDressMakingReq';
 import getBodegaReq from './querys/getRequests/getWareHouseReq';
+import getWareHouseProductsReq from './querys/getRequests/getWareHouseProductsReq';
+import getShopsReq from './querys/getRequests/getShopsReq';
 
 //POST
 import postRoutesDressMakingReq from './querys/postRequests/postDressMakingReq';
 import postRoutesDesignReq from './querys/postRequests/postDesignReq';
 import postDesignReqConsumption from './querys/postRequests/postDesignReqConsumption';
 import postBodegaReq from './querys/postRequests/postWareHouseReq';
+import postShopsReq from './querys/postRequests/postShopsReq';
 
 // AUTH ROUTES
 import authRoutes from './querys/authRequest';
@@ -64,12 +67,15 @@ app.use(getRoutesDesignReq);
 app.use(getRoutesDressMakingReq);
 
 app.use(getBodegaReq);
+app.use(getWareHouseProductsReq);
+app.use(getShopsReq);
 
 // POST APP.USE
 app.use(postRoutesDressMakingReq);
 app.use(postRoutesDesignReq);
 app.use(postDesignReqConsumption);
 app.use(postBodegaReq);
+app.use(postShopsReq);
 
 // AUTH ROUTES APP.USE
 app.use(authRoutes);

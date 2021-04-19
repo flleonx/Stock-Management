@@ -262,6 +262,7 @@ router.post('/api/savewarehousedecision', (req, res) => {
     timestamp: req.body.timestamp,
     idDecision: req.body.idDecision,
   };
+  console.log(req.body.timestamp);
   let deleteData = req.body;
   let queryInsertDecision =
     'INSERT INTO PETICIONES_PROCESADAS_CONFECCION SET ?';
