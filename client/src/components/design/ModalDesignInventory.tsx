@@ -4,6 +4,7 @@ import {baseURL} from '../app/baseURL';
 
 import notFoundImage from '../../assets/Not Found.svg';
 import ModalInformationDesign from './ModalInformationDesign';
+import './style/ModalDesignInventory.css';
 
 const ModalDesignInventory = ({modalContent, closeModal}: any) => {
   useEffect(() => {
@@ -48,62 +49,71 @@ const ModalDesignInventory = ({modalContent, closeModal}: any) => {
   return (
     <div className="container_table-design">
       <div className="table_title-design">Información</div>
-      <input
-        type="search"
-        placeholder="Buscar..."
-        className="search-filter-design"
-        onChange={(e: any) => handlerSearch(e.target.value)}
-      ></input>
-      <div className="table_header-design-sample">Muestra</div>
-      <div className="table_header-design-img">Imagen</div>
-      {modalContent
-        .filter((val: any) => {
-          iterator += 1;
-          if (searchTerm === '') {
-            return val;
-          } else if (
-            val.referencia
-              .toString()
-              .slice(0, searchTerm.length)
-              .includes(searchTerm)
-          ) {
-            enableEmpty = false;
-            return val;
-          } else if (iterator == modalContent.length && enableEmpty == true) {
-            showEmptySearch = true;
-          }
-        })
-        .map((props: any) => {
-          return (
-            <div className="items_container-design" key={props.referencia}>
-              <div className="sub_items_container-design">
-                <div className="sub_sub_items_container-design">
-                  <div className="table_item-design-ref">
+      <div className="search-design-container">
+        <i className="gg-search"></i>
+        <input
+          type="search"
+          placeholder="Buscar..."
+          className="search-filter-design"
+          onChange={(e: any) => handlerSearch(e.target.value)}
+        ></input>
+      </div>
+      <div className="sample-image-container">
+        <div className="table_header-design-sample">Muestra</div>
+        <div className="table_header-design-img">Imagen</div>
+      </div>
+      <div className="scroll-design">
+        {modalContent
+          .filter((val: any) => {
+            iterator += 1;
+            if (searchTerm === '') {
+              return val;
+            } else if (
+              val.referencia
+                .toString()
+                .slice(0, searchTerm.length)
+                .includes(searchTerm)
+            ) {
+              enableEmpty = false;
+              return val;
+            } else if (iterator == modalContent.length && enableEmpty == true) {
+              showEmptySearch = true;
+            }
+          })
+          .map((props: any) => {
+            return (
+              <div className="items_container-design" key={props.referencia}>
+                <div className="items-information-container">
+                  <div className="items-information-ref">
                     Referencia: {props.referencia}
                   </div>
-                  <div className="table_item-design">Talla: {props.talla}</div>
-                  <div className="table_item-design">
+                  <div className="items-information-size">
+                    Talla: {props.talla}
+                  </div>
+                  <div className="items-information-description">
                     Descripción: {props.descripcion}
                   </div>
-                  <div className="table_item-design">Color: {props.color}</div>
+                  <div className="items-information-color">
+                    Color: {props.color}
+                  </div>
+                  <button
+                    className="btn"
+                    id="handleInfoModal"
+                    onClick={() => handlerInfoModal(props.referencia)}
+                  >
+                    Información de consumo
+                  </button>
                 </div>
                 <div className="table_item-design">
                   <img className="table_img-design" src={props.nombre_imagen} />
                 </div>
-                <button
-                  className="btn"
-                  id="handleInfoModal"
-                  onClick={() => handlerInfoModal(props.referencia)}
-                >
-                  Información de consumo
-                </button>
               </div>
-            </div>
-          );
-        })}
-      {showEmptySearch && (
-        <img className="notfoundImg" src={notFoundImage} alt="Not Found" />
-      )}
+            );
+          })}
+        {showEmptySearch && (
+          <img className="notfoundImg" src={notFoundImage} alt="Not Found" />
+        )}
+      </div>
       <ModalInformationDesign
         isOpen={isModalOpen}
         closeModal={closeModalInfo}

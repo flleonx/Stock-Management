@@ -10,6 +10,7 @@ import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
 import {updateSourceFile} from 'typescript';
+import ModalAreYouSureDressmaking from '../components/dressmaking/ModalAreYouSureDressmaking';
 
 // INTERFACES
 interface IReference {
@@ -37,6 +38,8 @@ const DressMaking: React.FC = () => {
   const [approvedRequests, setApprovedRequests] = useState<any>([]);
   const [numberInput, setNumberInput] = useState<string>('');
   const refContainer: any = useRef(null);
+  const [isOpenARYModal, setIsOpenARYModal] = useState<boolean>(false);
+  const [infoProcess, setInfoProcess] = useState<any>({});
   const dbReferencesURL: string = baseURL + 'api/references';
   const dbSuppliesURL: string = baseURL + 'api/suppliesrequest';
   const dbWareHouseRequest: string = baseURL + 'api/requesttowarehouse';
@@ -92,7 +95,11 @@ const DressMaking: React.FC = () => {
 
   const suppliesRequest = () => {
     const correctAmount = parseFloat(amount);
-    const inputOption = document.querySelector('.selected-option-dressmaking');
+    const inputOption = document.querySelector(
+      '.selected-option-dressmaking'
+    ) as HTMLParagraphElement;
+    console.log(Number.isInteger(correctAmount));
+    console.log(correctAmount > 0);
     let enableInput = inputOption?.innerHTML !== 'Seleccionar';
     if (Number.isInteger(correctAmount) && correctAmount > 0 && enableInput) {
       Axios.post(dbWareHouseRequest, {
@@ -100,6 +107,8 @@ const DressMaking: React.FC = () => {
         referenceSelection: selectedReference,
       }).then((response: AxiosResponse): void => {
         if (response.data === 'SUCCESSFUL_REQUEST') {
+          setAmount('');
+          inputOption.innerHTML = 'Seleccionar';
           dispatch({type: 'SUCCESSFUL_REQUEST'});
         } else {
           dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
@@ -111,40 +120,56 @@ const DressMaking: React.FC = () => {
     }
   };
 
-  const handlerSubtract = (
+  const verificationARYModal = (
     referencia: any,
     id: any,
     amount: any,
     HTMLElement: any
   ) => {
-    if (
-      Number(HTMLElement.value) > 0 &&
-      Number.isInteger(parseFloat(HTMLElement.value))
-    ) {
-      let diff = amount - HTMLElement.value;
+    const valueInput = parseFloat(HTMLElement.value);
+    const inputCondition = valueInput > 0 && Number.isInteger(valueInput);
+    if (inputCondition) {
+      let diff = parseFloat(amount) - valueInput;
       console.log(diff);
       if (diff >= 0) {
-        Axios.post(dbUpdateDressMakingProcess, {
-          referencia,
+        setIsOpenARYModal(true);
+        setInfoProcess({
+          reference: referencia,
           id,
-          diff,
-          amount: Number(HTMLElement.value),
-        }).then((response: AxiosResponse) => {
-          console.log(response.data);
-
-          HTMLElement.value = null;
-          Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
-            setApprovedRequests(response.data);
-          });
+          amount,
+          valueInput,
+          HTMLElement,
         });
       } else {
-        console.log('HOLAS');
+        dispatch({type: 'DIFF_NEGATIVE'});
       }
+    } else {
+      setIsOpenARYModal(false);
+      dispatch({type: 'WRONG_INPUT_PROCESS'});
     }
   };
 
+  const handlerSubtract = () => {
+    let diff = infoProcess.amount - infoProcess.valueInput;
+    infoProcess.HTMLElement.value = '';
+    Axios.post(dbUpdateDressMakingProcess, {
+      referencia: infoProcess.reference,
+      id: infoProcess.id,
+      diff,
+      amount: infoProcess.valueInput,
+    }).then((response: AxiosResponse) => {
+      console.log(response.data);
+
+      infoProcess.valueInput = null;
+      Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
+        setApprovedRequests(response.data);
+      });
+    });
+  };
+
   const closeModal = () => {
-    dispatch({tpye: 'CLOSE_MODAL'});
+    setIsOpenARYModal(false);
+    dispatch({type: 'CLOSE_MODAL'});
   };
 
   return (
@@ -183,13 +208,13 @@ const DressMaking: React.FC = () => {
               name="actualAmount"
               className="actualAmount"
               type="number"
+              value={amount}
               autoComplete="off"
               onChange={(e) => {
                 setAmount(e.target.value);
               }}
             />
           </div>
-          {/* <label htmlFor='acualAmout' className="amount_label">Cantidad: </label> */}
           <div className="select_box_center-button">
             <button className="btn" type="button" onClick={suppliesRequest}>
               Enviar
@@ -214,7 +239,7 @@ const DressMaking: React.FC = () => {
                 Cantidad en proceso: {item.cantidad}
               </div>
               <div className="requestDressmakingContainer__timestamp">
-                Fecha: {item.timestamp.replace("T", " ").slice(0,16)}
+                Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
               </div>
               <input
                 className={'h' + item.id}
@@ -224,14 +249,14 @@ const DressMaking: React.FC = () => {
               />
               <button
                 className="btn requestDressmakingContainer__accept"
-                onClick={() =>
-                  handlerSubtract(
+                onClick={() => {
+                  verificationARYModal(
                     item.referencia,
                     item.id,
                     item.cantidad,
                     document.querySelector('.h' + item.id)
-                  )
-                }
+                  );
+                }}
               >
                 Aceptar
               </button>
@@ -259,6 +284,11 @@ const DressMaking: React.FC = () => {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
+      <ModalAreYouSureDressmaking
+        isOpen={isOpenARYModal}
+        closeModal={closeModal}
+        subAmountFunction={handlerSubtract}
+      />
     </div>
   );
 };

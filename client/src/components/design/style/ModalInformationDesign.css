@@ -19,8 +19,6 @@
   width: 50%;
   border-radius: 10px;
   height: 75%;
-  overflow: hidden;
-  overflow-y: scroll;
 }
 
 .ModalInfoComponent__close-button {
@@ -48,17 +46,17 @@
   outline: none;
 }
 
+.ModalInfoComponent p {
+  font-family: 'Ubuntu', sans-serif;
+  color: #627a85;
+  font-size: 0.9rem;
+}
+
 .ModalInfoComponent__titleInformation {
   display: flex;
   width: 100%;
   height: 6%;
   border: 2px solid #daf7ee;
-}
-
-.ModalInfoComponent p {
-  font-family: 'Ubuntu', sans-serif;
-  color: #627a85;
-  font-size: 0.9rem;
 }
 
 .ModalInfoComponent__titleInformation div {
@@ -72,9 +70,55 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
-#handleInfoModal {
-  font-size: 0.78rem;
-  width: 65%;
-  height: 50%;
-  margin-left: 20%;
+.scroll-design-information-modal {
+  overflow-y: hidden;
+  overflow-y: scroll;
+  height: 80%;
+}
+
+.scroll-design-information-modal::-webkit-scrollbar {
+  width: 10px;
+  background: #e7f7f2;
+  border-radius: 0 8px 8px 0;
+}
+
+.scroll-design-information-modal::-webkit-scrollbar-thumb {
+  background: #1da597;
+  border-radius: 0 5px 5px 0;
+}
+
+.items_container-design {
+  display: flex;
+  width: 100%;
+  height: 35%;
+  margin-bottom: 1%;
+  border-bottom: 1px solid #daf7ee;
+}
+
+.items-information-design {
+  width: 50%;
+}
+
+.item-information-design {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-information-image {
+  width: 100px;
+  height: 100px;
+}
+
+.item-information-design__ref,
+.item-information-design__amount,
+.item-information-design__color {
+  margin-left: 37%;
+  margin-bottom: 1%;
+}
+
+.item-information-design__description {
+  margin-left: 25%;
+  margin-bottom: 1%;
 }

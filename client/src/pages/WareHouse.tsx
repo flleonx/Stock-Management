@@ -8,6 +8,7 @@ import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
 import ModalinsufficientSupplies from '../components/warehouse/ModalinsufficientSupplies';
+import ModalDecisionSupplies from '../components/warehouse/ModalDecisionSupplies';
 
 const reducer = (state: any, action: any) => {
   if (action.type === 'INVENTORY_BODEGA') {
@@ -115,6 +116,9 @@ function WareHouse() {
   const [updateCode, setUpdateCode] = useState<string>('');
   const [updateAmount, setUpdateAmount] = useState<string>('');
   const [dressMakingReq, setDressMakingReq] = useState<any>([]);
+  const [reRenderUpdate, setReRenderUpdate] = useState<boolean>(false);
+  const [infoRequest, setInfoRequest] = useState({});
+  const [isOpenDecision, setIsOpenDecision] = useState<boolean>(false);
   const saveClothAPIURL: string = baseURL + 'api/savecloth';
   const invetoryBodegaAPIURL: string = baseURL + 'api/invetorywarehouse';
   const invetoryWareHouseAPIURL: string = baseURL + 'api/invetorywarehouse';
@@ -261,10 +265,11 @@ function WareHouse() {
           (item: any) => item.id != dressMakingReq[index].id
         );
         setDressMakingReq(filterResult);
-      } else {
-        dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
-        console.log('BARRILETE');
       }
+      // else {
+      //   dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
+      //   console.log('BARRILETE');
+      // }
     });
   };
 
@@ -289,82 +294,112 @@ function WareHouse() {
     // setDressMakingReq(dressMakingReq.splice[index])
   };
 
+  const handlerDecision = (index: any) => {
+    console.log(index);
+    console.log(dressMakingReq[index].cantidad);
+    console.log(dressMakingReq[index].referencia);
+    setInfoRequest({
+      index,
+      amount: dressMakingReq[index].cantidad,
+      reference: dressMakingReq[index].referencia,
+    });
+    Axios.post(dbSuppliesURL, {
+      actualAmount: dressMakingReq[index].cantidad,
+      referenceSelection: dressMakingReq[index].referencia,
+    }).then((response: AxiosResponse): void => {
+      if (response.data === 'SUCCESSFUL_REQUEST') {
+        setIsOpenDecision(true);
+      } else {
+        dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
+        console.log('BARRILETE');
+      }
+    });
+  };
+
   const closeModal = () => {
+    setIsOpenDecision(false);
     dispatch({tpye: 'CLOSE_MODAL'});
   };
 
   return (
-    <div className="general-container-bodega">
-      <h2 className="general-container-bodega__h2">Bodega</h2>
-      <p className="general-container-bodega__p">
+    <div className="general-container-warehouse">
+      <h2 className="general-container-warehouse__h2">Bodega</h2>
+      <p className="general-container-warehouse__p">
         ¡Hola!, Aquí podrás agregar nuevas telas e insumos, actualizar la
         cantidad de telas o insumos ya registrados, desplegar el inventario que
         hay en Bodega y manejar las peticiones.
       </p>
-      <div className="body-bodega-information">
-        <form className="bodega-form">
-          <h2>Registrar nuevos insumos</h2>
-          <div className="border-div"></div>
-          <input
-            type="text"
-            id="codigo"
-            placeholder="Codigo"
-            onChange={(e: any) => setCode(e.target.value)}
-          />
-          <input
-            type="text"
-            id="color"
-            placeholder="Color"
-            onChange={(e: any) => setColor(e.target.value)}
-          />
-          <input
-            type="number"
-            id="amount"
-            placeholder="Metros/Cantidad"
-            onChange={(e: any) => setAmount(e.target.value)}
-          />
-          <input
-            type="text"
-            id="descripcion"
-            placeholder="Descripción"
-            className="descriptionInput"
-            onChange={(e: any) => setDescription(e.target.value)}
-          />
-          <input
-            type="text"
-            id="url-img"
-            placeholder="URL de la imágen"
-            onChange={(e: any) => setImg(e.target.value)}
-          />
-          <div className="select-container-bodega">
-            <p className="selected-option-bodega">Seleccionar tela o insumo</p>
-            <ul className="options-container-bodega">
-              <li className="option-bodega">Tela</li>
-              <li className="option-bodega">Insumo</li>
-            </ul>
-          </div>
-          <button className="btn" onClick={handleSubmit}>
-            Enviar
-          </button>
-        </form>
-        <div className="bodega-inventory">
-          <h2>Click aquí para desplegar el inventario en Bodega:</h2>
-          <button className="btn" onClick={handleInvetoryTable}>
-            Desplegar
-          </button>
+      <div className="body-warehouse-information">
+        <div className="warehouse-form-container">
+          <form className="warehouse-form">
+            <h2>Registrar nuevos insumos</h2>
+            <div className="border-div"></div>
+            <input
+              type="text"
+              id="codigo"
+              placeholder="Código"
+              onChange={(e: any) => setCode(e.target.value)}
+            />
+            <input
+              type="text"
+              id="color"
+              placeholder="Color"
+              onChange={(e: any) => setColor(e.target.value)}
+            />
+            <input
+              type="number"
+              id="amount"
+              placeholder="Metros/Cantidad"
+              onChange={(e: any) => setAmount(e.target.value)}
+            />
+            <input
+              type="text"
+              id="descripcion"
+              placeholder="Descripción"
+              className="descriptionInput"
+              onChange={(e: any) => setDescription(e.target.value)}
+            />
+            <input
+              type="text"
+              id="url-img"
+              placeholder="URL de la imágen"
+              onChange={(e: any) => setImg(e.target.value)}
+            />
+            <div className="select-container-bodega">
+              <p className="selected-option-bodega">
+                Seleccionar tela o insumo
+              </p>
+              <ul className="options-container-bodega">
+                <li className="option-bodega">Tela</li>
+                <li className="option-bodega">Insumo</li>
+              </ul>
+            </div>
+            <button className="btn" onClick={handleSubmit}>
+              Enviar
+            </button>
+          </form>
         </div>
-        {state.isModalOpen && (
-          <ModalInvetoryWareHouse
-            modalContent={state.modalContent}
-            closeModal={closeModal}
-          />
-        )}
+        <div className="inventory-warehouse-open-modal">
+          <div className="bodega-inventory">
+            <h2>Click aquí para desplegar el inventario en Bodega:</h2>
+            <button className="btn" onClick={handleInvetoryTable}>
+              Desplegar
+            </button>
+          </div>
+          {state.isModalOpen && (
+            <ModalInvetoryWareHouse
+              modalContent={state.modalContent}
+              closeModal={closeModal}
+            />
+          )}
+        </div>
       </div>
+
       <div className="update-container">
-        <h2>Añadir a Insumo registrado </h2>
-        <p className="update-container__p">
+        <div className="update-container__h2">Añadir a Insumo registrado</div>
+        <div className="update-container__p">
           Aquí puedes actualizar la cantidad de insumos existentes
-        </p>
+        </div>
         <div className="update-container-form">
           <div className="select-update-inventory">
             <p className="selected-update-inventory">Seleccionar código</p>
@@ -420,29 +455,26 @@ function WareHouse() {
       <div className="dressmakingReqContainer">
         {dressMakingReq.map((req: any, index: any) => {
           return (
-            <div className="requestWarehouseContainer">
+            <div key={index} className="requestWarehouseContainer">
               <h4 className="requestWarehouseContainer__h4">
                 Petición de taller confección
               </h4>
               <div className="requestWarehouseContainer__reference">
                 Referencia: {req.referencia}
               </div>
-              <button
-                className="btn requestWarehouseContainer__accept"
-                key={index}
-                data-index={index}
-                onClick={() => handlerApprove(index)}
-              >
-                Aceptar
-              </button>
-              <button
-                className="btn requestWarehouseContainer__reject"
-                key={index + 1}
-                data-index={index}
-                onClick={() => handlerRefuse(index)}
-              >
-                Rechazar
-              </button>
+              <div className="requestWarehouseContainer__reference">
+                Cantidad: {req.cantidad}
+              </div>
+              <div className="requestWarehouseDecisionBTNContainer">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    handlerDecision(index);
+                  }}
+                >
+                  Tomar decisión
+                </button>
+              </div>
             </div>
           );
         })}
@@ -451,6 +483,15 @@ function WareHouse() {
         isOpen={state.isOpenNoSupplies}
         closeModal={closeModal}
         arrayNoSupplies={state.modalContent}
+        infoRequest={infoRequest}
+        handlerReject={handlerRefuse}
+      />
+      <ModalDecisionSupplies
+        isOpen={isOpenDecision}
+        closeModal={closeModal}
+        infoRequest={infoRequest}
+        handlerReject={handlerRefuse}
+        handlerAccept={handlerApprove}
       />
     </div>
   );

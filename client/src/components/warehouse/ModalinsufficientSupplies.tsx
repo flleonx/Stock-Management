@@ -8,6 +8,10 @@ const insufficientSuppliesID: any = document.getElementById(
 );
 
 const ModalinsufficientSupplies = (props: any) => {
+  const handlerButtonReject = () => {
+    props.handlerReject(props.infoRequest.index);
+    props.closeModal();
+  };
   const handleClose = () => {
     props.closeModal();
   };
@@ -48,7 +52,7 @@ const ModalinsufficientSupplies = (props: any) => {
                       Existencias: {props.metros}
                     </div>
                     <div className="tableNoSupplies_item">
-                      Remanente: {props.remainingAmount}
+                      Faltante: {props.remainingAmount}
                     </div>
                   </div>
                   <div className="tableNoSupplies_item">
@@ -61,6 +65,12 @@ const ModalinsufficientSupplies = (props: any) => {
               </div>
             );
           })}
+        </div>
+        <div
+          className="InsuficcientButtonRejectContainer"
+          onClick={handlerButtonReject}
+        >
+          <button className="btn">Rechazar petición</button>
         </div>
       </div>
     </div>,

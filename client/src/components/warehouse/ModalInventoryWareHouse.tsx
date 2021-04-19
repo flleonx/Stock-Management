@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import notFoundImage from '../../assets/Not Found.svg';
+import './style/ModalInventoryWareHouse.css';
 
 const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
   const handleClose = () => {
@@ -30,62 +31,70 @@ const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
           X
         </button>
       </div>
-      <input
-        type="search"
-        placeholder="Buscar..."
-        className="search-filter-design-warehouse"
-        onChange={(e: any) => handlerSearch(e.target.value)}
-      ></input>
+      <div className="search-warehouse-container">
+        <i className="gg-search"></i>
+        <input
+          type="search"
+          placeholder="Buscar..."
+          className="search-filter-design-warehouse"
+          onChange={(e: any) => handlerSearch(e.target.value)}
+        ></input>
+      </div>
       <div className="table-header-container-warehouse">
         <div className="table_header-bodega">Insumo</div>
         <div className="table_header-bodega">Imagen</div>
       </div>
-      {modalContent
-        .filter((val: any) => {
-          iterator += 1;
-          if (searchTerm === '') {
-            return val;
-          } else if (
-            val.codigo
-              .toString()
-              .slice(0, searchTerm.length)
-              .includes(searchTerm)
-          ) {
-            enableEmpty = false;
-            return val;
-          } else if (iterator == modalContent.length && enableEmpty == true) {
-            showEmptySearch = true;
-          }
-        })
-        .map((props: any) => {
-          return (
-            <div className="items_container-bodega" key={props.codigo}>
-              <div className="sub_items_container-bodega">
-                <div className="sub_sub_items_container-bodega">
-                  <div className="table_item-bodega">
-                    Código: {props.codigo}
+      <div className="scroll-modal-inventory">
+        {modalContent
+          .filter((val: any) => {
+            iterator += 1;
+            if (searchTerm === '') {
+              return val;
+            } else if (
+              val.codigo
+                .toString()
+                .slice(0, searchTerm.length)
+                .includes(searchTerm)
+            ) {
+              enableEmpty = false;
+              return val;
+            } else if (iterator == modalContent.length && enableEmpty == true) {
+              showEmptySearch = true;
+            }
+          })
+          .map((props: any) => {
+            return (
+              <div className="items_container-bodega" key={props.codigo}>
+                <div className="sub_items_container-bodega">
+                  <div className="sub_sub_items_container-bodega">
+                    <div className="table_item-bodega">
+                      Código: {props.codigo}
+                    </div>
+                    <div className="table_item-bodega">
+                      Descripción: {props.descripcion}
+                    </div>
+                    <div className="table_item-bodega">
+                      Cantidad: {props.metros} metros
+                    </div>
                   </div>
                   <div className="table_item-bodega">
-                    Descripción: {props.descripcion}
+                    <img
+                      className="table_img-bodega"
+                      src={props.nombre_imagen}
+                    />
                   </div>
-                  <div className="table_item-bodega">
-                    Cantidad: {props.metros} metros
-                  </div>
-                </div>
-                <div className="table_item-bodega">
-                  <img className="table_img-bodega" src={props.nombre_imagen} />
                 </div>
               </div>
-            </div>
-          );
-        })}
-      {showEmptySearch && (
-        <img
-          className="notFoundImgWarehouse"
-          src={notFoundImage}
-          alt="Not found"
-        />
-      )}
+            );
+          })}
+        {showEmptySearch && (
+          <img
+            className="notFoundImgWarehouse"
+            src={notFoundImage}
+            alt="Not found"
+          />
+        )}
+      </div>
     </div>
   );
 };

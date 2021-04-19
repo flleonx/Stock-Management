@@ -1,6 +1,6 @@
 .general-container-dressmaking {
   /* width: 78rem; */
-  width: 92.2vw;
+  width: 92vw;
 }
 
 .general-container-dressmaking__h2 {
@@ -8,14 +8,14 @@
   font-family: 'Ubuntu', sans-serif;
   letter-spacing: normal;
   color: #374663;
-  margin: 25px 0px 0px 37px;
+  margin: 20px 0px 0px 25px;
 }
 
 .general-container-dressmaking__p {
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #9ba9af;
-  margin: 12px 0px 0px 37px;
+  margin: 12px 0px 0px 25px;
 }
 
 .external_options_container {
@@ -24,7 +24,7 @@
   height: 120px;
   align-items: center;
   justify-content: center;
-  margin: 20px 0px 0px 20px;
+  margin: 20px 0px 0px 0px;
 }
 
 .options_container {

@@ -193,8 +193,7 @@ const Design = () => {
             <h2>Agregar referencia</h2>
             <div className="border-design-div"></div>
             <p className="design-form__information">
-              En este formulario puedes agregar una nueva referencia. Recuerda
-              agregar los insumos que esta consume.
+              En este formulario puedes asociar insumos a una nueva muestra.
             </p>
             <input
               className="add-reference-input"

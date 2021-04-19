@@ -1,0 +1,181 @@
+.container_table-design {
+  width: 55%;
+  background: white;
+  margin: 0 auto;
+  margin-top: -40px;
+  box-shadow: 4px 0px 15px rgb(192, 188, 188);
+  height: 390px;
+  margin-top: 2%;
+}
+
+.table_title-design {
+  height: 38px;
+  background: #daf7ee;
+  color: #1da597;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.search-design-container {
+  display: flex;
+  height: 40px;
+  background-color: #fae5dd;
+}
+
+.gg-search {
+  color: #404040;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 15px;
+  height: 15px;
+  border: 2px solid;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.gg-search::after {
+  content: '';
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 8px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 12px;
+}
+
+.search-filter-design {
+  padding-left: 2%;
+  height: 40px;
+  width: 98%;
+  background: #fae5dd;
+  border: 0;
+  color: #404040;
+  font-family: 'Ubuntu', sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.search-filter-design:focus {
+  outline: none;
+  border-right: 0;
+  border-left: 0;
+}
+
+.search-filter-design::-webkit-input-placeholder {
+  color: #404040;
+}
+
+.sample-image-container {
+  display: flex;
+  width: 100%;
+}
+
+.table_header-design-sample {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_header-design-img {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_header-design-sample {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: 'Ubuntu', sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.table_header-design-img {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: 'Ubuntu', sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.scroll-design {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-y: scroll;
+  max-height: 285px;
+}
+
+.scroll-design::-webkit-scrollbar {
+  width: 8px;
+  background: #daf7ee;
+  border-radius: 0 8px 8px 0;
+}
+
+.scroll-design::-webkit-scrollbar-thumb {
+  background: #daf7ee;
+  border-radius: 0 3px 3px 0;
+}
+
+.items_container-design {
+  display: flex;
+  width: 100%;
+}
+
+.items-information-container {
+  width: 50%;
+  height: 50%;
+  margin-bottom: 1%;
+}
+
+.items-information-ref {
+  margin-left: 32%;
+}
+
+.items-information-size {
+  margin-left: 45%;
+}
+
+.items-information-description {
+  margin-left: 25%;
+}
+
+.items-information-color {
+  margin-left: 40%;
+}
+
+.table_item-design {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_img-design {
+  width: 100px;
+  height: 100px;
+}
+
+.notfoundImg {
+  margin-left: 20%;
+}
+
+#handleInfoModal {
+  font-size: 0.78rem;
+  width: 65%;
+  height: 50%;
+  margin-left: 20%;
+}

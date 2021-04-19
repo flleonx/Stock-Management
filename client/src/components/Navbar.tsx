@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import './style/Navbar.css';
-import {withRouter, Link} from 'react-router-dom';
+import {withRouter, Link, NavLink} from 'react-router-dom';
 import Axios from 'axios';
 import App from '../App';
 import {baseURL} from './app/baseURL';
@@ -20,6 +20,7 @@ function Navbar({switchActive}: any) {
       .catch((err) => {
         console.log(err);
       });
+    // window.addEventListener('load', triggerListeners);
   }, [enable]);
 
   if (enable) {
@@ -41,7 +42,7 @@ const NavbarContainer = () => {
       <Brand />
       <NavbarOption classIcon="gg-chart" title="Dashboard" url="/" />
       <NavbarOption classIcon="gg-pen" title="Taller Diseño" url="/diseño" />
-      <NavbarOption classIcon="gg-box" title="Bodega" url="/warehouse" />
+      <NavbarOption classIcon="gg-box" title="Bodega Insumo" url="/warehouse" />
       <NavbarOption
         classIcon="gg-shape-half-circle"
         title="Confección"
@@ -77,14 +78,19 @@ interface INavbarOption {
 const NavbarOption = (props: INavbarOption) => {
   const {classIcon, title, url} = props;
   return (
-    <Link to={url} className="click_navbar-option">
+    <NavLink
+      exact
+      to={url}
+      className="click_navbar-option"
+      activeClassName="clicked_navbar-option"
+    >
       <div className="navbar-option">
         <div className="navbar-option__icon">
           <i className={classIcon}></i>
         </div>
         <h5 className="navbar-option__h5">{title}</h5>
       </div>
-    </Link>
+    </NavLink>
   );
 };
 

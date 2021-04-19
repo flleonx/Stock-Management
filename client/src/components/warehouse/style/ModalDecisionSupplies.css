@@ -1,4 +1,4 @@
-.ModalNoSuppliesComponent {
+.ModalDecisionSuppliesComponent {
   position: fixed;
   top: 0;
   left: 0;
@@ -11,17 +11,17 @@
   align-items: center;
 }
 
-.ModalNoSuppliesComponent__container {
+.ModalDecisionSuppliesComponent__container {
   position: relative;
   top: 5%;
-  height: 91%;
   background-color: #ffffff;
   padding: 1rem;
-  width: 60vw;
+  width: 600px;
+  height: 91%;
   border-radius: 10px;
 }
 
-.ModalNoSuppliesComponent__close-button {
+.ModalDecisionSuppliesComponent__close-button {
   position: absolute;
   top: 0;
   right: 0;
@@ -31,14 +31,14 @@
   border-radius: 10px;
 }
 
-.ModalNoSuppliesComponent__close-button:hover {
+.ModalDecisionSuppliesComponent__close-button:hover {
   background-color: red;
   color: white;
   cursor: pointer;
   border-radius: 10px;
 }
 
-.ModalNoSuppliesComponent__close-button:focus {
+.ModalDecisionSuppliesComponent__close-button:focus {
   background-color: red;
   color: white;
   cursor: pointer;
@@ -48,7 +48,7 @@
 
 /*MODAL:*/
 
-.containerNoSupplies_table {
+.containerDecisionSupplies_table {
   width: 90%;
   background: white;
   margin: 0 auto;
@@ -57,22 +57,21 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   overflow-y: scroll;
-  max-height: 80%;
-  /* height: 390px; */
+  max-height: 77%;
 }
 
-.containerNoSupplies_table::-webkit-scrollbar {
+.containerDecisionSupplies_table::-webkit-scrollbar {
   width: 8px;
   background: #daf7ee;
   border-radius: 0 8px 8px 0;
 }
 
-.containerNoSupplies_table::-webkit-scrollbar-thumb {
+.containerDecisionSupplies_table::-webkit-scrollbar-thumb {
   background: #daf7ee;
   border-radius: 0 3px 3px 0;
 }
 
-.tableNoSupplies_title {
+.tableDecisionSupplies_title {
   grid-column-start: 1;
   grid-column-end: 3;
   height: 38px;
@@ -86,14 +85,14 @@
   font-size: 1.2em;
 }
 
-.tableNoSupplies_header,
-.tableNoSupplies_item {
+.tableDecisionSupplies_header,
+.tableDecisionSupplies_item {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.tableNoSupplies_header {
+.tableDecisionSupplies_header {
   font-weight: 500;
   font-size: 1em;
   color: #1da597;
@@ -102,43 +101,62 @@
   border-style: hidden hidden solid hidden;
 }
 
-.tableNoSupplies_item {
-  padding: 10px;
-  font-size: 0.9em;
-  font-family: 'Ubuntu', sans-serif;
-  color: #374663;
-}
-
-.tableNoSupplies_img {
-  width: 100px;
-  height: 100px;
-}
-
-.itemsNoSupplies_container {
+.itemsDecisionSupplies_container {
   grid-column-start: 1;
   grid-column-end: 3;
   border: 2px solid #daf7ee;
   border-style: hidden hidden solid hidden;
 }
 
-.sub_itemsNoSupplies_container {
+.sub_itemsDecisionSupplies_container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
 
-.sub_sub_itemsNoSupplies_container {
+.sub_sub_itemsDecisionSupplies_container {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
 }
 
-.InsuficcientButtonRejectContainer {
+.tableDecisionSupplies_item {
+  padding: 10px;
+  font-size: 0.9em;
+  font-family: 'Ubuntu', sans-serif;
+  color: #374663;
+}
+
+.tableDecisionSupplies_img {
+  width: 100px;
+  height: 100px;
+}
+
+.DecisionButtonsContainer {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1%;
+  margin-top: 2%;
 }
 
-.InsuficcientButtonRejectContainer button {
+.DecisionButtonsContainer__accept {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  height: 20%;
+  background-color: #d1e7dd;
+  border: 1px solid #0f5132;
+  color: #0f5132;
+}
+
+.DecisionButtonsContainer__accept:hover {
+  background-color: #009751;
+  color: white;
+}
+
+.DecisionButtonsContainer__accept:focus {
+  outline: none;
+}
+
+.DecisionButtonsContainer__reject {
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.85rem;
   height: 20%;
@@ -147,11 +165,11 @@
   color: #842029;
 }
 
-.InsuficcientButtonRejectContainer button:hover {
+.DecisionButtonsContainer__reject:hover {
   background-color: rgb(253, 76, 76);
   color: white;
 }
 
-.InsuficcientButtonRejectContainer button:focus {
+.DecisionButtonsContainer__reject:focus {
   outline: none;
 }

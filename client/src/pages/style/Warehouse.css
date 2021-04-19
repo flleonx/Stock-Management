@@ -1,12 +1,12 @@
-.general-container-bodega {
-  width: 93vw;
+.general-container-warehouse {
+  width: 92vw;
   height: 91vh;
   margin-left: 3px;
   overflow: hidden;
   overflow-y: scroll;
 }
 
-.general-container-bodega__h2 {
+.general-container-warehouse__h2 {
   font-size: 1.1rem;
   font-family: 'Ubuntu', sans-serif;
   letter-spacing: normal;
@@ -14,34 +14,33 @@
   margin: 20px 0px 0px 37px;
 }
 
-.general-container-bodega__p {
+.general-container-warehouse__p {
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.85rem;
   color: #9ba9af;
   margin: 12px 0px 0px 37px;
 }
 
-.body-bodega-information {
-  display: grid;
-  grid-template-rows: 5% 1fr;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-    'agregar desplegar'
-    'agregar modal';
-  grid-gap: 5%;
+.body-warehouse-information {
+  display: flex;
+  width: 100%;
 }
 
-.bodega-form {
-  grid-area: agregar;
-  width: 100%;
+.warehouse-form-container {
+  width: 40%;
+}
+
+.warehouse-form {
+  width: 90%;
+  margin-left: 7%;
+  margin-top: 3%;
   height: 470px;
   background-color: white;
-  margin: 5% 0px 0px 11%;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   border: 1px solid transparent;
 }
 
-.bodega-form h2 {
+.warehouse-form h2 {
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.9rem;
   color: #374663;
@@ -49,14 +48,14 @@
   margin-top: 3%;
 }
 
-.bodega-form .border-div {
+.warehouse-form .border-div {
   border-bottom: 1.5px solid #374663;
   width: 90%;
   margin: 0px auto;
   margin-bottom: 4%;
 }
 
-.bodega-form input {
+.warehouse-form input {
   display: flex;
   margin: 0px auto;
   margin-bottom: 5%;
@@ -69,20 +68,25 @@
   color: #9ba9af;
 }
 
-.bodega-form input:focus {
+.warehouse-form input:focus {
   outline: none;
 }
 
-.bodega-form .descriptionInput {
+.warehouse-form .descriptionInput {
   padding-top: -20px;
   height: 10%;
 }
 
-.select-container-bodega,
-.select-update-inventory {
+.select-container-bodega {
   width: 90%;
   margin: 15px auto;
   margin-top: -2px;
+  position: relative;
+}
+
+.select-update-inventory {
+  width: 90%;
+  margin-top: 1.5%;
   position: relative;
 }
 
@@ -168,7 +172,7 @@
   background: #e7f7f2;
 }
 
-.bodega-form button {
+.warehouse-form button {
   width: 90%;
   margin-left: 5%;
   height: 7%;
@@ -177,19 +181,22 @@
   margin-top: -0.1%;
 }
 
-.bodega-form button:focus {
+.warehouse-form button:focus {
   outline: none;
 }
 
+.inventory-warehouse-open-modal {
+  width: 60%;
+}
+
 .bodega-inventory {
-  grid-area: desplegar;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   display: flex;
   height: 50px;
-  width: 750px;
-  margin-top: 3%;
-  margin-left: 4%;
+  width: 96%;
+  margin-top: 2%;
+  margin-left: 1%;
 }
 
 .bodega-inventory h2 {
@@ -213,142 +220,6 @@
   outline: none;
 }
 
-.container_table-bodega {
-  grid-area: modal;
-  width: 80%;
-  background: white;
-  margin: 0 auto;
-  margin-top: 5%;
-  box-shadow: 4px 0px 15px rgb(192, 188, 188);
-  grid-template-columns: repeat(2, 50%);
-  overflow-y: scroll;
-  max-height: 390px;
-}
-
-.container_table-bodega::-webkit-scrollbar {
-  width: 8px;
-  background: #daf7ee;
-  border-radius: 0 8px 8px 0;
-}
-
-.container_table-bodega::-webkit-scrollbar-thumb {
-  background: #daf7ee;
-  border-radius: 0 3px 3px 0;
-}
-
-.container-bodega-top {
-  display: flex;
-}
-
-.ModalWarehouseComponent__close-button {
-  top: 2px;
-  right: 0;
-  border: 0;
-  background-color: #f5f5f5;
-  padding: 0.5rem 1rem;
-}
-
-.ModalWarehouseComponent__close-button:hover {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-}
-
-.ModalWarehouseComponent__close-button:focus {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  outline: none;
-}
-
-.table_title-bodega {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  width: 94%;
-  height: 38px;
-  background: #daf7ee;
-  color: #1da597;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 500;
-  font-size: 1.2em;
-}
-
-.search-filter-design-warehouse {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  padding-left: 2%;
-  height: 38px;
-  background: #8a97b1;
-  border: 2px solid #daf7ee;
-  border-right: 0;
-  border-left: 0;
-  color: #ffffff;
-  font-family: 'Ubuntu', sans-serif;
-  font-weight: 500;
-  font-size: 1.2rem;
-  width: 100%;
-}
-
-.search-filter-design-warehouse:focus {
-  outline: none;
-  border: 2px solid #daf7ee;
-  border-right: 0;
-  border-left: 0;
-}
-
-.table-header-container-warehouse {
-  display: flex;
-}
-
-.table_header-bodega,
-.table_item-bodega {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.table_header-bodega {
-  font-weight: 500;
-  font-size: 1em;
-  width: 100%;
-  color: #1da597;
-  font-family: 'Ubuntu', sans-serif;
-  border: 2px solid #daf7ee;
-  border-style: hidden hidden solid hidden;
-}
-
-.table_item-bodega {
-  padding: 10px;
-  font-size: 0.9em;
-  font-family: 'Ubuntu', sans-serif;
-  color: #374663;
-}
-
-.table_img-bodega {
-  width: 100px;
-  height: 100px;
-}
-
-.items_container-bodega {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  border: 2px solid #daf7ee;
-  border-style: hidden hidden solid hidden;
-}
-
-.sub_items_container-bodega {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.sub_sub_items_container-bodega {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-}
-
 .modal-bodega-form {
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.7rem;
@@ -369,48 +240,55 @@
 
 .update-container {
   width: 93%;
-  height: 30%;
+  height: 20%;
   margin-left: 3%;
-  margin-top: 4%;
+  margin-top: 2%;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
 }
 
-.update-container h2 {
+.update-container__h2 {
   font-family: 'Ubuntu', sans-serif;
   font-size: 1rem;
-  margin-left: 38%;
-  border: 5px solid transparent;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20%;
 }
 
 .update-container__p {
-  margin-left: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .select-update-inventory {
   width: 25%;
-  margin-left: 17%;
-  margin-top: 1.5%;
 }
 
 .update-container-form {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  /* border: 1px solid red; */
   width: 100%;
-  height: 40%;
-  margin-top: -1%;
+  height: 32%;
 }
 
-.update-container-form input {
-  margin-right: 8%;
+.amount-update-inventory {
   height: 28px;
-  margin-top: 1.6%;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.8rem;
   padding-left: 1%;
-  margin-right: 3%;
+  outline: none;
+  width: 20%;
 }
 
-.update-container-form input:focus {
+.amount-update-inventory:focus {
   outline: none;
 }
 
@@ -419,8 +297,6 @@
   height: 29px;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.9rem;
-  margin-top: 1.6%;
-  margin-right: 17%;
 }
 
 .update-container button:focus {
@@ -454,10 +330,6 @@
   height: 350px;
 }
 
-.notFoundImgWarehouse {
-  margin-left: 17%;
-}
-
 .dressmakingReqContainer {
   border: 1px solid transparent;
   margin-left: 3%;
@@ -489,38 +361,40 @@
   margin-left: 4%;
 }
 
-.btn.requestWarehouseContainer__accept {
+.requestWarehouseDecisionBTNContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.requestWarehouseDecisionBTNContainer button {
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.85rem;
-  height: 20%;
-  background-color: #d1e7dd;
-  border: 1px solid #0f5132;
-  color: #0f5132;
+  font-size: 0.9rem;
+  width: 70%;
 }
 
-.btn.requestWarehouseContainer__accept:hover {
-  background-color: #009751;
-  color: white;
-}
-
-.btn.requestWarehouseContainer__accept:focus {
+.requestWarehouseDecisionBTNContainer button:focus {
   outline: none;
 }
 
-.btn.requestWarehouseContainer__reject {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.85rem;
-  height: 20%;
-  background-color: #f8d7da;
-  border: 1px solid #842029;
-  color: #842029;
-}
+/* RESPONSIVE */
 
-.btn.requestWarehouseContainer__reject:hover {
-  background-color: rgb(253, 76, 76);
-  color: white;
-}
+@media (min-height: 800px) {
+  .warehouse-form {
+    height: 560px;
+  }
 
-.btn.requestWarehouseContainer__reject:focus {
-  outline: none;
+  .bodega-inventory h2 {
+    margin-top: 1.7%;
+    margin-left: 17%;
+  }
+
+  .bodega-inventory button {
+    margin-left: 5%;
+    margin-top: 1.2%;
+  }
+
+  .update-container {
+    height: 15%;
+  }
 }

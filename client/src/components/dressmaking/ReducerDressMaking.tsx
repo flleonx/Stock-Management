@@ -29,6 +29,29 @@ export const reducer = (state: any, action: any) => {
       imgCheckNumber: 2,
     };
   }
+  if (action.type === 'WRONG_INPUT_PROCESS') {
+    return {
+      ...state,
+      modalContent: ['Por favor: Ingrese correctamente los campos.'],
+      isModalOpen: true,
+      isInsufficientModalOpen: false,
+      checkNumber: 2,
+      imgCheckNumber: 2,
+    };
+  }
+  if (action.type === 'DIFF_NEGATIVE') {
+    return {
+      ...state,
+      modalContent: [
+        'Error: Digite una cantidad menor o igual a la cantidad en proceso.',
+      ],
+      isModalOpen: true,
+      isInsufficientModalOpen: false,
+      checkNumber: 2,
+      imgCheckNumber: 2,
+    };
+  }
+
   if (action.type === 'CLOSE_MODAL') {
     return {
       ...state,

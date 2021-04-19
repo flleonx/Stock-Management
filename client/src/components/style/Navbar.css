@@ -1,6 +1,6 @@
 .navbar-user-container {
   display: flex;
-  width: 100px;
+  width: 10%;
 }
 
 .click_navbar-option:visited navbar-option {
@@ -9,7 +9,7 @@
 
 .navbar-container {
   background-color: white;
-  width: 100%;
+  width: 100px;
   height: 100vh;
   box-shadow: 4px 0px 15px rgb(209, 209, 209);
 }
@@ -34,6 +34,23 @@
   font-family: 'Ubuntu', sans-serif;
 }
 
+.clicked_navbar-option .navbar-option {
+  background: linear-gradient(
+    -37deg,
+    rgba(34, 168, 153, 1),
+    rgb(242, 243, 245) 9%
+  );
+}
+
+.clicked_navbar-option .navbar-option__icon i {
+  color: #22a899;
+}
+
+.clicked_navbar-option .navbar-option h5 {
+  color: #22a899;
+  font-weight: bold;
+}
+
 .navbar-option {
   width: 100%;
   height: 70px;
@@ -45,13 +62,6 @@
 }
 
 .navbar-option:hover {
-  background: linear-gradient(
-    -37deg,
-    rgba(34, 168, 153, 1),
-    rgba(248, 249, 251, 1) 9%
-  );
-}
-.click_navbar-option:active .navbar-option {
   background: linear-gradient(
     -37deg,
     rgba(34, 168, 153, 1),
@@ -75,6 +85,7 @@
   color: #a3b1ba;
   font-weight: 400;
   font-family: 'Ubuntu', sans-serif;
+  font-size: 0.75rem;
 }
 
 .navbar-option:hover .navbar-option__h5 {

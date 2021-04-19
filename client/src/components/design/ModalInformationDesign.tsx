@@ -27,29 +27,34 @@ const ModalInformationDesign = (props: any) => {
           <div>Insumo</div>
           <div>Imagen</div>
         </div>
-        {props.referenceArray.map((props: any) => {
-          return (
-            <div className="items_container-design" key={props.codigo}>
-              <div className="sub_items_container-design">
-                <div className="sub_sub_items_container-design">
-                  <div className="table_item-design-ref">
+        <div className="scroll-design-information-modal">
+          {props.referenceArray.map((props: any) => {
+            return (
+              <div className="items_container-design" key={props.codigo}>
+                <div className="items-information-design">
+                  <div className="item-information-design__ref">
                     Referencia: {props.codigo}
                   </div>
-                  <div className="table_item-design">
+                  <div className="item-information-design__amount">
                     Consumo: {props.consumptionAmount}
                   </div>
-                  <div className="table_item-design">
+                  <div className="item-information-design__description">
                     Descripción: {props.descripcion}
                   </div>
-                  <div className="table_item-design">Color: {props.color}</div>
+                  <div className="item-information-design__color">
+                    Color: {props.color}
+                  </div>
                 </div>
-                <div className="table_item-design">
-                  <img className="table_img-design" src={props.nombre_imagen} />
+                <div className="item-information-design">
+                  <img
+                    className="item-information-image"
+                    src={props.nombre_imagen}
+                  />
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>,
     informationModalID
