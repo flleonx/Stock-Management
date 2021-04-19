@@ -1,17 +1,17 @@
-import routerStatement, { query } from "express";
-import { MysqlError } from "mysql";
-import { runInNewContext } from "node:vm";
+import routerStatement, {query} from 'express';
+import {MysqlError} from 'mysql';
+import {runInNewContext} from 'node:vm';
 
 //PERSONAL MODULES:
-import database from "../../config/dbConfig";
+import database from '../../config/dbConfig';
 
 const router = routerStatement.Router();
 
 //SAVE THE INFORMATION OF BODEGA
-router.post("/api/savecloth", (req: any, res: any) => {
+router.post('/api/savecloth', (req: any, res: any) => {
   let newCode: boolean = true;
   // console.log(req.body.newCloth);
-  let queryVerifyCodes = "SELECT codigo FROM BODEGA_INSUMOS";
+  let queryVerifyCodes = 'SELECT codigo FROM BODEGA_INSUMOS';
   database.query(queryVerifyCodes, (err: MysqlError | null, result: any) => {
     if (err) {
       throw err;
@@ -24,12 +24,12 @@ router.post("/api/savecloth", (req: any, res: any) => {
     if (newCode) {
       addNewCode();
     } else {
-      res.end(JSON.stringify("EXISTING_CODE"));
+      res.end(JSON.stringify('EXISTING_CODE'));
     }
   });
 
   const addNewCode = () => {
-    if (req.body.newCloth.type === "Tela") {
+    if (req.body.newCloth.type === 'Tela') {
       const newCloth = {
         codigo: req.body.newCloth.code,
         color: req.body.newCloth.color,
@@ -38,17 +38,17 @@ router.post("/api/savecloth", (req: any, res: any) => {
         nombre_imagen: req.body.newCloth.img,
       };
       console.log(newCloth);
-      let newClothQuery: string = "INSERT INTO BODEGA_INSUMOS SET ?";
+      let newClothQuery: string = 'INSERT INTO BODEGA_INSUMOS SET ?';
       let query = database.query(
         newClothQuery,
         newCloth,
         (err: MysqlError | null, result: any) => {
           if (err) throw err;
-          res.end(JSON.stringify("SUCCESSFUL_ADDING"));
+          res.end(JSON.stringify('SUCCESSFUL_ADDING'));
         }
       );
     }
-    if (req.body.newCloth.type === "Insumo") {
+    if (req.body.newCloth.type === 'Insumo') {
       const newCloth = {
         codigo: req.body.newCloth.code,
         color: req.body.newCloth.color,
@@ -57,27 +57,27 @@ router.post("/api/savecloth", (req: any, res: any) => {
         nombre_imagen: req.body.newCloth.img,
       };
       console.log(newCloth);
-      let newClothQuery: string = "INSERT INTO BODEGA_INSUMOS SET ?";
+      let newClothQuery: string = 'INSERT INTO BODEGA_INSUMOS SET ?';
       let query = database.query(
         newClothQuery,
         newCloth,
         (err: MysqlError | null, result: any) => {
           if (err) throw err;
-          res.end(JSON.stringify("SUCCESSFUL_ADDING"));
+          res.end(JSON.stringify('SUCCESSFUL_ADDING'));
         }
       );
     }
   };
 });
 
-router.post("/api/updatewarehouseinventory", (req, res) => {
+router.post('/api/updatewarehouseinventory', (req, res) => {
   interface IAmountType {
     metros: number;
     cantidad: number;
   }
 
   let queryVerifyField = `SELECT metros, cantidad FROM BODEGA_INSUMOS WHERE codigo = ${req.body.code}`;
-  let field: string = "";
+  let field: string = '';
   let addition: number = 0;
   database.query(
     queryVerifyField,
@@ -87,10 +87,10 @@ router.post("/api/updatewarehouseinventory", (req, res) => {
       }
 
       if (result[0].metros === null) {
-        field = "cantidad";
+        field = 'cantidad';
         addition = result[0].cantidad + parseFloat(req.body.amount);
       } else {
-        field = "metros";
+        field = 'metros';
         addition = result[0].metros + parseFloat(req.body.amount);
       }
 
@@ -101,20 +101,20 @@ router.post("/api/updatewarehouseinventory", (req, res) => {
           if (err) {
             throw err;
           }
-          res.end(JSON.stringify("SUCCESSFUL_UPDATE"));
+          res.end(JSON.stringify('SUCCESSFUL_UPDATE'));
         }
       );
     }
   );
 });
 
-router.post("/api/suppliesrequest", (req, res) => {
+router.post('/api/suppliesrequest', (req, res) => {
   const reference = req.body.referenceSelection;
   const amount = parseInt(req.body.actualAmount);
   var enable = true;
   // RETURN CODES AND AMOUNT OF GOODS IN "CONSUMO_DE_INSUMOS"
   let consumptionQuery =
-    "SELECT codigoycantidad FROM InventoryManagement.MUESTRAS_PRODUCCION WHERE referencia = ?";
+    'SELECT codigoycantidad FROM InventoryManagement.MUESTRAS_PRODUCCION WHERE referencia = ?';
   // ROW DATA PACKET ? TPYE
   database.query(
     consumptionQuery,
@@ -123,7 +123,7 @@ router.post("/api/suppliesrequest", (req, res) => {
       if (err) {
         throw err;
       }
-      let data: string[] = result[0].codigoycantidad.split(",");
+      let data: string[] = result[0].codigoycantidad.split(',');
 
       var suppliesCodes: string[] = []; // CODES OF REQUIRES ITEMS.
       var amountProduction: number[] = []; // AMOUT FOR EACH ITEM 1-->1 RELATION.
@@ -195,17 +195,17 @@ router.post("/api/suppliesrequest", (req, res) => {
                     if (result[0].metros != null) {
                       const diff: number =
                         parseFloat(result[0].metros) - amountProduction[x];
-                      const type: string = "metros";
+                      const type: string = 'metros';
                       triggerF(diff, type);
                     }
                     if (result[0].cantidad != null) {
                       const diff: number =
                         parseFloat(result[0].cantidad) - amountProduction[x];
-                      const type: string = "cantidad";
+                      const type: string = 'cantidad';
                       triggerF(diff, type);
                     }
                     if (x + 1 == suppliesCodes.length) {
-                      res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
+                      res.end(JSON.stringify('SUCCESSFUL_REQUEST'));
                     }
                     x = x + 1;
                   }
@@ -255,7 +255,7 @@ router.post("/api/suppliesrequest", (req, res) => {
   );
 });
 
-router.post("/api/savewarehousedecision", (req, res) => {
+router.post('/api/savewarehousedecision', (req, res) => {
   let saveData = {
     referencia: req.body.referencia,
     cantidad: req.body.cantidad,
@@ -264,7 +264,7 @@ router.post("/api/savewarehousedecision", (req, res) => {
   };
   let deleteData = req.body;
   let queryInsertDecision =
-    "INSERT INTO PETICIONES_PROCESADAS_CONFECCION SET ?";
+    'INSERT INTO PETICIONES_PROCESADAS_CONFECCION SET ?';
   database.query(
     queryInsertDecision,
     [saveData],
@@ -280,7 +280,7 @@ router.post("/api/savewarehousedecision", (req, res) => {
       cantidad: req.body.cantidad,
       timestamp: req.body.timestamp,
     };
-    let queryInsertDressMaking = "INSERT INTO PROCESO_CONFECCION SET ?";
+    let queryInsertDressMaking = 'INSERT INTO PROCESO_CONFECCION SET ?';
     database.query(
       queryInsertDressMaking,
       [saveDataDressMaking],
@@ -297,8 +297,58 @@ router.post("/api/savewarehousedecision", (req, res) => {
     if (err) {
       throw err;
     }
-    res.end(JSON.stringify("SUCCESSFUL_SAVING"));
+    res.end(JSON.stringify('SUCCESSFUL_SAVING'));
   });
+});
+
+router.post('/api/temporal', (req, res) => {
+  let enable = true;
+  const reference = req.body.referenceSelection;
+  const amount = parseInt(req.body.actualAmount);
+  let consumptionQuery =
+    'SELECT codigoycantidad FROM InventoryManagement.MUESTRAS_PRODUCCION WHERE referencia = ?';
+  database.query(
+    consumptionQuery,
+    [reference],
+    (err: MysqlError | null, result: any) => {
+      if (err) {
+        throw err;
+      }
+      let data: string[] = result[0].codigoycantidad.split(',');
+
+      var suppliesCodes: string[] = []; // CODES OF REQUIRES ITEMS.
+      var amountProduction: number[] = []; // AMOUT FOR EACH ITEM 1-->1 RELATION.
+
+      data.map((dato: string) => {
+        if (enable) {
+          suppliesCodes.push(dato);
+          enable = !enable;
+        } else {
+          amountProduction.push(parseFloat(dato) * amount);
+          enable = !enable;
+        }
+      });
+
+      let codesString = suppliesCodes.join();
+      let suppliesQuery = `SELECT * FROM InventoryManagement.BODEGA_INSUMOS WHERE codigo IN (${codesString}) ORDER BY FIND_IN_SET(codigo,'${codesString}')`;
+      database.query(
+        suppliesQuery,
+        async (err: MysqlError | null, result: any) => {
+          if (err) {
+            throw err;
+          }
+          console.log(result);
+          amountProduction.map((amount, i) => {
+            result[i] = {
+              ...result[i],
+              amount,
+            };
+          });
+          res.end(JSON.stringify(result));
+        }
+      );
+    }
+  );
 });
 
 export default router;
