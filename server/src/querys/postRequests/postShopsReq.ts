@@ -14,7 +14,7 @@ router.post("/api/shoprequestproducts", (req, res) => {
     timestamp: string;
     restante?: number;
   }
-  let queryWareHouseProducts = `SELECT * FROM InventoryManagement.BODEGA_PRODUCTOS WHERE referencia=${req.body.reference}`;
+  let queryWareHouseProducts = `SELECT * FROM InventoryManagement.BODEGA_PRODUCTOS WHERE referencia=${req.body.reference} AND cantidad NOT IN (0)`;
   let acumulator: number = 0;
   let lotProducts: IWareHouseProducts[] = [];
   let enoughProduct = false;
@@ -24,11 +24,11 @@ router.post("/api/shoprequestproducts", (req, res) => {
       if (err) {
         throw err;
       }
-      console.log(wareHouseProducts[0])
+      console.log(wareHouseProducts);
       if (wareHouseProducts[0] !== undefined) {
         let arrayLength = wareHouseProducts.length;
         let index = 0;
-        for (let i = 0; i <arrayLength; i++) {
+        for (let i = 0; i < arrayLength; i++) {
           acumulator += wareHouseProducts[i].cantidad;
           lotProducts.push(wareHouseProducts[i]);
           if (acumulator >= parseInt(req.body.amount)) {
@@ -60,17 +60,18 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
   let reference = req.body.referenceSelection;
   const amount = parseInt(req.body.actualAmount);
   const idTienda = parseInt(req.body.idShop);
-  const date = new Date();
-  const year = date.getFullYear().toString();
-  let month = (date.getMonth() + 1).toString();
-  let day = date.getDate().toString();
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-  let dateFormat = [year, month, day].join("-");
-  const hour =
-    String(date.getHours()) +
-    ":" +
-    String(date.getMinutes() + ":" + String(date.getSeconds()));
+  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
+  let arrDate = date.split(" ");
+  let s1 = arrDate[0].split("/");
+  if (s1[0].length < 2) s1[0] = "0" + s1[0];
+  if (s1[1].length < 2) s1[1] = "0" + s1[1];
+  let dateFormat = s1.join("-");
+  let s2 = arrDate[1].split(":");
+  if (s2[0].length < 2) s2[0] = "0" + s2[0];
+  if (s2[1].length < 2) s2[1] = "0" + s2[1];
+  if (s2[2].length < 2) s2[2] = "0" + s2[2];
+  let hour = s2.join(":");
+
   let timestamp = dateFormat + " " + hour;
   console.log(timestamp);
   let reqData = {
