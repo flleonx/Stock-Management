@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(
   cors({
-    origin: 'http://localhost:3000', // <-- location of the react app were connecting to
+    origin: 'http://190.165.37.120:51000', // <-- location of the react app were connecting to
     credentials: true,
   })
 );
@@ -58,7 +58,7 @@ import postRoutesDesignReq from './querys/postRequests/postDesignReq';
 import postDesignReqConsumption from './querys/postRequests/postDesignReqConsumption';
 import postBodegaReq from './querys/postRequests/postWareHouseReq';
 import postShopsReq from './querys/postRequests/postShopsReq';
-
+import postWareHouseProductsReq from './querys/postRequests/postWareHouseProductsReq';
 // AUTH ROUTES
 import authRoutes from './querys/authRequest';
 
@@ -76,11 +76,12 @@ app.use(postRoutesDesignReq);
 app.use(postDesignReqConsumption);
 app.use(postBodegaReq);
 app.use(postShopsReq);
+app.use(postWareHouseProductsReq);
 
 // AUTH ROUTES APP.USE
 app.use(authRoutes);
 
 // PORT STATEMENT
-app.listen(10000, () => {
-  console.log('Running on port 10000');
+app.listen(52000, () => {
+  console.log('Running on port 52000');
 });

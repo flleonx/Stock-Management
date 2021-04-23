@@ -8,19 +8,19 @@ import database from "../../config/dbConfig";
 router.post("/api/requesttowarehouse", (req, res) => {
   let reference = req.body.referenceSelection;
   const amount = parseInt(req.body.actualAmount);
-  const date = new Date();
-  const year = date.getFullYear().toString();
-  let month = (date.getMonth() + 1).toString();
-  let day = date.getDate().toString();
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-  let dateFormat = [year, month, day].join("-")
-  const hour =
-    String(date.getHours()) +
-    ":" +
-    String(date.getMinutes() + ":" + String(date.getSeconds()));
-  let timestamp = dateFormat +" "+ hour
-  console.log(timestamp);
+  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
+  let arrDate = date.split(" ");
+  let s1 = arrDate[0].split("/");
+  if (s1[0].length < 2) s1[0] = "0" + s1[0];
+  if (s1[1].length < 2) s1[1] = "0" + s1[1];
+  let dateFormat = s1.join("-");
+  let s2 = arrDate[1].split(":");
+  if (s2[0].length < 2) s2[0] = "0" + s2[0];
+  if (s2[1].length < 2) s2[1] = "0" + s2[1];
+  if (s2[2].length < 2) s2[2] = "0" + s2[2];
+  let hour = s2.join(":");
+
+  let timestamp = dateFormat + " " + hour;
   let reqData = {
     referencia: reference,
     cantidad: amount,
@@ -67,17 +67,19 @@ router.post("/api/updatedressmakingprocess", (req, res) => {
   }
 
   let dataProducts = { ...req.body };
-  const date = new Date();
-  const timestamp =
-    date.getFullYear().toString() +
-    "-" +
-    String(date.getMonth() + 1) +
-    "-" +
-    date.getDate().toString() +
-    " " +
-    String(date.getHours()) +
-    ":" +
-    String(date.getMinutes() + ":" + String(date.getSeconds()));
+  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
+  let arrDate = date.split(" ");
+  let s1 = arrDate[0].split("/");
+  if (s1[0].length < 2) s1[0] = "0" + s1[0];
+  if (s1[1].length < 2) s1[1] = "0" + s1[1];
+  let dateFormat = s1.join("-");
+  let s2 = arrDate[1].split(":");
+  if (s2[0].length < 2) s2[0] = "0" + s2[0];
+  if (s2[1].length < 2) s2[1] = "0" + s2[1];
+  if (s2[2].length < 2) s2[2] = "0" + s2[2];
+  let hour = s2.join(":");
+
+  let timestamp = dateFormat + " " + hour;
 
   let dataNewProduct = {
     numero_de_orden: dataProducts.id,
