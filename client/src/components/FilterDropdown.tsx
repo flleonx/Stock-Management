@@ -1,9 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react';
 
-import './style/Dropdown.css';
+import './style/FilterDropdown.css';
 
 const Dropdown = ({options, id, label, prompt, value, onChange}: any) => {
   const [open, setOpen] = useState(false);
+  const [inputOpen, setInputOpen] = useState(false);
   const [query, setQuery] = useState<string>('');
   const ref = useRef(null);
 
@@ -31,7 +32,13 @@ const Dropdown = ({options, id, label, prompt, value, onChange}: any) => {
 
   return (
     <div className="dropdown">
-      <div className="control" onClick={() => setOpen((prev) => !prev)}>
+      <div
+        className="control"
+        onClick={() => {
+          setOpen((prev) => !prev);
+          if (inputOpen) setOpen(false);
+        }}
+      >
         <div className="selected-value">
           <input
             type="number"
@@ -41,7 +48,7 @@ const Dropdown = ({options, id, label, prompt, value, onChange}: any) => {
             value={displayValue()}
             onChange={(e: any) => {
               setQuery(e.target.value);
-              onChange(null);
+              onChange(e.target.value);
             }}
             onClick={() => setOpen((prev) => !prev)}
           />
@@ -49,6 +56,7 @@ const Dropdown = ({options, id, label, prompt, value, onChange}: any) => {
         <div className={`arrow ${open ? 'open' : null}`} />
       </div>
       <div className={`options ${open ? 'open' : null}`}>
+        {/* <input onClick={() => setOpen(true)} /> */}
         {filter(options).map((option: any) => {
           return (
             <div

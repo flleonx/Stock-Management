@@ -25,9 +25,8 @@
 
 .dropdown .selected-value input {
   line-height: 1.5;
-  font-size: 1rem;
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid #9ba9af;
   border-radius: 2px;
   box-sizing: border-box;
   cursor: default;
@@ -36,7 +35,7 @@
   transition: all 200ms ease;
   width: 100%;
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   height: 30px;
   color: #757575;
 }

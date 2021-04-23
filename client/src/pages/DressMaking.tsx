@@ -11,6 +11,7 @@ import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
 import {updateSourceFile} from 'typescript';
 import ModalAreYouSureDressmaking from '../components/dressmaking/ModalAreYouSureDressmaking';
+import FilterDropdown from '../components/FilterDropdown';
 
 // INTERFACES
 interface IReference {
@@ -40,6 +41,7 @@ const DressMaking: React.FC = () => {
   const refContainer: any = useRef(null);
   const [isOpenARYModal, setIsOpenARYModal] = useState<boolean>(false);
   const [infoProcess, setInfoProcess] = useState<any>({});
+  const [valueReferenceSelect, setValueReferenceSelect] = useState<any>(null);
   const dbReferencesURL: string = baseURL + 'api/references';
   const dbSuppliesURL: string = baseURL + 'api/suppliesrequest';
   const dbWareHouseRequest: string = baseURL + 'api/requesttowarehouse';
@@ -53,7 +55,6 @@ const DressMaking: React.FC = () => {
     if (input.includes('.') || input.includes('-') || input.includes('!')) {
       const amountInputHTML: any = document.getElementById('amountInput');
       amountInputHTML.value = '';
-      // refContainer.current.value = "";
       setAmount('');
     }
   };
@@ -62,60 +63,54 @@ const DressMaking: React.FC = () => {
   useEffect(() => {
     Axios.get(dbReferencesURL).then((response: AxiosResponse) => {
       setReferences(response.data);
-      triggerListeners();
     });
 
     Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
       setApprovedRequests(response.data);
     });
-
-    const triggerListeners = () => {
-      var selectedOption: any = document.querySelector(
-        '.selected-option-dressmaking'
-      );
-      var options: any = document.querySelectorAll('.option');
-
-      selectedOption.addEventListener('click', () => {
-        selectedOption.parentElement.classList.toggle('active');
-      });
-
-      options.forEach((option: any) => {
-        option.addEventListener('click', () => {
-          setTimeout(() => {
-            selectedOption.innerHTML = option.innerHTML;
-            // SET CURRENT REFERENCE VALUE
-            console.log(option);
-            setSelectedReference(option.innerHTML);
-          }, 300);
-
-          selectedOption.parentElement.classList.remove('active');
-        });
-      });
-    };
   }, []);
 
   const suppliesRequest = () => {
+    let ReferenceSelected = '';
+    let isReferenceExist = 0;
     const correctAmount = parseFloat(amount);
-    const inputOption = document.querySelector(
-      '.selected-option-dressmaking'
-    ) as HTMLParagraphElement;
-    console.log(Number.isInteger(correctAmount));
-    console.log(correctAmount > 0);
-    let enableInput = inputOption?.innerHTML !== 'Seleccionar';
+
+    if (valueReferenceSelect === null) {
+      ReferenceSelected = '';
+    } else if (typeof valueReferenceSelect === 'object') {
+      ReferenceSelected = valueReferenceSelect.referencia.toString();
+    } else if (typeof valueReferenceSelect === 'string') {
+      ReferenceSelected = valueReferenceSelect;
+    }
+
+    references.map((val: any) => {
+      if (val.referencia === parseFloat(ReferenceSelected)) {
+        isReferenceExist += 1;
+        return isReferenceExist;
+      } else {
+        return isReferenceExist;
+      }
+    });
+
+    let enableInput = ReferenceSelected !== '';
     if (Number.isInteger(correctAmount) && correctAmount > 0 && enableInput) {
-      Axios.post(dbWareHouseRequest, {
-        actualAmount: amount,
-        referenceSelection: selectedReference,
-      }).then((response: AxiosResponse): void => {
-        if (response.data === 'SUCCESSFUL_REQUEST') {
-          setAmount('');
-          inputOption.innerHTML = 'Seleccionar';
-          refContainer.current.value = '';
-          dispatch({type: 'SUCCESSFUL_REQUEST'});
-        } else {
-          dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
-        }
-      });
+      if (isReferenceExist === 1) {
+        Axios.post(dbWareHouseRequest, {
+          actualAmount: amount,
+          referenceSelection: ReferenceSelected,
+        }).then((response: AxiosResponse): void => {
+          if (response.data === 'SUCCESSFUL_REQUEST') {
+            setAmount('');
+            setValueReferenceSelect(null);
+            refContainer.current.value = '';
+            dispatch({type: 'SUCCESSFUL_REQUEST'});
+          } else {
+            dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
+          }
+        });
+      } else {
+        dispatch({type: 'REFERENCE_DOES_NOT_EXIST'});
+      }
     } else {
       dispatch({type: 'WRONG_INPUT'});
       refContainer.current.value = '';
@@ -188,7 +183,7 @@ const DressMaking: React.FC = () => {
           <div className="select_box_center-reference">
             <div className="references-container">
               <div className="title">Seleccione la referencia:</div>
-              <div className="select-container">
+              {/* <div className="select-container">
                 <p className="selected-option-dressmaking">Seleccionar</p>
                 <ul className="options-container">
                   {references.map((reference: IReference) => {
@@ -199,6 +194,16 @@ const DressMaking: React.FC = () => {
                     );
                   })}
                 </ul>
+              </div> */}
+              <div className="filterDropdownDressmaking">
+                <FilterDropdown
+                  options={references}
+                  id="referencia"
+                  label="referencia"
+                  prompt="Seleccionar referencia"
+                  value={valueReferenceSelect}
+                  onChange={(val: any) => setValueReferenceSelect(val)}
+                />
               </div>
             </div>
           </div>

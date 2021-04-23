@@ -22,11 +22,6 @@ passport.use(
         async (err, result) => {
           if (err) throw err;
           const userInfo = await result[0];
-          const user = {
-            id: userInfo.id,
-            user: userInfo.user,
-            idRol: userInfo.idRol,
-          };
           if (result[0] == null) {
             console.log('Ese usuario NO existe');
             done(null, false);
@@ -38,6 +33,11 @@ passport.use(
             );
             if (validPassword) {
               console.log('Las contraseñas coinciden');
+              const user = {
+                id: userInfo.id || '',
+                user: userInfo.user,
+                idRol: userInfo.idRol,
+              };
               done(null, user);
             } else {
               console.log('No coinciden');

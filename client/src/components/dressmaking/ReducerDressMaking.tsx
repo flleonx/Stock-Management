@@ -52,6 +52,17 @@ export const reducer = (state: any, action: any) => {
     };
   }
 
+  if (action.type === 'REFERENCE_DOES_NOT_EXIST') {
+    return {
+      ...state,
+      modalContent: ['Error: Esta referencia no existe.'],
+      isModalOpen: true,
+      isInsufficientModalOpen: false,
+      checkNumber: 2,
+      imgCheckNumber: 2,
+    };
+  }
+
   if (action.type === 'CLOSE_MODAL') {
     return {
       ...state,

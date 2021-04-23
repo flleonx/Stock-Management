@@ -6,7 +6,7 @@ import './style/ModalDesignAddSupplies.css';
 import {baseURL} from '../app/baseURL';
 import ModalDesign from './ModalDesign';
 import ModalDesignInventory from './ModalDesignInventory';
-import Dropdown from '../Dropdown';
+import FilterDropdown from '../FilterDropdown';
 import {type} from 'node:os';
 
 const addSuppliesID: any = document.getElementById('addSupplies');
@@ -85,6 +85,10 @@ const ModalDesignAddSupplies = (props: any) => {
   >([]);
   const dbWareHouseCodesURL: string = baseURL + 'api/warehousecodes';
   const [inputAmount, setInputAmount] = useState<string>('');
+  const [selectedOption, setSelectedOption] = useState<any>(
+    'Seleccionar insumo'
+  );
+  let optionSelectCode: any = [];
   let valueSelectComp: any = '';
   let inputSelectIterator = 0;
   let inputSelectAddedInfo = 0;
@@ -105,11 +109,14 @@ const ModalDesignAddSupplies = (props: any) => {
       valueSelectComp = {
         codigo: '',
       };
-    } else {
+    } else if (typeof valueSelect === 'object') {
+      valueSelectComp = valueSelect.codigo.toString();
+    } else if (typeof valueSelect === 'string') {
       valueSelectComp = valueSelect;
     }
+
     dBWareHouseSupplies.map((val: any) => {
-      if (val.codigo === parseInt(valueSelectComp.codigo)) {
+      if (val.codigo === parseInt(valueSelectComp)) {
         inputSelectIterator += 1;
         return inputSelectIterator;
       } else {
@@ -118,7 +125,7 @@ const ModalDesignAddSupplies = (props: any) => {
     });
 
     addedInformation.map((val: any) => {
-      if (val.supplyCode === valueSelectComp.codigo) {
+      if (val.supplyCode === valueSelectComp) {
         inputSelectAddedInfo += 1;
         return inputSelectAddedInfo;
       } else {
@@ -126,8 +133,7 @@ const ModalDesignAddSupplies = (props: any) => {
       }
     });
 
-    let enableSelector =
-      valueSelectComp.codigo !== '' || valueSelectComp.codigo !== null;
+    let enableSelector = valueSelectComp !== '' || valueSelectComp !== null;
     let enableAmount =
       Number.isInteger(parseInt(amountHTML.value)) &&
       parseInt(amountHTML.value) > 0;
@@ -135,7 +141,7 @@ const ModalDesignAddSupplies = (props: any) => {
       if (inputSelectIterator === 1) {
         if (inputSelectAddedInfo === 0) {
           let informationObject: ISupplyInformation = {
-            supplyCode: valueSelectComp.codigo,
+            supplyCode: valueSelectComp,
             supplyAmount: inputAmount,
           };
           setAddedInformation([...addedInformation, informationObject]);
@@ -189,7 +195,7 @@ const ModalDesignAddSupplies = (props: any) => {
         </p>
         <div className="addSuppliesZone">
           <div style={{width: 250}}>
-            <Dropdown
+            <FilterDropdown
               options={dBWareHouseSupplies}
               id="codigo"
               label="codigo"

@@ -89,85 +89,9 @@
   outline: none;
 }
 
-.select-container-design {
+.dropdownDesign {
   width: 90%;
-  margin: 15px auto;
-  margin-bottom: -5px;
-  margin-top: -2px;
-  position: relative;
-}
-
-.selected-option-size,
-.selected-option {
-  background: white;
-  border-radius: 5px;
-  padding: 5px 15px;
-  cursor: pointer;
-  border: 1px solid #9ba9af;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.75rem;
-  width: 100%;
-  height: 30px;
-  color: #6f797c;
-}
-
-.selected-option-size::after,
-.selected-option::after {
-  content: '';
-  position: absolute;
-  top: 10px;
-  right: 20px;
-  width: 8px;
-  height: 8px;
-  border-left: 3px solid #1da597;
-  border-top: 3px solid #1da597;
-  transform: rotate(-135deg);
-  transition: all 0.4s ease-in-out;
-}
-
-.active .selected-option-size::after,
-.active .selected-option::after {
-  top: 12px;
-  transform: rotate(45deg);
-}
-
-.options-container-design {
-  position: absolute;
-  top: 32px;
-  left: 0;
-  width: 100%;
-  background: white;
-  border-radius: 5px;
-  max-height: 240px;
-  overflow-y: scroll;
-  transform: rotateX(90deg);
-  transform-origin: top;
-  transition: transform 0.3s ease-in-out;
-  color: #9ba9af;
-  z-index: 20;
-  height: 100px;
-}
-
-.options-container-design::-webkit-scrollbar {
-  width: 10px;
-  background: #e7f7f2;
-  border-radius: 0 8px 8px 0;
-}
-
-.options-container-design::-webkit-scrollbar-thumb {
-  background: #1da597;
-  border-radius: 0 5px 5px 0;
-}
-
-.active .options-container-design {
-  transform: rotateX(0);
-}
-
-.option-size-design {
-  padding: 10px 20px;
-  cursor: pointer;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.8rem;
+  margin: 0 auto;
 }
 
 .option-design {
@@ -175,11 +99,6 @@
   cursor: pointer;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.8rem;
-}
-
-.option-size-design:hover,
-.option-design:hover {
-  background: #e7f7f2;
 }
 
 .design-form button {

@@ -1,7 +1,7 @@
 interface IState {
-  isModalErrorOpen: boolean;
-  isModalSuccessfulOpen: boolean;
+  isModalOpen: boolean;
   modalContent: string;
+  imgCheckNumber: number;
 }
 
 interface IActions {
@@ -12,7 +12,8 @@ export const reducer = (state: IState, action: IActions) => {
   if (action.type === 'ERROR_REGISTER') {
     return {
       ...state,
-      isModalErrorOpen: true,
+      isModalOpen: true,
+      imgCheckNumber: 2,
       modalContent: 'Error: no ha digitado todos los campos',
     };
   }
@@ -20,7 +21,8 @@ export const reducer = (state: IState, action: IActions) => {
   if (action.type === 'ERROR_ROL') {
     return {
       ...state,
-      isModalErrorOpen: true,
+      isModalOpen: true,
+      imgCheckNumber: 2,
       modalContent: 'Error: No ha escogido un ROL',
     };
   }
@@ -28,7 +30,8 @@ export const reducer = (state: IState, action: IActions) => {
   if (action.type === 'INVALID PASSWORD') {
     return {
       ...state,
-      isModalErrorOpen: true,
+      isModalOpen: true,
+      imgCheckNumber: 2,
       modalContent: 'Error: Digite una contraseña mayor o igual a 8 caracteres',
     };
   }
@@ -36,7 +39,8 @@ export const reducer = (state: IState, action: IActions) => {
   if (action.type === 'PASSWORDS_DO_NOT_MATCH') {
     return {
       ...state,
-      isModalErrorOpen: true,
+      isModalOpen: true,
+      imgCheckNumber: 2,
       modalContent: 'Error: las contraseñas NO coinciden',
     };
   }
@@ -44,7 +48,8 @@ export const reducer = (state: IState, action: IActions) => {
   if (action.type === 'USERNAME_EXIST') {
     return {
       ...state,
-      isModalErrorOpen: true,
+      isModalOpen: true,
+      imgCheckNumber: 2,
       modalContent: 'Error: el usuario ya existe',
     };
   }
@@ -52,14 +57,15 @@ export const reducer = (state: IState, action: IActions) => {
   if (action.type === 'SUCCESFUL_POST') {
     return {
       ...state,
-      isModalSuccessfulOpen: true,
+      isModalOpen: true,
+      imgCheckNumber: 1,
       modalContent: '¡Genial! ¡Se ha registrado correctamente!',
     };
   }
 
   if (action.type === 'CLOSE_MODAL') {
-    return {...state, isModalErrorOpen: false, isModalSuccessfulOpen: false};
+    return {...state, isModalOpen: false};
   }
 
-  throw new Error('no matching action type');
+  return {...state, isModalOpen: false, modalContent: ''};
 };

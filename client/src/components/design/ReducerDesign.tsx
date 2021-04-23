@@ -46,6 +46,16 @@ export const reducer = (state: any, action: any) => {
     };
   }
 
+  if (action.type === 'CODE_DOES_NOT_EXIST') {
+    return {
+      ...state,
+      isModalOpen: true,
+      modalContent: ['El codigo talla no existe'],
+      checkNumber: 5,
+      imgCheckNumber: 2,
+    };
+  }
+
   if (action.type === 'SUCCESSFUL_SAMPLE_INVENTORY') {
     const sampleInventory = action.payload;
     return {

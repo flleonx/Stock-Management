@@ -5,9 +5,10 @@ import Axios from 'axios';
 import './style/Register.css';
 
 //MyModuls:
-import RegisterErrorModal from '../components/register/RegisterErrorModal';
-import RegisterSuccessfulModal from '../components/register/RegisterSuccessfulModal';
 import {baseURL} from '../components/app/baseURL';
+import Modal from '../components/Modal';
+import completeImage from '../assets/complete.svg';
+import errorImage from '../assets/error.svg';
 
 //Assets:
 import registerImg from '../assets/register.svg';
@@ -17,9 +18,9 @@ import registerImg from '../assets/register.svg';
 import {reducer} from '../components/register/ReducerRegister';
 
 interface IDefaultState {
-  isModalErrorOpen: boolean;
-  isModalSuccessfulOpen: boolean;
+  isModalOpen: boolean;
   modalContent: string;
+  imgCheckNumber: number;
 }
 
 interface IUser {
@@ -29,9 +30,9 @@ interface IUser {
 }
 
 const defaultState: IDefaultState = {
-  isModalErrorOpen: false,
-  isModalSuccessfulOpen: false,
+  isModalOpen: false,
   modalContent: '',
+  imgCheckNumber: 0,
 };
 
 const Register = () => {
@@ -141,17 +142,24 @@ const Register = () => {
         <button onClick={handleSubmit} className="btn">
           Registrarse
         </button>
-        {state.isModalErrorOpen && (
-          <RegisterErrorModal
-            closeModal={closeModal}
-            modalContent={state.modalContent}
-          />
-        )}
-        {state.isModalSuccessfulOpen && (
-          <RegisterSuccessfulModal
-            closeModal={closeModal}
-            modalContent={state.modalContent}
-          />
+        {state.isModalOpen && (
+          <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
+            <h1 className="modalWarehouseh1">{state.modalContent}</h1>
+            {state.imgCheckNumber === 1 && (
+              <img
+                className="modalWarehouseImg"
+                src={completeImage}
+                alt="modalImg"
+              />
+            )}
+            {state.imgCheckNumber === 2 && (
+              <img
+                className="modalWarehouseImg"
+                src={errorImage}
+                alt="modalImg"
+              />
+            )}
+          </Modal>
         )}
       </form>
       <div className="img-register-container">

@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useReducer} from 'react';
 import Axios, {AxiosResponse} from 'axios';
 import {withRouter} from 'react-router-dom';
+
 import {reducer} from '../components/design/ReducerDesign';
 import './style/Design.css';
 import ModalDesignInventory from '../components/design/ModalDesignInventory';
@@ -9,6 +10,7 @@ import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
 import ModalAddSupplies from '../components/design/ModalDesignAddSupplies';
+import FilterDropdown from '../components/FilterDropdown';
 
 interface ISupplyInformation {
   supplyCode: string;
@@ -39,10 +41,18 @@ const Design = () => {
   const dbSaveNewReference: string = baseURL + 'api/savenewreference';
   const productionAPIURL: string = baseURL + 'api/production';
   const [addReference, setAddReference] = useState<string>('');
-  const [addSize, setAddSize] = useState<string>('');
+  // const [addSize, setAddSize] = useState<string>('');
   const [addDescription, setAddDescription] = useState<string>('');
   const [addColor, setAddColor] = useState<string>('');
   const [addImageName, setAddImageName] = useState<string>('');
+  const [valueSizeSelect, setValueSizeSelect] = useState<any>(null);
+  const sizesArray: any = [
+    {codigo: '1', label: '1'},
+    {codigo: '2', label: '2'},
+    {codigo: '3', label: '3'},
+    {codigo: '4', label: '4'},
+  ];
+  let addSize: any = '';
   // const [addedInformation, setAddedInformation] = useState<
   //   ISupplyInformation[]
   // >([]);
@@ -56,33 +66,8 @@ const Design = () => {
   const [modalAddSupplies, setModalAddSupplies] = useState<boolean>(false);
 
   useEffect(() => {
-    Axios.get(dbWareHouseCodesURL).then((response: AxiosResponse) => {
-      triggerListeners();
-    });
+    Axios.get(dbWareHouseCodesURL).then((response: AxiosResponse) => {});
   }, [switchSection]);
-
-  const triggerListeners = () => {
-    var selectedOptionSize: any = document.querySelector(
-      '.selected-option-size'
-    );
-    var optionsSize: any = document.querySelectorAll('.option-size-design');
-
-    selectedOptionSize.addEventListener('click', () => {
-      selectedOptionSize.parentElement.classList.toggle('active');
-    });
-
-    optionsSize.forEach((optionsSize: any) => {
-      optionsSize.addEventListener('click', () => {
-        setTimeout(() => {
-          selectedOptionSize.innerHTML = optionsSize.innerHTML;
-          // SET CURRENT REFERENCE VALUE
-          setAddSize(optionsSize.innerHTML);
-        }, 300);
-
-        selectedOptionSize.parentElement.classList.remove('active');
-      });
-    });
-  };
 
   const handlerAddSupplies = () => {
     setModalAddSupplies(true);
@@ -92,6 +77,27 @@ const Design = () => {
     let selectedOptionSize: any = document.querySelector(
       '.selected-option-size'
     );
+    let isCodeExist = 0;
+
+    if (valueSizeSelect === null) {
+      addSize = '';
+    } else if (typeof valueSizeSelect === 'object') {
+      addSize = valueSizeSelect.codigo.toString();
+    } else if (typeof valueSizeSelect === 'string') {
+      addSize = valueSizeSelect;
+    }
+
+    sizesArray.map((val: any) => {
+      if (val.codigo === addSize) {
+        isCodeExist += 1;
+        return isCodeExist;
+      } else {
+        return isCodeExist;
+      }
+    });
+
+    console.log(isCodeExist);
+
     const requestPayload = {
       addReference: addReference,
       addSize: addSize,
@@ -103,26 +109,30 @@ const Design = () => {
 
     let enable =
       addReference != '' &&
-      addSize != 'Seleccionar' &&
+      addSize != '' &&
       addDescription != '' &&
       addColor != '' &&
       addImageName != '' &&
       addedInformationFromModal.length != 0;
     if (enable) {
-      Axios.post(dbSaveNewReference, requestPayload).then(
-        (response: AxiosResponse): void => {
-          if (response.data === 'SUCCESSFUL_REQUEST') {
-            setEmptyValues();
-            dispatch({type: 'SUCCESSFUL_REQUEST'});
+      if (isCodeExist === 1) {
+        Axios.post(dbSaveNewReference, requestPayload).then(
+          (response: AxiosResponse): void => {
+            if (response.data === 'SUCCESSFUL_REQUEST') {
+              setEmptyValues();
+              dispatch({type: 'SUCCESSFUL_REQUEST'});
+            }
+            if (response.data === 'FAILED_REQUEST') {
+              dispatch({type: 'FAILED_REQUEST'});
+            }
+            if (response.data === 'INVALID_REFERENCE') {
+              dispatch({type: 'INVALID_REFERENCE'});
+            }
           }
-          if (response.data === 'FAILED_REQUEST') {
-            dispatch({type: 'FAILED_REQUEST'});
-          }
-          if (response.data === 'INVALID_REFERENCE') {
-            dispatch({type: 'INVALID_REFERENCE'});
-          }
-        }
-      );
+        );
+      } else {
+        dispatch({type: 'CODE_DOES_NOT_EXIST'});
+      }
     } else {
       dispatch({type: 'WRONG_INPUT'});
     }
@@ -136,7 +146,7 @@ const Design = () => {
     let addReferenceOption: any = document.querySelector(
       '.add-reference-input'
     );
-    let addSizeOption: any = document.querySelector('.selected-option-size');
+    // let addSizeOption: any = document.querySelector('.selected-option-size');
     let addDescriptionOption: any = document.querySelector(
       '.add-description-input'
     );
@@ -147,7 +157,7 @@ const Design = () => {
     // let : any = document.querySelector(".selected-option");
 
     addReferenceOption.value = '';
-    addSizeOption.innerHTML = 'Seleccionar';
+    setValueSizeSelect(null);
     addDescriptionOption.value = '';
     addColorOption.value = '';
     addImageNameOption.value = '';
@@ -201,16 +211,15 @@ const Design = () => {
               placeholder="Referencia"
               onChange={(e) => setAddReference(e.target.value)}
             />
-            <div className="select-container-design">
-              <p className="selected-option-size">
-                Seleccionar el codigo de talla
-              </p>
-              <ul className="options-container-design">
-                <li className="option-size-design">1</li>
-                <li className="option-size-design">2</li>
-                <li className="option-size-design">3</li>
-                <li className="option-size-design">4</li>
-              </ul>
+            <div className="dropdownDesign">
+              <FilterDropdown
+                options={sizesArray}
+                id="codigo"
+                label="codigo"
+                prompt="Seleccionar el codigo de talla"
+                value={valueSizeSelect}
+                onChange={(val: any) => setValueSizeSelect(val)}
+              />
             </div>
             <input
               className="add-description-input"

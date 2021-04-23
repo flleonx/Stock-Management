@@ -6,11 +6,21 @@ import {myContext} from './components/Context';
 //PAGES:
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import DressMaking from './pages/DressMaking';
+import WareHouse from './pages/WareHouse';
+import Diseño from './pages/Design';
+import Register from './pages/Register';
+import Error from './pages/Error';
+import Logout from './pages/Logout';
+import WareHouseProducts from './pages/WareHouseProducts';
+import Shops from './pages/Shops';
 
 //PERSONAL MODULES:
 import LoginRedirect from './components/login/LoginRedirect';
 import Routes from './components/RoutesComponent';
 import {baseURL} from './components/app/baseURL';
+import ProtectedRoute from './components/app/ProtectedRoute';
 
 Axios.defaults.withCredentials = true;
 
@@ -37,6 +47,9 @@ const App = () => {
         if (userInfo) {
           setIsAuth(true);
           setEnable(true);
+        } else {
+          setIsAuth(false);
+          setEnable(false);
         }
       })
       .catch((err) => {
@@ -63,7 +76,44 @@ const App = () => {
   return (
     <Router>
       <switch>
-        <LoginRedirect path="/login" component={Login} isAuth={isAuth} />
+        <LoginRedirect
+          path="/login"
+          component={Login}
+          isAuth={isAuth}
+          enable={enable}
+        />
+        <ProtectedRoute exact path="/" component={Home} isAuth={isAuth} />
+        <ProtectedRoute exact path="/dressmaking" component={DressMaking} />
+        <ProtectedRoute
+          path="/warehouse"
+          component={WareHouse}
+          isAuth={isAuth}
+        />
+        <ProtectedRoute
+          exact
+          path="/diseño"
+          component={Diseño}
+          isAuth={isAuth}
+        />
+        <ProtectedRoute
+          exact
+          path="/logout"
+          component={Logout}
+          isAuth={isAuth}
+        />
+        <ProtectedRoute
+          exact
+          path="/warehouseproducts"
+          component={WareHouseProducts}
+          isAuth={isAuth}
+        />
+        <ProtectedRoute exact path="/shops" component={Shops} isAuth={isAuth} />
+        <ProtectedRoute
+          exact
+          path="/register"
+          component={Register}
+          isAuth={isAuth}
+        />
       </switch>
     </Router>
   );

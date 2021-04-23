@@ -5,7 +5,7 @@
 
 .general-login-container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 .login-form {
@@ -73,8 +73,17 @@
   position: absolute;
   width: 40vw;
   height: 60vh;
-  z-index: 20;
+  z-index: 2;
   margin-left: 15%;
   left: 36%;
   top: 17%;
+}
+
+.modalLoginh1 {
+  font-size: 1rem;
+}
+
+.modalLoginImg {
+  width: 350px;
+  height: 350px;
 }

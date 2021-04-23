@@ -1,16 +1,35 @@
-import React, {useContext} from 'react';
-import {Redirect, Link, withRouter} from 'react-router-dom';
-import Axios from 'axios';
-import {myContext} from '../components/Context';
+import React from 'react';
+import {withRouter} from 'react-router-dom';
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
+
 import './style/Home.css';
+import {tiendasData} from '../components/home/tiendasData';
 
 const Home = () => {
   return (
     <div className="general-container-home">
       <h2 className="general-container-home__h2">Dashboard</h2>
       <p className="general-container-home__p">
-        ¡Bienvenido de nuevo! Ya puedes disfrutar del menú principal.
+        ¡Bienvenido! En el siguiente mapa hay un marcador para cada de las seis
+        tiendas. Utiliza el scroll del mouse para variar el Zoom del mapa y ver
+        todos los marcadores.
       </p>
+      <MapContainer
+        center={[10.9878, -74.7889]}
+        zoom={9}
+        scrollWheelZoom={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {tiendasData.map((tienda: any) => (
+          <Marker
+            key={tienda.id}
+            position={[tienda.latitude, tienda.longitude]}
+          />
+        ))}
+      </MapContainer>
     </div>
   );
 };

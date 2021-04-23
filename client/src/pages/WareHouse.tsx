@@ -9,88 +9,8 @@ import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
 import ModalinsufficientSupplies from '../components/warehouse/ModalinsufficientSupplies';
 import ModalDecisionSupplies from '../components/warehouse/ModalDecisionSupplies';
-
-const reducer = (state: any, action: any) => {
-  if (action.type === 'INVENTORY_BODEGA') {
-    const invetoryBodegaContent = action.payload;
-    return {...state, modalContent: invetoryBodegaContent, isModalOpen: true};
-  }
-
-  if (action.type === 'SUCCESSFUL_FORM') {
-    return {
-      ...state,
-      modalFormContent:
-        '¡Felicitaciones! Se ha agregado un nuevo insumo correctamente',
-      isFormModalOpen: true,
-      isModalOpen: false,
-      imgCheckNumber: 1,
-    };
-  }
-
-  if (action.type === 'SUCCESSFUL_UPDATE') {
-    return {
-      ...state,
-      modalUpdateContent: 'Inventario añadido exitosamente',
-      isModalUpdateOpen: true,
-      isModalOpen: false,
-      imgCheckNumber: 1,
-    };
-  }
-
-  if (action.type === 'EXISTING_CODE') {
-    return {
-      ...state,
-      modalFormContent:
-        'Este codigo ya existe en el inventario. Por favor dirigirse a la sección Añadir a Insumo registrado',
-      isFormModalOpen: true,
-      isModalOpen: false,
-      imgCheckNumber: 2,
-    };
-  }
-
-  if (action.type === 'SUCCESSFUL_ADDING') {
-    return {
-      ...state,
-      modalFormContent: 'Insumo añadido correctamente',
-      isModalOpen: false,
-      isFormModalOpen: true,
-    };
-  }
-
-  if (action.type === 'WRONG_INPUT') {
-    return {
-      ...state,
-      modalUpdateContent:
-        'OJO: Por favor ingrese correctamente todos los campos',
-      isModalUpdateOpen: true,
-      isModalOpen: false,
-      imgCheckNumber: 2,
-    };
-  }
-  if (action.type === 'INSUFFICIENT_SUPPLIES') {
-    return {
-      ...state,
-      isOpenNoSupplies: true,
-      modalContent: action.payload,
-    };
-  }
-
-  if (action.type === 'CLOSE_MODAL') {
-    return {
-      ...state,
-      isModalOpen: false,
-      isOpenNoSupplies: false,
-      imgCheckNumber: 0,
-    };
-  }
-  return {
-    ...state,
-    isModalOpen: false,
-    isFormModalOpen: false,
-    isModalUpdateOpen: false,
-    isOpenNoSupplies: false,
-  };
-};
+import {reducer} from '../components/warehouse/ReducerWarehouse';
+import FilterDropdown from '../components/FilterDropdown';
 
 const defaultState: any = {
   isModalOpen: false,
@@ -119,6 +39,7 @@ function WareHouse() {
   const [reRenderUpdate, setReRenderUpdate] = useState<boolean>(false);
   const [infoRequest, setInfoRequest] = useState({});
   const [isOpenDecision, setIsOpenDecision] = useState<boolean>(false);
+  const [valueCode, setValueCode] = useState<any>(null);
   const saveClothAPIURL: string = baseURL + 'api/savecloth';
   const invetoryBodegaAPIURL: string = baseURL + 'api/invetorywarehouse';
   const invetoryWareHouseAPIURL: string = baseURL + 'api/invetorywarehouse';
@@ -211,24 +132,52 @@ function WareHouse() {
 
   // UPDATE INVENTORY
   const handleUpdateInventory = () => {
+    let codeSelected = '';
+    let isCodeExist = 0;
+    let inputUpdateAmount = document.getElementById(
+      'amount-update-inventory'
+    ) as HTMLInputElement;
+
+    if (valueCode === null) {
+      codeSelected = '';
+    } else if (typeof valueCode === 'object') {
+      codeSelected = valueCode.codigo.toString();
+    } else if (typeof valueCode === 'string') {
+      codeSelected = valueCode;
+    }
+
+    queryData.map((val: any) => {
+      if (val.codigo === parseFloat(codeSelected)) {
+        isCodeExist += 1;
+        return isCodeExist;
+      } else {
+        return isCodeExist;
+      }
+    });
+
     let enableAmount =
       Number.isInteger(parseInt(updateAmount)) && parseInt(updateAmount) > 0;
-    let enableCode = updateCode !== 'Seleccionar código';
+    let enableCode = codeSelected !== '';
 
     if (enableAmount && enableCode) {
-      let payloadUpdate = {
-        code: updateCode,
-        amount: updateAmount,
-      };
-      console.log(payloadUpdate);
-      Axios.post(updateInventoryWareHouseURL, payloadUpdate).then(
-        (response: any) => {
-          console.log(response);
-          if (response.data == 'SUCCESSFUL_UPDATE') {
-            dispatch({type: 'SUCCESSFUL_UPDATE'});
+      if (isCodeExist === 1) {
+        let payloadUpdate = {
+          code: codeSelected,
+          amount: updateAmount,
+        };
+        setValueCode(null);
+        inputUpdateAmount.value = '';
+        Axios.post(updateInventoryWareHouseURL, payloadUpdate).then(
+          (response: any) => {
+            console.log(response);
+            if (response.data == 'SUCCESSFUL_UPDATE') {
+              dispatch({type: 'SUCCESSFUL_UPDATE'});
+            }
           }
-        }
-      );
+        );
+      } else {
+        dispatch({type: 'CODE_DOES_NOT_EXIST'});
+      }
     } else {
       dispatch({type: 'WRONG_INPUT'});
     }
@@ -401,7 +350,7 @@ function WareHouse() {
           Aquí puedes actualizar la cantidad de insumos existentes
         </div>
         <div className="update-container-form">
-          <div className="select-update-inventory">
+          {/* <div className="select-update-inventory">
             <p className="selected-update-inventory">Seleccionar código</p>
             <ul className="options-update-inventory">
               {queryData.map((data: any) => {
@@ -412,6 +361,16 @@ function WareHouse() {
                 );
               })}
             </ul>
+          </div> */}
+          <div className="filterDropdownWarehouse">
+            <FilterDropdown
+              options={queryData}
+              id="codigo"
+              label="codigo"
+              prompt="Seleccionar código"
+              value={valueCode}
+              onChange={(val: any) => setValueCode(val)}
+            />
           </div>
           <input
             type="number"
@@ -517,30 +476,30 @@ const triggerListeners = (setType: any, setUpdateCode: any) => {
     });
   });
 
-  var selectedCodeUpdateInventory: any = document.querySelector(
-    '.selected-update-inventory'
-  );
-  var optionsUpdateInventory: any = document.querySelectorAll(
-    '.option-update-inventory'
-  );
+  // var selectedCodeUpdateInventory: any = document.querySelector(
+  //   '.selected-update-inventory'
+  // );
+  // var optionsUpdateInventory: any = document.querySelectorAll(
+  //   '.option-update-inventory'
+  // );
 
-  selectedCodeUpdateInventory.addEventListener('click', () => {
-    selectedCodeUpdateInventory.parentElement.classList.toggle('active-bodega');
-  });
+  // selectedCodeUpdateInventory.addEventListener('click', () => {
+  //   selectedCodeUpdateInventory.parentElement.classList.toggle('active-bodega');
+  // });
 
-  optionsUpdateInventory.forEach((option: any) => {
-    option.addEventListener('click', () => {
-      setTimeout(() => {
-        selectedCodeUpdateInventory.innerHTML = option.innerHTML;
-        // SET CURRENT REFERENCE VALUE
-        setUpdateCode(option.innerHTML);
-      }, 300);
+  // optionsUpdateInventory.forEach((option: any) => {
+  //   option.addEventListener('click', () => {
+  //     setTimeout(() => {
+  //       selectedCodeUpdateInventory.innerHTML = option.innerHTML;
+  //       // SET CURRENT REFERENCE VALUE
+  //       setUpdateCode(option.innerHTML);
+  //     }, 300);
 
-      selectedCodeUpdateInventory.parentElement.classList.remove(
-        'active-bodega'
-      );
-    });
-  });
+  //     selectedCodeUpdateInventory.parentElement.classList.remove(
+  //       'active-bodega'
+  //     );
+  //   });
+  // });
 };
 
 export default withRouter(WareHouse);

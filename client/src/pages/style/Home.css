@@ -1,7 +1,8 @@
 .general-container-home {
-  width: 79rem;
+  width: 92vw;
   margin-left: 3px;
-  max-height: 91vh;
+  height: 91vh;
+  border: 1px solid transparent;
 }
 
 .general-container-home__h2 {
@@ -17,4 +18,11 @@
   font-size: 0.85rem;
   color: #9ba9af;
   margin: 12px 0px 0px 37px;
+}
+
+.leaflet-container {
+  margin: 0 auto;
+  margin-top: 1%;
+  width: 90%;
+  height: 90%;
 }

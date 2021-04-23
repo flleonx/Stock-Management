@@ -4,6 +4,7 @@
 }
 
 .general-register-container {
+  border: 1px solid transparent;
   width: 92.5vw;
   height: 91vh;
 }

@@ -1,7 +1,12 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
 
-function LoginRedirect({isAuth: isAuth, component: Component, ...rest}: any) {
+function LoginRedirect({
+  isAuth: isAuth,
+  component: Component,
+  enable: enable,
+  ...rest
+}: any) {
   return (
     <div>
       <Route

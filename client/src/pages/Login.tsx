@@ -6,9 +6,10 @@ import Axios from 'axios';
 import './style/Login.css';
 
 //My_modules:
-import LoginErrorModal from '../components/login/LoginErrorModal';
 import {baseURL} from '../components/app/baseURL';
 import loginIMG from '../assets/Securelogin.svg';
+import Modal from '../components/Modal';
+import errorImage from '../assets/error.svg';
 
 //Assets:
 
@@ -30,7 +31,6 @@ const Login = () => {
   const [password, setPassword] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
   const loginAPIURL: string = baseURL + 'api/login';
-  console.log(loginAPIURL);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -93,10 +93,10 @@ const Login = () => {
         </button>
       </form>
       {state.isModalOpen && (
-        <LoginErrorModal
-          closeModal={closeModal}
-          modalContent={state.modalContent}
-        />
+        <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
+          <h1 className="modalLoginh1">{state.modalContent}</h1>
+          <img className="modalLoginImg" src={errorImage} alt="modalImg" />
+        </Modal>
       )}
       <div className="img-login-container">
         <img src={loginIMG} alt="login" />

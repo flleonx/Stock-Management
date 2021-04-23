@@ -1,6 +1,6 @@
 .general-container-dressmaking {
   /* width: 78rem; */
-  width: 92vw;
+  width: 88.5vw;
 }
 
 .general-container-dressmaking__h2 {
@@ -89,6 +89,12 @@
   color: #1da597;
   margin-right: 8%;
   margin-left: 5%;
+}
+
+.filterDropdownDressmaking {
+  width: 45%;
+  margin-top: -1%;
+  margin-left: 3%;
 }
 
 .select-container {
