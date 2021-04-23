@@ -48,6 +48,12 @@ const NavbarContainer = () => {
         title="Confección"
         url="/dressmaking"
       />
+      <NavbarOption
+        classIcon="gg-browse"
+        title="Bodega Producto"
+        url="/warehouseproducts"
+      />
+      <NavbarOption classIcon="gg-home-alt" title="Tiendas" url="/shops" />
       <NavbarOption classIcon="gg-add-r" title="Registrar" url="/register" />
       <NavbarOption
         classIcon="gg-log-out"

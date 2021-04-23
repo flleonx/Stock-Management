@@ -1,0 +1,169 @@
+.ModalWarehouseProductsComponent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  flex-direction: column;
+  z-index: 20;
+  align-items: center;
+}
+
+.ModalWarehouseProductsComponent__container {
+  position: relative;
+  top: 10%;
+  background-color: #ffffff;
+  padding: 1rem;
+  width: 700px;
+  border-radius: 10px;
+  max-height: 80%;
+}
+
+.ModalWarehouseProductsComponent__close-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: 0;
+  background-color: #f5f5f5;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+}
+
+.ModalWarehouseProductsComponent__close-button:hover {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.ModalWarehouseProductsComponent__close-button:focus {
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  border-radius: 10px;
+  outline: none;
+}
+
+.ModalWarehouseProductsComponent__h2 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.1rem;
+}
+
+/*Sucess Modal*/
+.successModalCard {
+  border: 1px solid rgb(247, 247, 247);
+  background-color: rgb(247, 247, 247);
+  border-radius: 10px;
+}
+
+.successModalCard__h4,
+.successModalCard__lot,
+.successModalCard__reference,
+.successModalCard__order,
+.successModalCard__amount,
+.successModalCard__date {
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonssuccessModalContiner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn.buttonsSuccessModalContiner__approve {
+  width: 40%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  height: 22%;
+  background-color: #d1e7dd;
+  border: 1px solid #0f5132;
+  color: #0f5132;
+}
+
+.buttonsSuccessModalContiner__approve:hover {
+  background-color: #009751;
+  color: white;
+}
+
+.buttonsSuccessModalContiner__approve:focus {
+  outline: none;
+}
+
+.buttonsSuccessModalContiner__reject {
+  width: 40%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  height: 22%;
+  background-color: #f8d7da;
+  border: 1px solid #842029;
+  color: #842029;
+}
+
+.buttonsSuccessModalContiner__reject:hover {
+  background-color: rgb(253, 76, 76);
+  color: white;
+}
+
+.buttonsSuccessModalContiner__reject:focus {
+  outline: none;
+}
+
+/*Insufficient Modal*/
+
+.insufficientModalCard {
+  border: 1px solid rgb(247, 247, 247);
+  background-color: rgb(247, 247, 247);
+  border-radius: 10px;
+}
+
+.insufficientModalCard__h4,
+.insufficientModalCard__reference,
+.insufficientModalCard__amount {
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.buttonRejectContainer {
+  margin-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonRejectContainer__Reject {
+  width: 40%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  height: 19%;
+  background-color: #f8d7da;
+  border: 1px solid #842029;
+  color: #842029;
+}
+
+.buttonRejectContainer__Reject:hover {
+  background-color: rgb(253, 76, 76);
+  color: white;
+}
+
+.buttonRejectContainer__Reject:focus {
+  outline: none;
+}
+
+.imgErrorWarehouseProductContainer {
+  height: 350px;
+  margin-bottom: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.imgErrorWarehouseProductContainer__img {
+  height: 350px;
+}

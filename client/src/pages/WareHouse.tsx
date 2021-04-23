@@ -117,6 +117,11 @@ function WareHouse() {
             descripcionInput.value = '';
             imgInput.value = '';
             selectedOption.innerHTML = 'Seleccionar tela o insumo';
+            Axios.get(invetoryWareHouseAPIURL).then(
+              (response: AxiosResponse) => {
+                setQueryData(response.data);
+              }
+            );
           }
           if (response.data == 'EXISTING_CODE') {
             dispatch({type: 'EXISTING_CODE'});

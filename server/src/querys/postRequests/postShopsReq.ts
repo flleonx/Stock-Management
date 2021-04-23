@@ -1,11 +1,11 @@
-import e from "express";
-import routerStatement from "express";
-import { MysqlError } from "mysql";
-import { stringify } from "node:querystring";
+import e from 'express';
+import routerStatement from 'express';
+import {MysqlError} from 'mysql';
+import {stringify} from 'node:querystring';
 const router = routerStatement.Router();
-import database from "../../config/dbConfig";
+import database from '../../config/dbConfig';
 
-router.post("/api/shoprequestproducts", (req, res) => {
+router.post('/api/shoprequestproducts', (req, res) => {
   interface IWareHouseProducts {
     numero_lote: number;
     referencia: number;
@@ -43,36 +43,36 @@ router.post("/api/shoprequestproducts", (req, res) => {
             let size = lotProducts.length - 1;
             lotProducts[size].cantidad =
               wareHouseProducts[index].cantidad - diff;
-            lotProducts[size] = { ...lotProducts[size], restante: diff };
+            lotProducts[size] = {...lotProducts[size], restante: diff};
           }
           res.end(JSON.stringify(lotProducts));
         } else {
           res.end(JSON.stringify(diff * -1));
         }
       } else {
-        res.end(JSON.stringify("NO EXISTE"));
+        res.end(JSON.stringify('NO EXISTE'));
       }
     }
   );
 });
 
-router.post("/api/shopwarehouseproductsrequest", (req, res) => {
+router.post('/api/shopwarehouseproductsrequest', (req, res) => {
   let reference = req.body.referenceSelection;
   const amount = parseInt(req.body.actualAmount);
   const idTienda = parseInt(req.body.idShop);
-  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
-  let arrDate = date.split(" ");
-  let s1 = arrDate[0].split("/");
-  if (s1[0].length < 2) s1[0] = "0" + s1[0];
-  if (s1[1].length < 2) s1[1] = "0" + s1[1];
-  let dateFormat = s1.join("-");
-  let s2 = arrDate[1].split(":");
-  if (s2[0].length < 2) s2[0] = "0" + s2[0];
-  if (s2[1].length < 2) s2[1] = "0" + s2[1];
-  if (s2[2].length < 2) s2[2] = "0" + s2[2];
-  let hour = s2.join(":");
+  let date = new Date().toLocaleString('es-ES', {timeZone: 'America/Bogota'});
+  let arrDate = date.split(' ');
+  let s1 = arrDate[0].split('/');
+  if (s1[0].length < 2) s1[0] = '0' + s1[0];
+  if (s1[1].length < 2) s1[1] = '0' + s1[1];
+  let dateFormat = s1.join('-');
+  let s2 = arrDate[1].split(':');
+  if (s2[0].length < 2) s2[0] = '0' + s2[0];
+  if (s2[1].length < 2) s2[1] = '0' + s2[1];
+  if (s2[2].length < 2) s2[2] = '0' + s2[2];
+  let hour = s2.join(':');
 
-  let timestamp = dateFormat + " " + hour;
+  let timestamp = dateFormat + ' ' + hour;
   console.log(timestamp);
   let reqData = {
     referencia: reference,
@@ -82,7 +82,9 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
   };
 
   const querySaveNewRequest =
-    "INSERT INTO InventoryManagement.PETICIONES_ACTIVAS_TIENDAS SET ?";
+    'INSERT INTO InventoryManagement.PETICIONES_ACTIVAS_TIENDAS SET ?';
+  console.log(querySaveNewRequest);
+  console.log(reqData);
   database.query(
     querySaveNewRequest,
     [reqData],
@@ -90,7 +92,7 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
       if (err) {
         throw err;
       }
-      res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
+      res.end(JSON.stringify('SUCCESSFUL_REQUEST'));
     }
   );
 });

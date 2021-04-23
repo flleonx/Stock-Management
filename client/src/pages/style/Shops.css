@@ -1,3 +1,56 @@
+.general-container-shops {
+  width: 89vw;
+}
+
+.general-container-shops__h2 {
+  font-size: 1.1rem;
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: normal;
+  color: #374663;
+  margin: 20px 0px 0px 10px;
+}
+
+.general-container-shops__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.85rem;
+  color: #9ba9af;
+  margin: 12px 0px 0px 10px;
+}
+
+.makeReqShopsContainer {
+  width: 97%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  margin-top: 1%;
+  padding-left: 12%;
+}
+
+.makeReqShopsContainer .actualAmount {
+  height: 25px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  padding-left: 1%;
+}
+
+.makeReqShopsContainer__dropdownReference {
+  width: 17%;
+}
+
+.makeReqShopsContainer__dropdownShop {
+  width: 17%;
+}
+
+.makeReqButtonContainer {
+  width: 25%;
+  height: 12%;
+}
+
+.makeReqButtonContainer button {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.7rem;
+}
 
 .external_options_container {
   display: flex;
@@ -80,7 +133,7 @@
 }
 
 .selected-option-shops,
-.selected-option-shopsinfo{
+.selected-option-shopsinfo {
   background: white;
   border-radius: 5px;
   padding: 3px 15px;
@@ -94,7 +147,7 @@
 }
 
 .selected-option-shops::after,
-.selected-option-shopsinfo::after{
+.selected-option-shopsinfo::after {
   content: '';
   position: absolute;
   top: 8px;
@@ -108,7 +161,7 @@
 }
 
 .active .selected-option-shops::after,
-.active .selected-option-shopsinfo::after{
+.active .selected-option-shopsinfo::after {
   top: 12px;
   transform: rotate(45deg);
 }

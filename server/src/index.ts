@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(
   cors({
-    origin: 'http://190.165.37.120:51000', // <-- location of the react app were connecting to
+    origin: 'http://localhost:51000', // <-- location of the react app were connecting to
     credentials: true,
   })
 );

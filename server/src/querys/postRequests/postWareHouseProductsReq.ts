@@ -1,13 +1,13 @@
-import routerStatement, { query } from "express";
-import { MysqlError } from "mysql";
-import { runInNewContext } from "node:vm";
+import routerStatement, {query} from 'express';
+import {MysqlError} from 'mysql';
+import {runInNewContext} from 'node:vm';
 
 //PERSONAL MODULES:
-import database from "../../config/dbConfig";
+import database from '../../config/dbConfig';
 
 const router = routerStatement.Router();
 
-router.post("/api/savewarehouseproductsdecision", (req, res) => {
+router.post('/api/savewarehouseproductsdecision', (req, res) => {
   interface INeededStock {
     numero_lote: number;
     referencia: number;
@@ -17,19 +17,19 @@ router.post("/api/savewarehouseproductsdecision", (req, res) => {
     restante?: number;
   }
 
-  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
-  let arrDate = date.split(" ");
-  let s1 = arrDate[0].split("/");
-  if (s1[0].length < 2) s1[0] = "0" + s1[0];
-  if (s1[1].length < 2) s1[1] = "0" + s1[1];
-  let dateFormat = s1.join("-");
-  let s2 = arrDate[1].split(":");
-  if (s2[0].length < 2) s2[0] = "0" + s2[0];
-  if (s2[1].length < 2) s2[1] = "0" + s2[1];
-  if (s2[2].length < 2) s2[2] = "0" + s2[2];
-  let hour = s2.join(":");
+  let date = new Date().toLocaleString('es-ES', {timeZone: 'America/Bogota'});
+  let arrDate = date.split(' ');
+  let s1 = arrDate[0].split('/');
+  if (s1[0].length < 2) s1[0] = '0' + s1[0];
+  if (s1[1].length < 2) s1[1] = '0' + s1[1];
+  let dateFormat = s1.join('-');
+  let s2 = arrDate[1].split(':');
+  if (s2[0].length < 2) s2[0] = '0' + s2[0];
+  if (s2[1].length < 2) s2[1] = '0' + s2[1];
+  if (s2[2].length < 2) s2[2] = '0' + s2[2];
+  let hour = s2.join(':');
 
-  let timestamp = dateFormat + " " + hour;
+  let timestamp = dateFormat + ' ' + hour;
   let saveData = {
     numero_de_orden: req.body.numero_de_orden,
     referencia: req.body.referencia,
@@ -38,18 +38,15 @@ router.post("/api/savewarehouseproductsdecision", (req, res) => {
     idDecision: req.body.idDecision,
     idTienda: req.body.idTienda,
   };
-  console.log(req.body.timestamp);
+  console.log(`EEEEEEEEEEE: ${req.body.timestamp}`);
   let deleteData = req.body;
-  let queryInsertDecision = "INSERT INTO PETICIONES_PROCESADAS_TIENDAS SET ?";
-  database.query(
-    queryInsertDecision,
-    [saveData],
-    (err: MysqlError | null) => {
-      if (err) {
-        throw err;
-      }
+  console.log(deleteData);
+  let queryInsertDecision = 'INSERT INTO PETICIONES_PROCESADAS_TIENDAS SET ?';
+  database.query(queryInsertDecision, [saveData], (err: MysqlError | null) => {
+    if (err) {
+      throw err;
     }
-  );
+  });
 
   if (req.body.idDecision === 1) {
     let staticData = {
@@ -64,7 +61,7 @@ router.post("/api/savewarehouseproductsdecision", (req, res) => {
         numero_lote: entry.numero_de_orden,
         timestamp,
       };
-      let queryInsertDressMaking = "INSERT INTO INVENTARIO_TIENDAS SET ?";
+      let queryInsertDressMaking = 'INSERT INTO INVENTARIO_TIENDAS SET ?';
       database.query(
         queryInsertDressMaking,
         [saveDataDressMaking],
@@ -89,7 +86,7 @@ router.post("/api/savewarehouseproductsdecision", (req, res) => {
     if (err) {
       throw err;
     }
-    res.end(JSON.stringify("SUCCESSFUL_SAVING"));
+    res.end(JSON.stringify('SUCCESSFUL_SAVING'));
   });
 });
 
