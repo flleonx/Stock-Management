@@ -162,3 +162,13 @@
     width: 95.5%;
   }
 }
+
+@media (min-height: 1400px) {
+  .container_table-bodega {
+    height: 630px;
+  }
+
+  .scroll-modal-inventory {
+    max-height: 515px;
+  }
+}

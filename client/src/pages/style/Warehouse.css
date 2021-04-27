@@ -101,7 +101,7 @@
   width: 90%;
   margin-left: 7%;
   margin-top: 3%;
-  height: 470px;
+  height: 92%;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   border: 1px solid transparent;
@@ -412,7 +412,6 @@
 
 .dressMakingReqSection {
   width: 100%;
-  /* border: 1px solid lightgreen; */
   height: 83vh;
 }
 
@@ -423,8 +422,31 @@
   margin-top: 1%;
 }
 
+.no-data-image-warehouse-container {
+  height: 70%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.no-data-image-warehouse-container__img {
+  height: 100%;
+}
+
+.no-data-image-warehouse-paragraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 300;
+  margin-top: 1%;
+  margin-left: 3%;
+}
+
 .dressmakingReqContainer {
-  /* border: 1px solid blue; */
   background-color: rgb(245, 250, 249);
   margin-top: 1%;
   margin-left: 1.5%;
@@ -523,11 +545,11 @@
   }
 
   .warehouse-form {
-    margin-top: 18%;
+    margin-top: 20%;
   }
 
   .inventory-warehouse-open-modal {
-    margin-top: 7%;
+    margin-top: 7.5%;
   }
 
   .update-container {
@@ -568,5 +590,37 @@
 
   .requestWarehouseDecisionBTNContainer button {
     margin-top: 7%;
+  }
+
+  .dressMakingReqSection h3 {
+    margin-top: 1%;
+    font-size: 2rem;
+  }
+
+  .no-data-image-warehouse-container {
+    margin-top: 4%;
+  }
+
+  .no-data-image-warehouse-paragraph {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-height: 1400px) {
+  .warehouse-form {
+    margin-top: 20%;
+    height: 62%;
+  }
+
+  .inventory-warehouse-open-modal {
+    margin-top: 7.5%;
+  }
+
+  .no-data-image-warehouse-container {
+    margin-top: 5%;
+  }
+
+  .no-data-image-warehouse-paragraph {
+    font-size: 1.7rem;
   }
 }

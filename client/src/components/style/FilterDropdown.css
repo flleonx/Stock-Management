@@ -85,3 +85,9 @@
   background-color: #f2f9fc;
   color: #333;
 }
+
+@media (min-height: 1400px) {
+  .dropdown .selected-value input {
+    height: 50px;
+  }
+}

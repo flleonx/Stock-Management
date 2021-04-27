@@ -7,6 +7,7 @@ import {baseURL} from '../components/app/baseURL';
 import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
+import noDataImage from '../assets/no-data.svg';
 import ModalinsufficientSupplies from '../components/warehouse/ModalinsufficientSupplies';
 import ModalDecisionSupplies from '../components/warehouse/ModalDecisionSupplies';
 import {reducer} from '../components/warehouse/ReducerWarehouse';
@@ -302,12 +303,6 @@ function WareHouse() {
           </a>
         </div>
       </div>
-      {/* <h2 className="general-container-warehouse__h2">Bodega</h2>
-      <p className="general-container-warehouse__p">
-        ¡Hola!, Aquí podrás agregar nuevas telas e insumos, actualizar la
-        cantidad de telas o insumos ya registrados, desplegar el inventario que
-        hay en Bodega y manejar las peticiones.
-      </p> */}
       <div className="scroll-warehouse" id="scroll-warehouse">
         <div className="body-warehouse-information" id="new-supplies-section">
           <div className="warehouse-form-container">
@@ -420,33 +415,49 @@ function WareHouse() {
 
         <div className="dressMakingReqSection" id="request-section">
           <h3>Peticiones</h3>
-          <div className="dressmakingReqContainer">
-            {dressMakingReq.map((req: any, index: any) => {
-              return (
-                <div key={index} className="requestWarehouseContainer">
-                  <h4 className="requestWarehouseContainer__h4">
-                    Petición de taller confección
-                  </h4>
-                  <div className="requestWarehouseContainer__reference">
-                    Referencia: {req.referencia}
+          {dressMakingReq.length == 0 && (
+            <>
+              <div className="no-data-image-warehouse-container">
+                <img
+                  src={noDataImage}
+                  alt="no-data"
+                  className="no-data-image-warehouse-container__img"
+                />
+              </div>
+              <p className="no-data-image-warehouse-paragraph">
+                Aún no hay peticiones
+              </p>
+            </>
+          )}
+          {dressMakingReq.length !== 0 && (
+            <div className="dressmakingReqContainer">
+              {dressMakingReq.map((req: any, index: any) => {
+                return (
+                  <div key={index} className="requestWarehouseContainer">
+                    <h4 className="requestWarehouseContainer__h4">
+                      Petición de taller confección
+                    </h4>
+                    <div className="requestWarehouseContainer__reference">
+                      Referencia: {req.referencia}
+                    </div>
+                    <div className="requestWarehouseContainer__reference">
+                      Cantidad: {req.cantidad}
+                    </div>
+                    <div className="requestWarehouseDecisionBTNContainer">
+                      <button
+                        className="btn"
+                        onClick={() => {
+                          handlerDecision(index);
+                        }}
+                      >
+                        Tomar decisión
+                      </button>
+                    </div>
                   </div>
-                  <div className="requestWarehouseContainer__reference">
-                    Cantidad: {req.cantidad}
-                  </div>
-                  <div className="requestWarehouseDecisionBTNContainer">
-                    <button
-                      className="btn"
-                      onClick={() => {
-                        handlerDecision(index);
-                      }}
-                    >
-                      Tomar decisión
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
         <ModalinsufficientSupplies
           isOpen={state.isOpenNoSupplies}

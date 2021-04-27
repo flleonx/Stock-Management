@@ -9,6 +9,7 @@ import {baseURL} from '../components/app/baseURL';
 import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
+import noDataImage from '../assets/no-data.svg';
 import ModalAddSupplies from '../components/design/ModalDesignAddSupplies';
 import FilterDropdown from '../components/FilterDropdown';
 
@@ -61,13 +62,16 @@ const Design = () => {
     setAddedInformationFromModal,
   ] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const [switchNumber, setSwitchNumber] = useState<number>(0);
-  const [switchSection, setSwitchSection] = useState<boolean>(false);
   const [modalAddSupplies, setModalAddSupplies] = useState<boolean>(false);
 
   useEffect(() => {
     Axios.get(dbWareHouseCodesURL).then((response: AxiosResponse) => {});
-  }, [switchSection]);
+    Axios.get(productionAPIURL)
+      .then((response: any) => {
+        dispatch({type: 'SUCCESSFUL_SAMPLE_INVENTORY', payload: response.data});
+      })
+      .catch((error) => {});
+  }, []);
 
   const handlerAddSupplies = () => {
     setModalAddSupplies(true);
@@ -95,8 +99,6 @@ const Design = () => {
         return isCodeExist;
       }
     });
-
-    console.log(isCodeExist);
 
     const requestPayload = {
       addReference: addReference,
@@ -164,13 +166,7 @@ const Design = () => {
     setAddedInformationFromModal([]);
   };
 
-  const handleForm = () => {
-    setSwitchNumber(0);
-    setSwitchSection(!switchSection);
-  };
-
   const handleInventory = () => {
-    setSwitchNumber(1);
     Axios.get(productionAPIURL)
       .then((response: any) => {
         dispatch({type: 'SUCCESSFUL_SAMPLE_INVENTORY', payload: response.data});
@@ -182,25 +178,37 @@ const Design = () => {
     setModalAddSupplies(false);
   };
 
+  const handleNavbarClick = (e: any) => {
+    e.preventDefault();
+    const target = e.target.getAttribute('href');
+    const location = document.querySelector(target).offsetTop;
+    const scrollDiv = document.getElementById(
+      'scroll-design-section'
+    ) as HTMLDivElement;
+
+    scrollDiv.scrollTo(0, location - 108);
+  };
+
   return (
     <div className="general-container-design">
-      <h2 className="general-container-design__h2">Taller diseño</h2>
-      <p className="general-container-design__p">
-        ¡Hola!, Aqui puedes agregar nuevas referencias y observar la
-        informaconsolción de estas.
-      </p>
-      <div className="switch-design-container">
-        <button className="btn addButton" onClick={handleForm}>
-          Agregar muestra
-        </button>
-        <button className="btn inventoryButton" onClick={handleInventory}>
-          Inventario muestra
-        </button>
+      <div className="navbar-design">
+        <h2 className="navbar-design__h2">Taller diseño</h2>
+        <div className="navbar-design-otpions">
+          <a href="#add-reference-design-container" onClick={handleNavbarClick}>
+            Agregar una nueva muestra
+          </a>
+          <a href="#inventory-design-modal-section" onClick={handleNavbarClick}>
+            Inventario de las muestras
+          </a>
+        </div>
       </div>
-      {switchNumber === 0 && (
-        <div className="ingreso-referencia-container">
+      <div className="scroll-design-section" id="scroll-design-section">
+        <div
+          className="add-reference-design-container"
+          id="add-reference-design-container"
+        >
           <form className="design-form">
-            <h2>Agregar referencia</h2>
+            <h2>Agregar muestra</h2>
             <div className="border-design-div"></div>
             <p className="design-form__information">
               En este formulario puedes asociar insumos a una nueva muestra.
@@ -258,7 +266,22 @@ const Design = () => {
               </button>
             )}
           </form>
-          <div className="insumosAgregados">
+          <div className="supplies-added-design">
+            <h3>Insumos agregados</h3>
+            {addedInformationFromModal.length == 0 && (
+              <>
+                <div className="no-data-image-container">
+                  <img
+                    src={noDataImage}
+                    alt="no-data"
+                    className="no-data-image-container__img"
+                  />
+                </div>
+                <p className="no-data-paragraph">
+                  Aún no se han añadido insumos
+                </p>
+              </>
+            )}
             {addedInformationFromModal.map((item: any) => {
               return (
                 <div key={item.supplyCode} className="insumo-add">
@@ -269,13 +292,17 @@ const Design = () => {
             })}
           </div>
         </div>
-      )}
-      {switchNumber === 1 && (
-        <ModalDesignInventory
-          closeModal={closeModal}
-          modalContent={state.modalInventoryContent}
-        />
-      )}
+        <div
+          className="inventory-design-modal-section"
+          id="inventory-design-modal-section"
+        >
+          <h3>Inventario de las muestras</h3>
+          <ModalDesignInventory
+            closeModal={closeModal}
+            modalContent={state.modalInventoryContent}
+          />
+        </div>
+      </div>
       <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
         <h1 className="modalWarehouseh1">{state.modalContent}</h1>
         {state.imgCheckNumber === 1 && (

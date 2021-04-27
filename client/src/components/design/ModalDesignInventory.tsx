@@ -62,7 +62,7 @@ const ModalDesignInventory = ({modalContent, closeModal}: any) => {
         <div className="table_header-design-sample">Muestra</div>
         <div className="table_header-design-img">Imagen</div>
       </div>
-      <div className="scroll-design">
+      <div className="scroll-modal-design">
         {modalContent
           .filter((val: any) => {
             iterator += 1;

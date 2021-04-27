@@ -4,7 +4,7 @@
   margin: 0 auto;
   margin-top: -40px;
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
-  height: 390px;
+  height: 415px;
   margin-top: 2%;
 }
 
@@ -112,20 +112,20 @@
   border-style: hidden hidden solid hidden;
 }
 
-.scroll-design {
+.scroll-modal-design {
   width: 100%;
   overflow-y: hidden;
   overflow-y: scroll;
-  max-height: 285px;
+  max-height: 310px;
 }
 
-.scroll-design::-webkit-scrollbar {
+.scroll-modal-design::-webkit-scrollbar {
   width: 8px;
   background: #daf7ee;
   border-radius: 0 8px 8px 0;
 }
 
-.scroll-design::-webkit-scrollbar-thumb {
+.scroll-modal-design::-webkit-scrollbar-thumb {
   background: #daf7ee;
   border-radius: 0 3px 3px 0;
 }
@@ -178,4 +178,26 @@
   width: 65%;
   height: 50%;
   margin-left: 20%;
+}
+
+@media (min-height: 1075px) {
+  .container_table-design {
+    height: 550px;
+    margin-top: 3%;
+  }
+
+  .scroll-modal-design {
+    max-height: 440px;
+  }
+}
+
+@media (min-height: 1400px) {
+  .container_table-design {
+    height: 650px;
+    margin-top: 3%;
+  }
+
+  .scroll-modal-design {
+    max-height: 535px;
+  }
 }
