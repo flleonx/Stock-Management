@@ -460,3 +460,14 @@
   border-top-right-radius: 3px;
   top: 9px;
 }
+
+/* RESPONSIVE */
+
+@media (max-height: 780px) {
+  .navbar-option {
+    width: 100%;
+    height: 55px;
+    margin-bottom: 16%;
+    cursor: pointer;
+  }
+}

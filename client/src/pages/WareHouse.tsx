@@ -275,188 +275,231 @@ function WareHouse() {
     dispatch({tpye: 'CLOSE_MODAL'});
   };
 
+  const handleNavbarClick = (e: any) => {
+    e.preventDefault();
+    const target = e.target.getAttribute('href');
+    const location = document.querySelector(target).offsetTop;
+    const scrollDiv = document.getElementById(
+      'scroll-warehouse'
+    ) as HTMLDivElement;
+
+    scrollDiv.scrollTo(0, location - 108);
+  };
+
   return (
     <div className="general-container-warehouse">
-      <h2 className="general-container-warehouse__h2">Bodega</h2>
+      <div className="navbar-warehouse">
+        <h2 className="navbar-warehouse__h2">Bodega Insumos</h2>
+        <div className="navbar-warehouse-otpions">
+          <a href="#new-supplies-section" onClick={handleNavbarClick}>
+            Registrar nuevos insumos
+          </a>
+          <a href="#new-supplies-section" onClick={handleNavbarClick}>
+            Inventario
+          </a>
+          <a href="#update-section" onClick={handleNavbarClick}>
+            Actualizar insumos existentes
+          </a>
+          <a href="#request-section" onClick={handleNavbarClick}>
+            Peticiones
+          </a>
+        </div>
+      </div>
+      {/* <h2 className="general-container-warehouse__h2">Bodega</h2>
       <p className="general-container-warehouse__p">
         ¡Hola!, Aquí podrás agregar nuevas telas e insumos, actualizar la
         cantidad de telas o insumos ya registrados, desplegar el inventario que
         hay en Bodega y manejar las peticiones.
-      </p>
-      <div className="body-warehouse-information">
-        <div className="warehouse-form-container">
-          <form className="warehouse-form">
-            <h2>Registrar nuevos insumos</h2>
-            <div className="border-div"></div>
-            <input
-              type="text"
-              id="codigo"
-              placeholder="Código"
-              onChange={(e: any) => setCode(e.target.value)}
-            />
-            <input
-              type="text"
-              id="color"
-              placeholder="Color"
-              onChange={(e: any) => setColor(e.target.value)}
-            />
-            <input
-              type="number"
-              id="amount"
-              placeholder="Metros/Cantidad"
-              onChange={(e: any) => setAmount(e.target.value)}
-            />
-            <input
-              type="text"
-              id="descripcion"
-              placeholder="Descripción"
-              className="descriptionInput"
-              onChange={(e: any) => setDescription(e.target.value)}
-            />
-            <input
-              type="text"
-              id="url-img"
-              placeholder="URL de la imágen"
-              onChange={(e: any) => setImg(e.target.value)}
-            />
-            <div className="select-container-bodega">
-              <p className="selected-option-bodega">
-                Seleccionar tela o insumo
-              </p>
-              <ul className="options-container-bodega">
-                <li className="option-bodega">Tela</li>
-                <li className="option-bodega">Insumo</li>
-              </ul>
-            </div>
-            <button className="btn" onClick={handleSubmit}>
-              Enviar
-            </button>
-          </form>
-        </div>
-        <div className="inventory-warehouse-open-modal">
-          <div className="bodega-inventory">
-            <h2>Click aquí para desplegar el inventario en Bodega:</h2>
-            <button className="btn" onClick={handleInvetoryTable}>
-              Desplegar
-            </button>
+      </p> */}
+      <div className="scroll-warehouse" id="scroll-warehouse">
+        <div className="body-warehouse-information" id="new-supplies-section">
+          <div className="warehouse-form-container">
+            <form className="warehouse-form">
+              <h2>Registrar nuevos insumos</h2>
+              <div className="border-div"></div>
+              <input
+                type="text"
+                id="codigo"
+                placeholder="Código"
+                onChange={(e: any) => setCode(e.target.value)}
+              />
+              <input
+                type="text"
+                id="color"
+                placeholder="Color"
+                onChange={(e: any) => setColor(e.target.value)}
+              />
+              <input
+                type="number"
+                id="amount"
+                placeholder="Metros/Cantidad"
+                onChange={(e: any) => setAmount(e.target.value)}
+              />
+              <input
+                type="text"
+                id="descripcion"
+                placeholder="Descripción"
+                className="descriptionInput"
+                onChange={(e: any) => setDescription(e.target.value)}
+              />
+              <input
+                type="text"
+                id="url-img"
+                placeholder="URL de la imágen"
+                onChange={(e: any) => setImg(e.target.value)}
+              />
+              <div className="select-container-bodega">
+                <p className="selected-option-bodega">
+                  Seleccionar tela o insumo
+                </p>
+                <ul className="options-container-bodega">
+                  <li className="option-bodega">Tela</li>
+                  <li className="option-bodega">Insumo</li>
+                </ul>
+              </div>
+              <button className="btn" onClick={handleSubmit}>
+                Enviar
+              </button>
+            </form>
           </div>
-          {state.isModalOpen && (
-            <ModalInvetoryWareHouse
-              modalContent={state.modalContent}
-              closeModal={closeModal}
+          <div className="inventory-warehouse-open-modal">
+            <div className="bodega-inventory">
+              <h2>Click aquí para desplegar el inventario en Bodega:</h2>
+              <button className="btn" onClick={handleInvetoryTable}>
+                Desplegar
+              </button>
+            </div>
+            {state.isModalOpen && (
+              <ModalInvetoryWareHouse
+                modalContent={state.modalContent}
+                closeModal={closeModal}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="update-container" id="update-section">
+          <div className="update-container-card">
+            <div className="update-container__h2">
+              Actualizar insumos registrados
+            </div>
+            <div className="update-container-form">
+              <div className="filterDropdownUpdateWarehouse">
+                <FilterDropdown
+                  options={queryData}
+                  id="codigo"
+                  label="codigo"
+                  prompt="Seleccionar código"
+                  value={valueCode}
+                  onChange={(val: any) => setValueCode(val)}
+                />
+              </div>
+              <input
+                type="number"
+                id="amount-update-inventory"
+                placeholder="Cantidad"
+                className="amount-update-inventory"
+                onChange={(e: any) => setUpdateAmount(e.target.value)}
+              />
+              <button className="btn" onClick={handleUpdateInventory}>
+                {' '}
+                Actualizar
+              </button>
+            </div>
+          </div>
+
+          <div className="information-update-container">
+            <h2 className="information-update-container__h2">
+              Actualizar cantidad a un insumo registrado
+            </h2>
+            <p className="information-update-container__p">
+              ¿Has recibido más stock de insumos ya registrados en tu
+              inventario? En este apartado puedes actualizar estos insumos
+              existentes. Solo escoge el codigo, digita la cantidad y presiona
+              el botón actualizar. Así de sencillo :)
+            </p>
+          </div>
+        </div>
+
+        <div className="dressMakingReqSection" id="request-section">
+          <h3>Peticiones</h3>
+          <div className="dressmakingReqContainer">
+            {dressMakingReq.map((req: any, index: any) => {
+              return (
+                <div key={index} className="requestWarehouseContainer">
+                  <h4 className="requestWarehouseContainer__h4">
+                    Petición de taller confección
+                  </h4>
+                  <div className="requestWarehouseContainer__reference">
+                    Referencia: {req.referencia}
+                  </div>
+                  <div className="requestWarehouseContainer__reference">
+                    Cantidad: {req.cantidad}
+                  </div>
+                  <div className="requestWarehouseDecisionBTNContainer">
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        handlerDecision(index);
+                      }}
+                    >
+                      Tomar decisión
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <ModalinsufficientSupplies
+          isOpen={state.isOpenNoSupplies}
+          closeModal={closeModal}
+          arrayNoSupplies={state.modalContent}
+          infoRequest={infoRequest}
+          handlerReject={handlerRefuse}
+        />
+        <ModalDecisionSupplies
+          isOpen={isOpenDecision}
+          closeModal={closeModal}
+          infoRequest={infoRequest}
+          handlerReject={handlerRefuse}
+          handlerAccept={handlerApprove}
+        />
+        <Modal isOpen={state.isFormModalOpen} closeModal={closeModal}>
+          <h1 className="modalWarehouseh1">{state.modalFormContent}</h1>
+          {state.imgCheckNumber === 1 && (
+            <img
+              className="modalWarehouseImg"
+              src={completeImage}
+              alt="modalImg"
             />
           )}
-        </div>
-      </div>
-
-      <div className="update-container">
-        <div className="update-container__h2">Añadir a Insumo registrado</div>
-        <div className="update-container__p">
-          Aquí puedes actualizar la cantidad de insumos existentes
-        </div>
-        <div className="update-container-form">
-          {/* <div className="select-update-inventory">
-            <p className="selected-update-inventory">Seleccionar código</p>
-            <ul className="options-update-inventory">
-              {queryData.map((data: any) => {
-                return (
-                  <li key={data.codigo} className="option-update-inventory">
-                    {data.codigo}
-                  </li>
-                );
-              })}
-            </ul>
-          </div> */}
-          <div className="filterDropdownWarehouse">
-            <FilterDropdown
-              options={queryData}
-              id="codigo"
-              label="codigo"
-              prompt="Seleccionar código"
-              value={valueCode}
-              onChange={(val: any) => setValueCode(val)}
+          {state.imgCheckNumber === 2 && (
+            <img
+              className="modalWarehouseImg"
+              src={errorImage}
+              alt="modalImg"
             />
-          </div>
-          <input
-            type="number"
-            id="amount-update-inventory"
-            placeholder="Cantidad"
-            className="amount-update-inventory"
-            onChange={(e: any) => setUpdateAmount(e.target.value)}
-          />
-          <button className="btn" onClick={handleUpdateInventory}>
-            {' '}
-            Actualizar
-          </button>
-        </div>
+          )}
+        </Modal>
+        <Modal isOpen={state.isModalUpdateOpen} closeModal={closeModal}>
+          <h1 className="modalWarehouseh1">{state.modalUpdateContent}</h1>
+          {state.imgCheckNumber === 1 && (
+            <img
+              className="modalWarehouseImg"
+              src={completeImage}
+              alt="modalImg"
+            />
+          )}
+          {state.imgCheckNumber === 2 && (
+            <img
+              className="modalWarehouseImg"
+              src={errorImage}
+              alt="modalImg"
+            />
+          )}
+        </Modal>
       </div>
-      <Modal isOpen={state.isFormModalOpen} closeModal={closeModal}>
-        <h1 className="modalWarehouseh1">{state.modalFormContent}</h1>
-        {state.imgCheckNumber === 1 && (
-          <img
-            className="modalWarehouseImg"
-            src={completeImage}
-            alt="modalImg"
-          />
-        )}
-        {state.imgCheckNumber === 2 && (
-          <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
-        )}
-      </Modal>
-      <Modal isOpen={state.isModalUpdateOpen} closeModal={closeModal}>
-        <h1 className="modalWarehouseh1">{state.modalUpdateContent}</h1>
-        {state.imgCheckNumber === 1 && (
-          <img
-            className="modalWarehouseImg"
-            src={completeImage}
-            alt="modalImg"
-          />
-        )}
-        {state.imgCheckNumber === 2 && (
-          <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
-        )}
-      </Modal>
-      <div className="dressmakingReqContainer">
-        {dressMakingReq.map((req: any, index: any) => {
-          return (
-            <div key={index} className="requestWarehouseContainer">
-              <h4 className="requestWarehouseContainer__h4">
-                Petición de taller confección
-              </h4>
-              <div className="requestWarehouseContainer__reference">
-                Referencia: {req.referencia}
-              </div>
-              <div className="requestWarehouseContainer__reference">
-                Cantidad: {req.cantidad}
-              </div>
-              <div className="requestWarehouseDecisionBTNContainer">
-                <button
-                  className="btn"
-                  onClick={() => {
-                    handlerDecision(index);
-                  }}
-                >
-                  Tomar decisión
-                </button>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <ModalinsufficientSupplies
-        isOpen={state.isOpenNoSupplies}
-        closeModal={closeModal}
-        arrayNoSupplies={state.modalContent}
-        infoRequest={infoRequest}
-        handlerReject={handlerRefuse}
-      />
-      <ModalDecisionSupplies
-        isOpen={isOpenDecision}
-        closeModal={closeModal}
-        infoRequest={infoRequest}
-        handlerReject={handlerRefuse}
-        handlerAccept={handlerApprove}
-      />
     </div>
   );
 }
