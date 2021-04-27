@@ -1,7 +1,7 @@
-import routerStatement from "express";
-import { MysqlError } from "mysql";
+import routerStatement from 'express';
+import {MysqlError} from 'mysql';
 const router = routerStatement.Router();
-import database from "../../config/dbConfig";
+import database from '../../config/dbConfig';
 
 interface IReference {
   referencia: number;
@@ -18,8 +18,16 @@ interface IApprovedRequests {
   timestamp: string;
 }
 
-router.get("/api/references", (req, res) => {
-  let referencesQuery = "SELECT * FROM InventoryManagement.MUESTRAS_PRODUCCION";
+interface IRequestHistory {
+  numero_de_orden: number;
+  referencia: number;
+  cantidad: number;
+  decision: string;
+  timestamp: string;
+}
+
+router.get('/api/references', (req, res) => {
+  let referencesQuery = 'SELECT * FROM InventoryManagement.MUESTRAS_PRODUCCION';
 
   let dbQuery = database.query(
     referencesQuery,
@@ -32,8 +40,8 @@ router.get("/api/references", (req, res) => {
   );
 });
 
-router.get("/api/getapprovedrequests", (req, res) => {
-  let referencesQuery = "SELECT * FROM InventoryManagement.PROCESO_CONFECCION";
+router.get('/api/getapprovedrequests', (req, res) => {
+  let referencesQuery = 'SELECT * FROM InventoryManagement.PROCESO_CONFECCION';
 
   let dbQuery = database.query(
     referencesQuery,
@@ -46,5 +54,19 @@ router.get("/api/getapprovedrequests", (req, res) => {
   );
 });
 
+router.get('/api/getRequestHistoryDressmaking', (req, res) => {
+  let requestHistoryQuery =
+    'SELECT p.numero_de_orden, p.referencia, p.cantidad, d.decision, p.timestamp FROM PETICIONES_PROCESADAS_CONFECCION p, decision d WHERE p.idDecision=d.idDecision';
+
+  let dbQuery = database.query(
+    requestHistoryQuery,
+    async (err: MysqlError | null, dataRequestHistory: IRequestHistory) => {
+      if (err) {
+        throw err;
+      }
+      res.end(JSON.stringify(dataRequestHistory));
+    }
+  );
+});
 
 export default router;
