@@ -54,7 +54,7 @@
 }
 
 .navbar-warehouse-otpions {
-  width: 70%;
+  width: 60%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -518,6 +518,10 @@
 }
 
 @media (min-height: 1075px) {
+  .general-container-warehouse {
+    margin-left: -2.5%;
+  }
+
   .warehouse-form {
     margin-top: 18%;
   }
@@ -527,7 +531,6 @@
   }
 
   .update-container {
-    border: 1px solid blue;
     height: 83vh;
   }
 
@@ -553,7 +556,6 @@
 
   .dressMakingReqSection {
     height: 83vh;
-    border: 1px solid lightsalmon;
   }
 
   .requestWarehouseContainer__h4 {

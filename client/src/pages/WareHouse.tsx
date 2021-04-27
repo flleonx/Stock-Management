@@ -292,10 +292,7 @@ function WareHouse() {
         <h2 className="navbar-warehouse__h2">Bodega Insumos</h2>
         <div className="navbar-warehouse-otpions">
           <a href="#new-supplies-section" onClick={handleNavbarClick}>
-            Registrar nuevos insumos
-          </a>
-          <a href="#new-supplies-section" onClick={handleNavbarClick}>
-            Inventario
+            Registrar nuevos insumos / Inventarios
           </a>
           <a href="#update-section" onClick={handleNavbarClick}>
             Actualizar insumos existentes
