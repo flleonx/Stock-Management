@@ -37,6 +37,7 @@ const DressMaking: React.FC = () => {
   const [selectedReference, setSelectedReference] = useState<string>('');
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [approvedRequests, setApprovedRequests] = useState<any>([]);
+  const [requestsHistory, setRequestsHistory] = useState<any>([]);
   const [numberInput, setNumberInput] = useState<string>('');
   const refContainer: any = useRef(null);
   const [isOpenARYModal, setIsOpenARYModal] = useState<boolean>(false);
@@ -48,6 +49,8 @@ const DressMaking: React.FC = () => {
   const dbApprovedRequests: string = baseURL + 'api/getapprovedrequests';
   const dbUpdateDressMakingProcess: string =
     baseURL + 'api/updatedressmakingprocess';
+  const dbRequestHistoryDressmaking: string =
+    baseURL + 'api/getRequestHistoryDressmaking';
 
   // HANDLE AMOUNT INPUT
   const handleInput = (input: any) => {
@@ -67,6 +70,10 @@ const DressMaking: React.FC = () => {
 
     Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
       setApprovedRequests(response.data);
+    });
+
+    Axios.get(dbRequestHistoryDressmaking).then((response: AxiosResponse) => {
+      setRequestsHistory(response.data);
     });
   }, []);
 
@@ -169,33 +176,44 @@ const DressMaking: React.FC = () => {
     dispatch({type: 'CLOSE_MODAL'});
   };
 
+  const handleNavbarClick = (e: any) => {
+    e.preventDefault();
+    const target = e.target.getAttribute('href');
+    const location = document.querySelector(target).offsetTop;
+    const scrollDiv = document.getElementById(
+      'scroll-dressmaking'
+    ) as HTMLDivElement;
+
+    scrollDiv.scrollTo(0, location - 108);
+  };
+
   return (
     <div className="general-container-dressmaking">
-      <h2 className="general-container-dressmaking__h2">
-        Taller de confección
-      </h2>
-      <p className="general-container-dressmaking__p">
-        ¡Hola!, Aquí puedes digitar la cantidad a producir de una o varias
-        referencias.
-      </p>
-      <div className="external_options_container">
-        <div className="options_container">
-          <div className="select_box_center-reference">
-            <div className="references-container">
-              <div className="title">Seleccione la referencia:</div>
-              {/* <div className="select-container">
-                <p className="selected-option-dressmaking">Seleccionar</p>
-                <ul className="options-container">
-                  {references.map((reference: IReference) => {
-                    return (
-                      <li key={reference.referencia} className="option">
-                        {reference.referencia}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div> */}
-              <div className="filterDropdownDressmaking">
+      <div className="navbar-dressmaking">
+        <h2 className="navbar-dressmaking__h2">Taller confección</h2>
+        <div className="navbar-dressmaking-otpions">
+          <a href="#ressmaking-request-container" onClick={handleNavbarClick}>
+            Enviar petición
+          </a>
+          <a href="#dressmaking-process-container" onClick={handleNavbarClick}>
+            Artículos en proceso
+          </a>
+          <a href="#requests-history-section" onClick={handleNavbarClick}>
+            Historial de peticiones
+          </a>
+        </div>
+      </div>
+      <div className="scroll-dressmaking-section" id="scroll-dressmaking">
+        <div
+          className="dressmaking-request-container"
+          id="ressmaking-request-container"
+        >
+          <div className="dressmaking-request-card">
+            <div className="dressmaking-request-card__h2">
+              Actualizar insumos registrados
+            </div>
+            <div className="dressmaking-request-form">
+              <div className="filter-dropdown-request-dressmaking">
                 <FilterDropdown
                   options={references}
                   id="referencia"
@@ -205,71 +223,102 @@ const DressMaking: React.FC = () => {
                   onChange={(val: any) => setValueReferenceSelect(val)}
                 />
               </div>
-            </div>
-          </div>
-          <div className="select_box_center-amount">
-            <div className="title">Cantidad:</div>
-            <input
-              ref={refContainer}
-              id="actualAmount"
-              name="actualAmount"
-              className="actualAmount"
-              type="number"
-              value={amount}
-              autoComplete="off"
-              onChange={(e) => {
-                setAmount(e.target.value);
-              }}
-            />
-          </div>
-          <div className="select_box_center-button">
-            <button className="btn" type="button" onClick={suppliesRequest}>
-              Enviar
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="dressMakingReqProcessContainer">
-        {approvedRequests.map((item: any) => {
-          return (
-            <div className="requestDressmakingContainer">
-              <h4 className="requestDressmakingContainer__h4">
-                Referencia en proceso
-              </h4>
-              <div className="requestDressmakingContainer__reference">
-                Petición: #{item.id}
-              </div>
-              <div className="requestDressmakingContainer__reference">
-                Referencia: {item.referencia}
-              </div>
-              <div className="requestDressmakingContainer__amount">
-                Cantidad en proceso: {item.cantidad}
-              </div>
-              <div className="requestDressmakingContainer__timestamp">
-                Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
-              </div>
               <input
-                className={'h' + item.id}
-                id="requestDressmakingContainer__amountInput"
+                ref={refContainer}
+                id="actualAmount"
+                name="actualAmount"
+                className="actualAmount"
+                placeholder="cantidad"
                 type="number"
-                placeholder="Digite la cantidad terminada"
-              />
-              <button
-                className="btn requestDressmakingContainer__accept"
-                onClick={() => {
-                  verificationARYModal(
-                    item.referencia,
-                    item.id,
-                    item.cantidad,
-                    document.querySelector('.h' + item.id)
-                  );
+                value={amount}
+                autoComplete="off"
+                onChange={(e) => {
+                  setAmount(e.target.value);
                 }}
-              >
-                Aceptar
+              />
+              <button className="btn" type="button" onClick={suppliesRequest}>
+                Enviar
               </button>
             </div>
-          );
-        })}
+          </div>
+
+          <div className="information-dressmaking-request-container">
+            <h2 className="information-dressmaking-request-container__h2">
+              Enviar petición a Bodega Insumos
+            </h2>
+            <p className="information-dressmaking-request-container__p">
+              ¿Necesitas confeccionar un nuevo artículo? Entonces envía una
+              petición a Bodega Insumos para obtener los insumos necesarios para
+              confeccionar este artículo. Para esto solo escoge la referencia
+              del artículo que quieres hacer, cuantos artículos quieres realizar
+              y preciona el botón enviar. Así de fácil :)
+            </p>
+          </div>
+        </div>
+        <div
+          className="dressmaking-process-container"
+          id="dressmaking-process-container"
+        >
+          <h3>Artículos en proceso</h3>
+          <div className="approved-requests-dressmaking-container">
+            {approvedRequests.map((item: any) => {
+              return (
+                <div className="requestDressmakingContainer">
+                  <h4 className="requestDressmakingContainer__h4">
+                    Referencia en proceso
+                  </h4>
+                  <div className="requestDressmakingContainer__reference">
+                    Petición: #{item.id}
+                  </div>
+                  <div className="requestDressmakingContainer__reference">
+                    Referencia: {item.referencia}
+                  </div>
+                  <div className="requestDressmakingContainer__amount">
+                    Cantidad en proceso: {item.cantidad}
+                  </div>
+                  <div className="requestDressmakingContainer__timestamp">
+                    Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
+                  </div>
+                  <input
+                    className={'h' + item.id}
+                    id="requestDressmakingContainer__amountInput"
+                    type="number"
+                    placeholder="Digite la cantidad terminada"
+                  />
+                  <button
+                    className="btn requestDressmakingContainer__accept"
+                    onClick={() => {
+                      verificationARYModal(
+                        item.referencia,
+                        item.id,
+                        item.cantidad,
+                        document.querySelector('.h' + item.id)
+                      );
+                    }}
+                  >
+                    Aceptar
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="requests-history-section" id="requests-history-section">
+          <h3>Historial de peticiones</h3>
+          <div className="requets-history-dressmaking-container">
+            {requestsHistory.map((request: any) => {
+              return (
+                <div className="request-card-container">
+                  <div># de orden: {request.numero_de_orden}</div>
+                  <div>Referencia: {request.referencia}</div>
+                  <div>Cantidad: {request.cantidad}</div>
+                  <div>Decision: {request.decision}</div>
+                  <div>Timestamp: {request.timestamp}</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
       {state.isInsufficientModalOpen && (
         <SuccessfulModalDressMaking

@@ -413,7 +413,7 @@ function WareHouse() {
           </div>
         </div>
 
-        <div className="dressMakingReqSection" id="request-section">
+        <div className="warehouseReqSection" id="request-section">
           <h3>Peticiones</h3>
           {dressMakingReq.length == 0 && (
             <>
