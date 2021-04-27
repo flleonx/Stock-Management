@@ -18,13 +18,17 @@ const ModalWarehouseProductsReq = (props: any) => {
     props.closeModal();
   };
 
+  const handlerPartialDelivery = () => {
+    props.handlerPartialDelivery(props.index);
+    props.closeModal();
+  };
+
   const handlerApprove = () => {
     props.handlerAccept(props.index);
     props.closeModal();
   };
+  console.log(props.infoReq)
 
-  console.log(props.infoReq);
-  console.log(props.isShopReqOkey);
 
   if (!props.isOpen) return null;
   if (props.checkReqNumber === 1) {
@@ -102,20 +106,35 @@ const ModalWarehouseProductsReq = (props: any) => {
           </p>
           {props.infoReq.map((info: any) => {
             return (
-              <div className="insufficientModalCard">
-                <h4 className="insufficientModalCard__h4">
-                  Producto insuficiente
+              <div className="successModalCard">
+                <h4 className="successModalCard__h4">
+                  Información del producto
                 </h4>
-                <div className="insufficientModalCard__reference">
+                <div className="successModalCard__lot">
+                  Numero lote: {info.numero_lote}
+                </div>
+                <div className="successModalCard__reference">
                   Referencia: {info.referencia}
                 </div>
-                <div className="insufficientModalCard__amount">
-                  Cantidad necesaria: {info.cantidad}
+                <div className="successModalCard__order">
+                  # de orden: {info.numero_de_orden}
+                </div>
+                <div className="successModalCard__amount">
+                  Cantidad: {info.cantidad}
+                </div>
+                <div className="successModalCard__date">
+                  Fecha: {info.timestamp.replace('T', ' ').slice(0, 16)}
                 </div>
               </div>
             );
           })}
           <div className="buttonRejectContainer">
+            <button
+              className="btn buttonRejectContainer__Reject"
+              onClick={handlerPartialDelivery}
+            >
+               PET PARCIAL
+            </button>
             <button
               className="btn buttonRejectContainer__Reject"
               onClick={handlerReject}
@@ -138,7 +157,7 @@ const ModalWarehouseProductsReq = (props: any) => {
             X
           </button>
           <h2 className="ModalWarehouseProductsComponent__h2">
-            Error: El código no existe
+            Aviso: No hay existencias.
           </h2>
           <div className="imgErrorWarehouseProductContainer">
             <img
