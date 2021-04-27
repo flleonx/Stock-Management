@@ -5,7 +5,7 @@ import database from "../../config/dbConfig";
 
 router.get("/api/getwarehouseproducts", (req, res) => {
   let queryWareHouseProducts =
-    "SELECT * FROM InventoryManagement.BODEGA_PRODUCTOS";
+    "SELECT * FROM InventoryManagement.BODEGA_PRODUCTOS WHERE cantidad NOT IN (0)";
 
   database.query(
     queryWareHouseProducts,

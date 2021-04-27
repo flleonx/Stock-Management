@@ -22,6 +22,7 @@ const WareHouseProducts = () => {
     cantidad: string;
     timestamp: string;
     restante?: string;
+    faltante?: string;
   }
 
   interface IShopRequests {
@@ -53,6 +54,7 @@ const WareHouseProducts = () => {
   const dbAcceptShopRequest: string = baseURL + 'api/acceptshoprequest';
   const dbActualShopsRequests: string = baseURL + 'api/getactualshoprequests';
   const dbSaveDecision: string = baseURL + 'api/savewarehouseproductsdecision';
+  const dbPartialDelivery: string = baseURL + 'api/updatepartialdelivery';
 
   useEffect(() => {
     Axios.get(dbWareHouseProducts).then((response: AxiosResponse) => {
@@ -65,21 +67,12 @@ const WareHouseProducts = () => {
   }, []);
 
   const handlerShowInfo = (index: number) => {
-    console.log(actualShopRequests[index]);
     Axios.post(dbShopsRequestProducts, {
       reference: actualShopRequests[index].referencia,
       amount: actualShopRequests[index].cantidad,
     }).then((response: AxiosResponse) => {
-      console.log(response.data);
-      if (Number.isInteger(Number(response.data))) {
-        console.log('No hay suficientes se necesitan: ', response.data);
-        const insufficientInfo = [
-          {
-            referencia: actualShopRequests[index].referencia.toString(),
-            cantidad: response.data.toString(),
-          },
-        ];
-        setShopRequestInfo(insufficientInfo);
+      if (response.data[response.data.length - 1].faltante) {
+        setShopRequestInfo(response.data);
         setCheckReqNumber(2);
         setIndexModal(index);
         setIsOpenModalReq(true);
@@ -99,8 +92,6 @@ const WareHouseProducts = () => {
 
   const handlerApprove = (payload: any) => {
     let index = payload;
-    console.log(shopRequestInfo);
-    console.log(shopRequestInfo);
     // dispatch({ type: "SUCCESSFUL_REQUEST" });
     console.log('TODO NICE');
     Axios.post(dbSaveDecision, {
@@ -119,8 +110,6 @@ const WareHouseProducts = () => {
 
   const handlerRefuse = (payload: any) => {
     let index = payload;
-    console.log(actualShopRequests[index]);
-    console.log(index);
     Axios.post(dbSaveDecision, {
       ...actualShopRequests[index],
       idDecision: 0,
@@ -139,6 +128,17 @@ const WareHouseProducts = () => {
 
     // setDressMakingReq(dressMakingReq.splice[index])
   };
+
+  const handlerPartialDelivery = (index: number) => {
+    Axios.post(dbPartialDelivery,{
+      ...actualShopRequests[index],
+      neededStock: shopRequestInfo,
+      idDecision: 1,
+    }
+    ).then((response: AxiosResponse) => {
+      console.log(response.data)
+    });
+  }
 
   const closeModal = () => {
     setIsOpenModalReq(false);
@@ -256,6 +256,7 @@ const WareHouseProducts = () => {
         checkReqNumber={checkReqNumber}
         handlerRefuse={handlerRefuse}
         handlerAccept={handlerApprove}
+        handlerPartialDelivery={handlerPartialDelivery}
         index={indexModal}
       />
     </div>
