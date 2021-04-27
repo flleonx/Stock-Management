@@ -177,7 +177,30 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.no-data-image-approved-req-dressmaking-container {
+  height: 70%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2%;
+}
+
+.no-data-image-approved-req-dressmaking-container__img {
+  height: 100%;
+}
+
+.no-data-image-approved-req-dressmaking-paragraph {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 300;
   margin-top: 1%;
+  margin-left: 3%;
 }
 
 .approved-requests-dressmaking-container {
@@ -321,4 +344,207 @@
 
 .requets-history-dressmaking-container::-webkit-scrollbar-button {
   display: none;
+}
+
+.label-history-request-dressmanking {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 1%;
+  background-color: #204363;
+  color: white;
+  position: sticky;
+  top: 0;
+}
+
+.label-history-request-dressmanking__number-of-order,
+.label-history-request-dressmanking__reference {
+  margin-right: 8.2%;
+}
+
+.label-history-request-dressmanking__amount {
+  margin-left: 4%;
+}
+
+.label-history-request-dressmanking__decision {
+  margin-left: 13.5%;
+}
+
+.label-history-request-dressmanking__timestamp {
+  margin-left: 19.5%;
+}
+
+.label-history-request-dressmanking__number-of-order {
+  margin-left: 5%;
+}
+
+.request-card-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 1%;
+  background-color: #f8f9fb;
+}
+
+/* RESPONSIVE */
+
+@media (min-height: 1075px) {
+  .general-container-dressmaking {
+    margin-left: -2.5%;
+  }
+
+  .dressmaking-request-card {
+    height: 50%;
+    margin-top: 13%;
+  }
+
+  .dressmaking-request-card__h2 {
+    font-size: 1.4rem;
+    margin-top: 7%;
+  }
+
+  .information-dressmaking-request-container {
+    margin-top: 20%;
+  }
+
+  .information-dressmaking-request-container__h2 {
+    font-size: 1.8rem;
+  }
+
+  .information-dressmaking-request-container__p {
+    font-size: 1.6rem;
+  }
+
+  .dressmaking-process-container h3 {
+    font-size: 2rem;
+  }
+
+  .no-data-image-approved-req-dressmaking-container {
+    margin-top: 4.5%;
+  }
+
+  .no-data-image-approved-req-dressmaking-paragraph {
+    font-size: 1.6rem;
+    margin-top: 1%;
+  }
+
+  .requestDressmakingContainer {
+    height: 28%;
+  }
+
+  .label-history-request-dressmanking__number-of-order,
+  .label-history-request-dressmanking__reference {
+    margin-right: 12%;
+  }
+
+  .label-history-request-dressmanking__number-of-order {
+    margin-left: 6%;
+  }
+
+  .label-history-request-dressmanking__amount {
+    margin-left: 2%;
+  }
+
+  .label-history-request-dressmanking__decision {
+    margin-left: 16%;
+  }
+
+  .label-history-request-dressmanking__timestamp {
+    margin-left: 20%;
+  }
+}
+
+@media (min-height: 1400px) {
+  .general-container-dressmaking {
+    margin-left: -4%;
+  }
+
+  .dressmaking-request-card {
+    height: 50%;
+    margin-top: 13%;
+  }
+
+  .dressmaking-request-card__h2 {
+    font-size: 1.5rem;
+    margin-top: 7%;
+  }
+
+  .dressmaking-request-form button {
+    width: 90%;
+    height: 10%;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.1rem;
+    margin-left: 5%;
+    margin-top: 6%;
+  }
+
+  .information-dressmaking-request-container {
+    margin-top: 20%;
+  }
+
+  .information-dressmaking-request-container__h2 {
+    font-size: 2.4rem;
+  }
+
+  .information-dressmaking-request-container__p {
+    font-size: 2.2rem;
+    line-height: 2.5rem;
+  }
+
+  .dressmaking-process-container h3 {
+    font-size: 2rem;
+  }
+
+  .no-data-image-approved-req-dressmaking-container {
+    margin-top: 5.5%;
+  }
+
+  .no-data-image-approved-req-dressmaking-paragraph {
+    font-size: 1.6rem;
+    margin-top: 1%;
+  }
+
+  .requestDressmakingContainer {
+    height: 24%;
+  }
+
+  .requestDressmakingContainer__h4 {
+    font-size: 1.1rem;
+  }
+
+  .requestDressmakingContainer__reference,
+  .requestDressmakingContainer__amount,
+  .requestDressmakingContainer__timestamp,
+  #requestDressmakingContainer__amountInput {
+    font-size: 0.95rem;
+  }
+
+  .btn.requestDressmakingContainer__accept {
+    width: 60%;
+    margin-left: 4%;
+  }
+
+  .label-history-request-dressmanking__number-of-order,
+  .label-history-request-dressmanking__reference {
+    margin-right: 14%;
+  }
+
+  .label-history-request-dressmanking__number-of-order {
+    margin-left: 7%;
+  }
+
+  .label-history-request-dressmanking__amount {
+    margin-left: 2%;
+  }
+
+  .label-history-request-dressmanking__decision {
+    margin-left: 16.5%;
+  }
+
+  .label-history-request-dressmanking__timestamp {
+    margin-left: 19.5%;
+  }
 }

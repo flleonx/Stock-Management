@@ -9,6 +9,7 @@ import {baseURL} from '../components/app/baseURL';
 import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
+import noDataImage from '../assets/no-data.svg';
 import {updateSourceFile} from 'typescript';
 import ModalAreYouSureDressmaking from '../components/dressmaking/ModalAreYouSureDressmaking';
 import FilterDropdown from '../components/FilterDropdown';
@@ -210,7 +211,7 @@ const DressMaking: React.FC = () => {
         >
           <div className="dressmaking-request-card">
             <div className="dressmaking-request-card__h2">
-              Actualizar insumos registrados
+              Enviar petición a Bodega Insumos
             </div>
             <div className="dressmaking-request-form">
               <div className="filter-dropdown-request-dressmaking">
@@ -260,60 +261,93 @@ const DressMaking: React.FC = () => {
           id="dressmaking-process-container"
         >
           <h3>Artículos en proceso</h3>
-          <div className="approved-requests-dressmaking-container">
-            {approvedRequests.map((item: any) => {
-              return (
-                <div className="requestDressmakingContainer">
-                  <h4 className="requestDressmakingContainer__h4">
-                    Referencia en proceso
-                  </h4>
-                  <div className="requestDressmakingContainer__reference">
-                    Petición: #{item.id}
+          {approvedRequests.length == 0 && (
+            <>
+              <div className="no-data-image-approved-req-dressmaking-container">
+                <img
+                  src={noDataImage}
+                  alt="no-data"
+                  className="no-data-image-approved-req-dressmaking-container__img"
+                />
+              </div>
+              <p className="no-data-image-approved-req-dressmaking-paragraph">
+                Aún no hay artículos en proceso
+              </p>
+            </>
+          )}
+          {approvedRequests.length !== 0 && (
+            <div className="approved-requests-dressmaking-container">
+              {approvedRequests.map((item: any) => {
+                return (
+                  <div className="requestDressmakingContainer">
+                    <h4 className="requestDressmakingContainer__h4">
+                      Referencia en proceso
+                    </h4>
+                    <div className="requestDressmakingContainer__reference">
+                      Petición: #{item.id}
+                    </div>
+                    <div className="requestDressmakingContainer__reference">
+                      Referencia: {item.referencia}
+                    </div>
+                    <div className="requestDressmakingContainer__amount">
+                      Cantidad en proceso: {item.cantidad}
+                    </div>
+                    <div className="requestDressmakingContainer__timestamp">
+                      Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
+                    </div>
+                    <input
+                      className={'h' + item.id}
+                      id="requestDressmakingContainer__amountInput"
+                      type="number"
+                      placeholder="Digite la cantidad terminada"
+                    />
+                    <button
+                      className="btn requestDressmakingContainer__accept"
+                      onClick={() => {
+                        verificationARYModal(
+                          item.referencia,
+                          item.id,
+                          item.cantidad,
+                          document.querySelector('.h' + item.id)
+                        );
+                      }}
+                    >
+                      Aceptar
+                    </button>
                   </div>
-                  <div className="requestDressmakingContainer__reference">
-                    Referencia: {item.referencia}
-                  </div>
-                  <div className="requestDressmakingContainer__amount">
-                    Cantidad en proceso: {item.cantidad}
-                  </div>
-                  <div className="requestDressmakingContainer__timestamp">
-                    Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
-                  </div>
-                  <input
-                    className={'h' + item.id}
-                    id="requestDressmakingContainer__amountInput"
-                    type="number"
-                    placeholder="Digite la cantidad terminada"
-                  />
-                  <button
-                    className="btn requestDressmakingContainer__accept"
-                    onClick={() => {
-                      verificationARYModal(
-                        item.referencia,
-                        item.id,
-                        item.cantidad,
-                        document.querySelector('.h' + item.id)
-                      );
-                    }}
-                  >
-                    Aceptar
-                  </button>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </div>
         <div className="requests-history-section" id="requests-history-section">
           <h3>Historial de peticiones</h3>
           <div className="requets-history-dressmaking-container">
+            <div className="label-history-request-dressmanking">
+              <div className="label-history-request-dressmanking__number-of-order">
+                Número de orden
+              </div>
+              <div className="label-history-request-dressmanking__reference">
+                Referencia
+              </div>
+              <div className="label-history-request-dressmanking__amount">
+                Cantidad
+              </div>
+              <div className="label-history-request-dressmanking__decision">
+                Decisión
+              </div>
+              <div className="label-history-request-dressmanking__timestamp">
+                Fecha
+              </div>
+            </div>
             {requestsHistory.map((request: any) => {
               return (
                 <div className="request-card-container">
-                  <div># de orden: {request.numero_de_orden}</div>
-                  <div>Referencia: {request.referencia}</div>
-                  <div>Cantidad: {request.cantidad}</div>
-                  <div>Decision: {request.decision}</div>
-                  <div>Timestamp: {request.timestamp}</div>
+                  <div>{request.numero_de_orden}</div>
+                  <div>{request.referencia}</div>
+                  <div>{request.cantidad}</div>
+                  <div>{request.decision}</div>
+                  <div> {request.timestamp.replace('T', ' ').slice(0, 16)}</div>
                 </div>
               );
             })}

@@ -27,8 +27,7 @@ interface IRequestHistory {
 }
 
 router.get('/api/references', (req, res) => {
-  let referencesQuery =
-    'SELECT p.numero_de_orden, p.referencia, p.cantidad, d.decision, p.timestamp FROM PETICIONES_PROCESADAS_CONFECCION p, decision d WHERE p.idDecision=d.idDecision';
+  let referencesQuery = 'SELECT * FROM InventoryManagement.MUESTRAS_PRODUCCION';
 
   let dbQuery = database.query(
     referencesQuery,
