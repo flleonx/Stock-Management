@@ -6,10 +6,12 @@ import {reducer} from '../components/dressmaking/ReducerDressMaking';
 // import './style/DressMaking.css';
 // import '../components/dressmaking/style/buttonStyle.css';
 import {baseURL} from '../components/app/baseURL';
+import notFoundImage from '../assets/Not Found.svg';
 import Modal from '../components/Modal';
 import completeImage from '../assets/complete.svg';
 import errorImage from '../assets/error.svg';
 import {StringLiteralLike, updateSourceFile} from 'typescript';
+import noDataImage from '../assets/no-data.svg';
 import './style/WareHouseProducts.css';
 import ModalWarehouseProductsReq from '../components/warehouseProducts/ModalWarehouseProductsReq';
 
@@ -48,6 +50,7 @@ const WareHouseProducts = () => {
   const [isOpenModalReq, setIsOpenModalReq] = useState<boolean>(false);
   const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
   const [indexModal, setIndexModal] = useState<number>(0);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const dbWareHouseProducts: string = baseURL + 'api/getwarehouseproducts';
   const dbShopsRequestProducts: string = baseURL + 'api/shoprequestproducts';
@@ -55,6 +58,10 @@ const WareHouseProducts = () => {
   const dbActualShopsRequests: string = baseURL + 'api/getactualshoprequests';
   const dbSaveDecision: string = baseURL + 'api/savewarehouseproductsdecision';
   const dbPartialDelivery: string = baseURL + 'api/updatepartialdelivery';
+
+  let iterator = 0;
+  let enableEmpty = true;
+  let showEmptySearch = false;
 
   useEffect(() => {
     Axios.get(dbWareHouseProducts).then((response: AxiosResponse) => {
@@ -130,94 +137,226 @@ const WareHouseProducts = () => {
   };
 
   const handlerPartialDelivery = (index: number) => {
-    Axios.post(dbPartialDelivery,{
+    Axios.post(dbPartialDelivery, {
       ...actualShopRequests[index],
       neededStock: shopRequestInfo,
       idDecision: 1,
-    }
-    ).then((response: AxiosResponse) => {
-      console.log(response.data)
+    }).then((response: AxiosResponse) => {
+      console.log(response.data);
     });
-  }
+  };
 
   const closeModal = () => {
     setIsOpenModalReq(false);
   };
 
+  const handleNavbarClick = (e: any) => {
+    e.preventDefault();
+    const target = e.target.getAttribute('href');
+    const location = document.querySelector(target).offsetTop;
+    const scrollDiv = document.getElementById(
+      'scroll-warehouseproducts'
+    ) as HTMLDivElement;
+
+    scrollDiv.scrollTo(0, location - 108);
+  };
+
+  const handlerSearch = (e: any) => {
+    setSearchTerm(e);
+    iterator = 0;
+    enableEmpty = true;
+    showEmptySearch = false;
+  };
+
   return (
     <div className="general-container-warehouseproducts">
-      <h2 className="general-container-warehouseproducts__h2">
-        Bodega productos
-      </h2>
-      <p className="general-container-warehouseproducts__p">
-        Aquí en Bodega productos puedes ver los productos producidos y aceptar
-        peticiones de tiendas.
-      </p>
-      <h3 className="general-container-warehouseproducts__h3">
-        Productos producidos
-      </h3>
-      <div className="productsContainer">
-        {wareHouseProducts.map((item) => {
-          return (
-            <div className="productCard">
-              <h4 className="productCard__h4"> Información del producto</h4>
-              <div className="productCard__lot">
-                Numero de Lote: {item.numero_lote}
-              </div>
-              <div className="productCard__reference">
-                Referencia: {item.referencia}
-              </div>
-              <div className="productCard__Order">
-                # de orden: {item.numero_de_orden}
-              </div>
-              <div className="productCard__amount">
-                Cantidad: {item.cantidad}
-              </div>
-              <div className="productCard__date">
-                Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
-              </div>
-            </div>
-          );
-        })}
+      <div className="navbar-warehouseproducts">
+        <h2 className="navbar-warehouseproducts__h2">Bodega Productos</h2>
+        <div className="navbar-warehouseproducts-otpions">
+          <a
+            href="#products-warehouseproducts-section"
+            onClick={handleNavbarClick}
+          >
+            Productos terminados
+          </a>
+          <a
+            href="#shops-request-warehouseproducts-section"
+            onClick={handleNavbarClick}
+          >
+            Peticiones
+          </a>
+        </div>
       </div>
-      <h3 className="general-container-warehouseproducts__h3">
-        Estas son las peticiones activas
-      </h3>
-      <div className="shopsRequestContainer">
-        {actualShopRequests.map((shop, index) => {
-          return (
-            <div className="shopRequestCard">
-              <h4 className="shopRequestCard__h4">
-                Información de la petición
-              </h4>
-              <div className="shopRequestCard__order">
-                # de orden: {shop.numero_de_orden}
+      <div className="scroll-warehouseproducts" id="scroll-warehouseproducts">
+        <div
+          className="products-warehouseproducts-section"
+          id="products-warehouseproducts-section"
+        >
+          <h3 className="products-finished-warehouseproducts-section__h3">
+            Productos terminados
+          </h3>
+          <div className="container_table-warehouseproducts">
+            <div className="table_title-warehouseproducts ">Información</div>
+            <div className="search-warehouseproducts-container">
+              <i className="gg-search"></i>
+              <input
+                type="search"
+                placeholder="Buscar..."
+                className="search-filter-warehouseproducts"
+                onChange={(e: any) => handlerSearch(e.target.value)}
+              ></input>
+            </div>
+            <div className="sample-image-warehouseproducts-container">
+              <div className="table_header-warehouseproducts-sample">
+                Producto
               </div>
-              <div className="shopRequestCard__reference">
-                Referencia: {shop.referencia}
+              <div className="table_header-warehouseproducts-img">Imagen</div>
+            </div>
+            <div className="scroll-modal-warehouseproducts">
+              {wareHouseProducts
+                .filter((val: any) => {
+                  iterator += 1;
+                  if (searchTerm === '') {
+                    return val;
+                  } else if (
+                    val.referencia
+                      .toString()
+                      .slice(0, searchTerm.length)
+                      .includes(searchTerm)
+                  ) {
+                    enableEmpty = false;
+                    return val;
+                  } else if (
+                    iterator == wareHouseProducts.length &&
+                    enableEmpty == true
+                  ) {
+                    showEmptySearch = true;
+                  }
+                })
+                .map((props: any) => {
+                  return (
+                    <div
+                      className="items_container-warehouseproducts"
+                      key={props.referencia}
+                    >
+                      <div className="items-information-wproducts-container">
+                        <div className="items-information-wp-lot">
+                          Numero de lote: {props.numero_lote}
+                        </div>
+                        <div className="items-information-wp-ref">
+                          Referencia: {props.referencia}
+                        </div>
+                        <div className="items-information-wp-order">
+                          Numero de orden: {props.numero_de_orden}
+                        </div>
+                        <div className="items-information-amount">
+                          Cantidad: {props.cantidad}
+                        </div>
+                        <div className="items-information-timestamp">
+                          Fecha:{' '}
+                          {props.timestamp.replace('T', ' ').slice(0, 16)}
+                        </div>
+                      </div>
+                      <div className="table_item-warehouseproduct">
+                        <img
+                          className="table_img-warehouseproduct"
+                          src={props.nombre_imagen}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              {showEmptySearch && (
+                <img
+                  className="notfoundImg-warehouseproducts"
+                  src={notFoundImage}
+                  alt="Not Found"
+                />
+              )}
+            </div>
+          </div>
+          {/* <div className="productsContainer">
+            {wareHouseProducts.map((item) => {
+              return (
+                <div className="productCard">
+                  <h4 className="productCard__h4"> Información del producto</h4>
+                  <div className="productCard__lot">
+                    Numero de Lote: {item.numero_lote}
+                  </div>
+                  <div className="productCard__reference">
+                    Referencia: {item.referencia}
+                  </div>
+                  <div className="productCard__Order">
+                    # de orden: {item.numero_de_orden}
+                  </div>
+                  <div className="productCard__amount">
+                    Cantidad: {item.cantidad}
+                  </div>
+                  <div className="productCard__date">
+                    Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
+                  </div>
+                </div>
+              );
+            })}
+          </div> */}
+        </div>
+        <div
+          className="shops-request-warehouseproducts-section"
+          id="shops-request-warehouseproducts-section"
+        >
+          <h3 className="shops-request-warehouseproducts-section__h3">
+            Peticiones
+          </h3>
+          {actualShopRequests.length == 0 && (
+            <>
+              <div className="no-data-image-warehouseproducts-container">
+                <img
+                  src={noDataImage}
+                  alt="no-data"
+                  className="no-data-image-warehouseproducts-container__img"
+                />
               </div>
-              <div className="shopRequestCard__amount">
-                Cantidad: {shop.cantidad}
-              </div>
-              <div className="shopRequestCard__shop">
-                Tienda: {shop.nombre_tienda}
-              </div>
-              <div className="shopRequestCard_date">
-                Fecha: {shop.timestamp.replace('T', ' ').slice(0, 16)}
-              </div>
-              <div className="shopRequestCard__address">
-                Dirección: {shop.direccion ? shop.direccion : '0'}
-              </div>
-              <button
-                className="btn shopRequestCard__deploy"
-                key={index}
-                data-index={index}
-                // onClick={() => setIsOpenModalReq(true)}
-                onClick={() => handlerShowInfo(index)}
-              >
-                Desplegar requerimientos
-              </button>
-              {/* <button
+              <p className="no-data-image-warehouseproducts-paragraph">
+                Aún no hay peticiones
+              </p>
+            </>
+          )}
+          {actualShopRequests.length !== 0 && (
+            <div className="shopsRequestContainer">
+              {actualShopRequests.map((shop, index) => {
+                return (
+                  <div className="shopRequestCard">
+                    <h4 className="shopRequestCard__h4">
+                      Información de la petición
+                    </h4>
+                    <div className="shopRequestCard__order">
+                      # de orden: {shop.numero_de_orden}
+                    </div>
+                    <div className="shopRequestCard__reference">
+                      Referencia: {shop.referencia}
+                    </div>
+                    <div className="shopRequestCard__amount">
+                      Cantidad: {shop.cantidad}
+                    </div>
+                    <div className="shopRequestCard__shop">
+                      Tienda: {shop.nombre_tienda}
+                    </div>
+                    <div className="shopRequestCard_date">
+                      Fecha: {shop.timestamp.replace('T', ' ').slice(0, 16)}
+                    </div>
+                    <div className="shopRequestCard__address">
+                      Dirección: {shop.direccion ? shop.direccion : '0'}
+                    </div>
+                    <button
+                      className="btn shopRequestCard__deploy"
+                      key={index}
+                      data-index={index}
+                      // onClick={() => setIsOpenModalReq(true)}
+                      onClick={() => handlerShowInfo(index)}
+                    >
+                      Desplegar requerimientos
+                    </button>
+                    {/* <button
                 className="btn shopRequestCard__refuse"
                 key={index + Math.random()}
                 data-index={index}
@@ -233,9 +372,12 @@ const WareHouseProducts = () => {
               >
                 Aceptar
               </button> */}
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
+          )}
+        </div>
       </div>
       {/* <div>PARA CUMPLIR EL PEDIDO SE NECESITAN:</div>
       {shopRequestInfo.map((item) => {
