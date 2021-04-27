@@ -5,7 +5,7 @@ import database from "../../config/dbConfig";
 
 router.get("/api/getwarehouseproducts", (req, res) => {
   let queryWareHouseProducts =
-    "SELECT * FROM InventoryManagement.BODEGA_PRODUCTOS WHERE cantidad NOT IN (0)";
+    "SELECT bp.*, mp.nombre_imagen FROM BODEGA_PRODUCTOS bp, MUESTRAS_PRODUCCION mp WHERE cantidad NOT IN (0) AND bp.referencia = mp.referencia";
 
   database.query(
     queryWareHouseProducts,
@@ -13,6 +13,7 @@ router.get("/api/getwarehouseproducts", (req, res) => {
       if (err) {
         throw err;
       }
+      console.log(wareHouseProducts)
       res.end(JSON.stringify(wareHouseProducts));
     }
   );
