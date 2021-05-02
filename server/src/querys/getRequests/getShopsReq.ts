@@ -3,6 +3,7 @@ import { MysqlError } from "mysql";
 const router = routerStatement.Router();
 import database from "../../config/dbConfig";
 
+
 router.get("/api/shopsinformation", (req, res) => {
   let queryShopsInfo = "SELECT * FROM InventoryManagement.tienda";
 

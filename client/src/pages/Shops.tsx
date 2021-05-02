@@ -1,53 +1,53 @@
-import React, {useState, useEffect, useReducer, useRef} from 'react';
-import Axios, {AxiosResponse} from 'axios';
-import SuccessfulModalDressMaking from '../components/dressmaking/SuccessfulModalDressMaking';
+import React, { useState, useEffect, useReducer, useRef } from "react";
+import Axios, { AxiosResponse } from "axios";
+import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
 // REDUCER
 // import {reducer} from '../components/dressmaking/ReducerDressMaking';
-import './style/Shops.css';
+import "./style/Shops.css";
 // import '../components/dressmaking/style/buttonStyle.css';
-import {baseURL} from '../components/app/baseURL';
-import FilterDropdown from '../components/FilterDropdown';
-import Modal from '../components/Modal';
-import completeImage from '../assets/complete.svg';
-import errorImage from '../assets/error.svg';
-import {StringLiteralLike, updateSourceFile} from 'typescript';
+import { baseURL } from "../components/app/baseURL";
+import FilterDropdown from "../components/FilterDropdown";
+import Modal from "../components/Modal";
+import completeImage from "../assets/complete.svg";
+import errorImage from "../assets/error.svg";
+import { StringLiteralLike, updateSourceFile } from "typescript";
 
 const reducer = (state: any, action: any) => {
-  if (action.type === 'SUCCESSFUL_REQUEST') {
+  if (action.type === "SUCCESSFUL_REQUEST") {
     return {
       ...state,
-      modalContent: 'Petición realizada',
+      modalContent: "Petición realizada",
       imgCheckNumber: 1,
       isModalOpen: true,
     };
   }
-  if (action.type === 'WRONG_INPUT') {
+  if (action.type === "WRONG_INPUT") {
     return {
       ...state,
-      modalContent: 'Error: Digite los campos bien',
+      modalContent: "Error: Digite los campos bien",
       isModalOpen: true,
       imgCheckNumber: 2,
     };
   }
-  if (action.type === 'CLOSE_MODAL') {
+  if (action.type === "CLOSE_MODAL") {
     return {
       ...state,
       isModalOpen: false,
       imgCheckNumber: 0,
-      modalContent: '',
+      modalContent: "",
     };
   }
   return {
     ...state,
     isModalOpen: false,
-    modalContent: '',
+    modalContent: "",
     imgCheckNumber: 0,
   };
 };
 
 const defaultState: any = {
   isModalOpen: false,
-  modalContent: '',
+  modalContent: "",
   imgCheckNumber: 0,
 };
 
@@ -70,22 +70,34 @@ const Shops = () => {
   const [shops, setShops] = useState<IShops[]>([]);
   const [valueReferenceSelect, setValueReferenceSelect] = useState<any>(null);
   const [valueShopSelect, setValueShopSelect] = useState<any>(null);
-  const [amount, setAmount] = useState<string>('');
-  const [selectedReference, setSelectedReference] = useState<string>('');
-  const [selectedShop, setSelectedShop] = useState<string>('');
+  const [amount, setAmount] = useState<string>("");
+  const [selectedReference, setSelectedReference] = useState<string>("");
+  const [selectedShop, setSelectedShop] = useState<string>("");
   const [approvedRequests, setApprovedRequests] = useState<any>([]);
-  const [numberInput, setNumberInput] = useState<string>('');
+  const [numberInput, setNumberInput] = useState<string>("");
   const [infoDeliveryState, setInfoDeliveryState] = useState<any>([]);
   const [infoActualInventory, setInfoActualInventory] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
-  const dbReferencesURL: string = baseURL + 'api/references';
-  const dbShopsInfoURL: string = baseURL + 'api/shopsinformation';
+
+  // REQUEST BETWEEN SHOPS useStates
+  const [value_reference_request, set_value_reference_request] = useState<any>(
+    null
+  );
+  const [amount_request, set_amount_request] = useState<string>("");
+  const [value_origin_shop, set_value_origin_shop] = useState<any>(null);
+  const [value_destination_shop, set_value_destination_shop] = useState<any>(
+    null
+  );
+  // DATABASE URLS
+  const dbReferencesURL: string = baseURL + "api/references";
+  const dbShopsInfoURL: string = baseURL + "api/shopsinformation";
   const dbProductsRequestURL: string =
-    baseURL + 'api/shopwarehouseproductsrequest';
-  const dbDeliveryState: string = baseURL + 'api/deliverystate';
-  const dbActualInventory: string = baseURL + 'api/getactualinventory';
-  const dbUpdateReceivedState: string = baseURL + 'api/updatereceivedstate';
+    baseURL + "api/shopwarehouseproductsrequest";
+  const dbDeliveryState: string = baseURL + "api/deliverystate";
+  const dbActualInventory: string = baseURL + "api/getactualinventory";
+  const dbUpdateReceivedState: string = baseURL + "api/updatereceivedstate";
+  const dbRequestBetweenShops: string = baseURL + "api/requestsbetweenshops";
 
   useEffect(() => {
     Axios.get(dbReferencesURL).then((response: AxiosResponse) => {
@@ -115,12 +127,12 @@ const Shops = () => {
       var selectedOption: any = document.querySelector(class1);
       var options: any = document.querySelectorAll(class2);
 
-      selectedOption.addEventListener('click', () => {
-        selectedOption.parentElement.classList.toggle('active');
+      selectedOption.addEventListener("click", () => {
+        selectedOption.parentElement.classList.toggle("active");
       });
 
       options.forEach((option: any) => {
-        option.addEventListener('click', () => {
+        option.addEventListener("click", () => {
           setTimeout(() => {
             selectedOption.innerHTML = option.innerHTML;
             // SET CURRENT REFERENCE VALUE
@@ -129,90 +141,91 @@ const Shops = () => {
               setSelectedReference(option.innerHTML);
               // 1 ==> Shop id
             } else if (setNumber === 1) {
-              setSelectedShop(option.getAttribute('data-id'));
+              setSelectedShop(option.getAttribute("data-id"));
             }
           }, 300);
 
-          selectedOption.parentElement.classList.remove('active');
+          selectedOption.parentElement.classList.remove("active");
         });
       });
     };
   }, []);
 
-  const productsRequest = () => {
-    let valueReferenceSelected = '';
-    let valueShopSelected = '';
-    let isReferenceExist = 0;
-    let isShopExist = 0;
+  // GENERAL DATABASE CHECK
+  const check_existing_value = async (check_case: number, payload: string) => {
+    try {
+      const response = await Axios.post(baseURL + "api/check_existing_value", {
+        check_case,
+        payload,
+      });
+      return response.data;
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  // CHECK THE TYPE DUE TO THE SEARCH DROPDOWN
+  const check_type_case = (case_parameter: any, case_attribute: string) => {
+    let result = "";
+    if (typeof case_parameter === "object" && case_parameter !== null) {
+      result = case_parameter[case_attribute].toString();
+      return result;
+    } else if (typeof case_parameter === "string" && case_parameter !== null) {
+      result = case_parameter;
+      return result;
+    }
+    return result;
+  };
+
+  const productsRequest = async () => {
+    let valueReferenceSelected: string = check_type_case(
+      valueReferenceSelect,
+      "referencia"
+    );
+    let valueShopSelected: string = check_type_case(
+      valueShopSelect,
+      "idTienda"
+    );
+    let isReferenceExist: boolean = false;
+    let isShopExist: boolean = false;
 
     const correctAmount = parseFloat(amount);
-    if (valueReferenceSelect === null) {
-      valueReferenceSelected = '';
-    } else if (typeof valueReferenceSelect === 'object') {
-      valueReferenceSelected = valueReferenceSelect.referencia.toString();
-    } else if (typeof valueReferenceSelect === 'string') {
-      valueReferenceSelected = valueReferenceSelect;
-    }
 
-    references.map((val: any) => {
-      if (val.referencia.toString() === valueReferenceSelected) {
-        isReferenceExist += 1;
-        return isReferenceExist;
-      } else {
-        return isReferenceExist;
-      }
-    });
-
-    if (valueShopSelect === null) {
-      valueShopSelected = '';
-    } else if (typeof valueShopSelect === 'object') {
-      valueShopSelected = valueShopSelect.idTienda;
-    } else if (typeof valueShopSelect === 'string') {
-      valueShopSelected = valueShopSelect;
-    }
-
-    shops.map((val: any) => {
-      if (val.idTienda === valueShopSelected) {
-        isShopExist += 1;
-        return isShopExist;
-      } else {
-        return isShopExist;
-      }
-    });
+    // CHECK IN DATABASE ==> return boolean
+    isReferenceExist = await check_existing_value(0, valueReferenceSelected); // O: referencia
+    isShopExist = await check_existing_value(1, valueShopSelected); // 1: idTienda
+    console.log(amount, valueReferenceSelected, valueShopSelected);
 
     console.log(valueShopSelected);
 
-    let enableInput = valueShopSelected !== '';
-    let enableInput2 = valueReferenceSelected !== '';
+    let enableInput = valueShopSelected !== "";
+    let enableInput2 = valueReferenceSelected !== "";
     if (
       Number.isInteger(correctAmount) &&
       correctAmount > 0 &&
       enableInput &&
-      enableInput2
+      enableInput2 &&
+      isShopExist &&
+      isReferenceExist
     ) {
-      if (isShopExist === 1) {
-        if (isReferenceExist === 1) {
-          Axios.post(dbProductsRequestURL, {
-            actualAmount: amount,
-            referenceSelection: valueReferenceSelected,
-            idShop: valueShopSelected,
-          }).then((response: AxiosResponse): void => {
-            console.log(response.data);
-            dispatch({type: 'SUCCESSFUL_REQUEST'});
-            setValueReferenceSelect(null);
-            setValueShopSelect(null);
-            refContainer.current.value = '';
-          });
-        }
-      }
+      Axios.post(dbProductsRequestURL, {
+        actualAmount: amount,
+        referenceSelection: valueReferenceSelected,
+        idShop: valueShopSelected,
+      }).then((response: AxiosResponse): void => {
+        console.log(response.data);
+        dispatch({ type: "SUCCESSFUL_REQUEST" });
+        setValueReferenceSelect(null);
+        setValueShopSelect(null);
+        refContainer.current.value = "";
+      });
     } else {
-      dispatch({type: 'WRONG_INPUT'});
-      refContainer.current.value = '';
+      dispatch({ type: "WRONG_INPUT" });
+      refContainer.current.value = "";
     }
   };
 
   const closeModal = () => {
-    dispatch({type: 'CLOSE_MODAL'});
+    dispatch({ type: "CLOSE_MODAL" });
   };
 
   const handlerReceived = (index: number) => {
@@ -222,6 +235,76 @@ const Shops = () => {
         setInfoActualInventory(response.data[1]);
       }
     );
+  };
+
+  const query_post = async (url: string, payload: any) => {
+    try {
+      const response:AxiosResponse = await Axios.post(url, payload);
+      console.log("RESPONSE", response.data)
+      return response.data;
+    } catch (err) {
+      console.error("There is an error", err);
+      return
+    }
+  };
+
+  const request_betweenshops_handler = async () => {
+    let valueReferenceSelected: string = check_type_case(
+      value_reference_request,
+      "referencia"
+    );
+    let valueOriginShopSelected: string = check_type_case(
+      value_origin_shop,
+      "idTienda"
+    );
+    let valueDestinationShopSelected: string = check_type_case(
+      value_destination_shop,
+      "idTienda"
+    );
+    let isReferenceExist: boolean = false;
+    let isOShopExist: boolean = false; //Origin
+    let isDShopExist: boolean = false; //Destination
+    const correctAmount = parseFloat(amount_request);
+
+    // CHECK IN DATABASE ==> return boolean
+    isReferenceExist = await check_existing_value(0, valueReferenceSelected); // O: referencia
+    isOShopExist = await check_existing_value(1, valueOriginShopSelected); // 1: idTienda
+    isDShopExist = await check_existing_value(1, valueDestinationShopSelected); // 1: idTienda
+
+    let enableInput = valueReferenceSelected !== "" && isReferenceExist;
+    let enableInput2 = valueOriginShopSelected !== "" && isOShopExist;
+    let enableInput3 = valueDestinationShopSelected !== "" && isDShopExist;
+
+    if (
+      Number.isInteger(correctAmount) &&
+      correctAmount > 0 &&
+      enableInput &&
+      enableInput2 &&
+      enableInput3
+    ) {
+      const data = {
+        cantidad: amount_request,
+        referencia: valueReferenceSelected,
+        tienda_origen: valueOriginShopSelected,
+        tienda_destino: valueDestinationShopSelected,
+      };
+      const response:AxiosResponse | undefined = await query_post(dbRequestBetweenShops, data);
+      console.log(response);
+    } else {
+      // dispatch({ type: "WRONG_INPUT" });
+      // refContainer.current.value = "";
+      console.log("WRONG");
+    }
+
+    // const payload = {
+    //   referencia: value_reference_request,
+    //   cantidad: amount_request,
+    //   tienda_origen: value_origin_shop,
+    //   tienda_destino: value_destination_shop,
+    // };
+    // Axios.post(dbRequestBetweenShops).then((response: AxiosResponse) => {
+    //   console.log(response.data);
+    // });
   };
 
   return (
@@ -289,7 +372,7 @@ const Shops = () => {
                 Cantidad: {item.cantidadTotal}
               </div>
               <div className="productCard__date">
-                Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
+                Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
               </div>
               <div className="productCard__date">
                 Estado: {item.nombre_estado}
@@ -326,7 +409,7 @@ const Shops = () => {
                 Cantidad: {item.cantidadTotal}
               </div>
               <div className="productCard__date">
-                Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
+                Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
               </div>
               <div className="productCard__date">
                 Estado: {item.nombre_estado}
@@ -392,6 +475,60 @@ const Shops = () => {
           Enviar
         </button>
       </div> */}
+      <div className="makeReqShopsContainer">
+        <div className="makeReqShopsContainer__dropdownReference">
+          <FilterDropdown
+            options={references}
+            id="referencia"
+            label="referencia"
+            prompt="Seleccionar referencia"
+            value={value_reference_request}
+            onChange={(val: any) => set_value_reference_request(val)}
+          />
+        </div>
+        <input
+          ref={refContainer}
+          id="actualAmount"
+          name="actualAmount"
+          className="actualAmount"
+          placeholder="Digite la cantidad"
+          type="number"
+          autoComplete="off"
+          onChange={(e) => {
+            set_amount_request(e.target.value);
+          }}
+        />
+        <div className="makeReqShopsContainer__dropdownShop">
+          <FilterDropdown
+            options={shops}
+            id="idTienda"
+            label="nombre_tienda"
+            prompt="Seleccionar la tienda"
+            value={value_origin_shop}
+            onChange={(val: any) => set_value_origin_shop(val)}
+          />
+        </div>
+        <div className="makeReqShopsContainer__dropdownShop">
+          <FilterDropdown
+            options={shops}
+            id="idTienda"
+            label="nombre_tienda"
+            prompt="Seleccionar la tienda"
+            value={value_destination_shop}
+            onChange={(val: any) => set_value_destination_shop(val)}
+          />
+        </div>
+        <div className="makeReqButtonContainer">
+          <button
+            className="btn"
+            type="button"
+            onClick={request_betweenshops_handler}
+          >
+            Enviar
+          </button>
+        </div>
+      </div>
+
       <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
         <h1 className="modalWarehouseh1">{state.modalContent}</h1>
         {state.imgCheckNumber === 1 && (

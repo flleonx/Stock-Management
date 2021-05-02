@@ -4,6 +4,8 @@ import { MysqlError } from "mysql";
 import { stringify } from "node:querystring";
 const router = routerStatement.Router();
 import database from "../../config/dbConfig";
+import util from "util";
+const db_query = util.promisify(database.query).bind(database);
 
 router.post("/api/shoprequestproducts", (req, res) => {
   interface IWareHouseProducts {
@@ -139,6 +141,102 @@ router.post("/api/updatereceivedstate", (req, res) => {
       );
     });
   });
+});
+
+router.post("/api/requestsbetweenshops", (req, res) => {
+  console.log(req.body);
+  // let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
+  // let arrDate = date.split(" ");
+  // let s1 = arrDate[0].split("/");
+  // if (s1[0].length < 2) s1[0] = "0" + s1[0];
+  // if (s1[1].length < 2) s1[1] = "0" + s1[1];
+  // let dateFormat = s1.join("-");
+  // let s2 = arrDate[1].split(":");
+  // if (s2[0].length < 2) s2[0] = "0" + s2[0];
+  // if (s2[1].length < 2) s2[1] = "0" + s2[1];
+  // if (s2[2].length < 2) s2[2] = "0" + s2[2];
+  // let hour = s2.join(":");
+
+  // let timestamp = dateFormat + " " + hour;
+
+  // const query_check = `UPDATE INVENTARIO_TIENDAS SET id_estado = 1 WHERE numero_de_orden = ${req.body.numero_de_orden}`;
+  const query_inventory_list = ` SELECT NULL AS numero_entrada, NULL AS total FROM dual WHERE (@total := 0) UNION SELECT numero_entrada, @total := @total + cantidad AS total
+  FROM InventoryManagement.INVENTARIO_TIENDAS WHERE @total < ${req.body.cantidad} AND referencia = ${req.body.referencia}`;
+  const db_call = async () => {
+    const result = await databaseQuery(query_inventory_list);
+    console.log(result);
+    res.end(JSON.stringify(result));
+  };
+
+  const databaseQuery = async (query_request: string) => {
+    try {
+      const response: any = await db_query(query_request);
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log("There is an error: ", err);
+    }
+  };
+  db_call();
+});
+
+router.post("/api/decisionbetweenshops", (req, res) => {
+  let numeros_de_entrada = "";
+  // DEFINIR NUMEROS DE ENTRADA CON CONCATENACION Y SLICE(0, -1)
+  const query_decision = `UPDATE INVENTARIO_TIENDAS SET id_estado = 0 WHERE numero_entrada IN (${numeros_de_entrada})`;
+  const db_call = async () => {
+    const result = await databaseQuery(query_decision);
+    console.log(result);
+    res.end(JSON.stringify(result));
+  };
+
+  const databaseQuery = async (query_request: string) => {
+    try {
+      const response: any = await db_query(query_request);
+      console.log(response);
+      return response;
+    } catch (err) {
+      console.log("There is an error: ", err);
+    }
+  };
+  db_call();
+});
+
+router.post("/api/check_existing_value", (req, res) => {
+  console.log(req.body);
+  var query_check: string = "";
+  var result_attribute: string = "";
+
+  switch (req.body.check_case) {
+    case 0:
+      query_check = `SELECT referencia FROM MUESTRAS_PRODUCCION WHERE referencia = ${req.body.payload}`;
+      result_attribute = "referencia";
+      break;
+    case 1:
+      query_check = `SELECT idTienda FROM tienda WHERE idTienda = ${req.body.payload}`;
+      result_attribute = "idTienda";
+      break;
+  }
+
+  const db_call = async () => {
+    const result = await databaseQuery(query_check);
+    console.log(result);
+    res.end(JSON.stringify(result));
+  };
+
+  const databaseQuery = async (query_request: string) => {
+    try {
+      const response: any = await db_query(query_request);
+      console.log(response);
+      if (response[0][result_attribute] == req.body.payload) {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.log("There is an error: ", err);
+    }
+  };
+  db_call();
 });
 
 export default router;
