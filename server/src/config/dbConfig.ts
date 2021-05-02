@@ -1,12 +1,4 @@
 import mysql from "mysql";
-//Personal moduls
-
-interface IdbCredentials {
-  host: string;
-  user: string;
-  password: string;
-  database: string;
-}
 
 import dbCredentials from "../dbCredentials";
 
@@ -20,5 +12,4 @@ database.connect((err) => {
   }
 });
 
-// module.exports = { database };
 export default database;
