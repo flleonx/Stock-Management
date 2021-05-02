@@ -1,0 +1,6 @@
+{
+    "host": "db-proyecto-final.c3ex9f7yzoql.us-east-1.rds.amazonaws.com",
+    "user": "admin",
+    "password": "proyectofinal202010!",
+    "database": "InventoryManagement"
+}
