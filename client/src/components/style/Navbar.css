@@ -1,6 +1,15 @@
+.maxDiv-Control-App {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+}
+
+.maxDiv-Control-App__Routes {
+  width: 100%;
+}
+
 .navbar-user-container {
   display: flex;
-  width: 10%;
+  width: 100px;
 }
 
 .click_navbar-option:visited navbar-option {

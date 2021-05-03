@@ -66,9 +66,11 @@ const App = () => {
   if (enable) {
     return (
       <Router>
-        <div style={{display: 'flex'}}>
+        <div className="maxDiv-Control-App">
           <Navbar switchActive={switchActive} />
-          <Routes rol={rol} isAuth={isAuth} enableRoutes={enableRoutes} />
+          <div className="maxDiv-Control-App__Routes">
+            <Routes rol={rol} isAuth={isAuth} enableRoutes={enableRoutes} />
+          </div>
         </div>
       </Router>
     );
