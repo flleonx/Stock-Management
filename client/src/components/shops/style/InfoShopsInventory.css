@@ -1,4 +1,16 @@
-.container_table-design {
+.products-warehouseproducts-section {
+  width: 100%;
+  height: 83vh;
+}
+
+.products-finished-warehouseproducts-section__h3 {
+  font-family: "Ubuntu", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container_table-shops {
   width: 55%;
   background: white;
   margin: 0 auto;
@@ -6,22 +18,21 @@
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
   height: 415px;
   margin-top: 2%;
-  z-index: 5000;
 }
 
-.table_title-design {
+.table_title-shops {
   height: 38px;
   background: #daf7ee;
   color: #1da597;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-weight: 500;
   font-size: 1.2em;
 }
 
-.search-design-container {
+.search-shops-container {
   display: flex;
   height: 40px;
   background-color: #fae5dd;
@@ -41,7 +52,7 @@
   margin-top: 10px;
 }
 .gg-search::after {
-  content: '';
+  content: "";
   display: block;
   box-sizing: border-box;
   position: absolute;
@@ -54,123 +65,125 @@
   left: 12px;
 }
 
-.search-filter-design {
+.search-filter-shops {
   padding-left: 2%;
   height: 40px;
   width: 98%;
   background: #fae5dd;
   border: 0;
   color: #404040;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-weight: 500;
   font-size: 1.2rem;
 }
 
-.search-filter-design:focus {
+.search-filter-shops:focus {
   outline: none;
   border-right: 0;
   border-left: 0;
 }
 
-.search-filter-design::-webkit-input-placeholder {
+.search-filter-shops::-webkit-input-placeholder {
   color: #404040;
 }
 
-.sample-image-container {
+.sample-image-shops-container {
   display: flex;
   width: 100%;
 }
 
-.table_header-design-sample {
+.table_header-shops-sample {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: "Ubuntu", sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
 }
 
-.table_header-design-img {
+.table_header-shops-img {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.table_header-design-sample {
   font-weight: 500;
   font-size: 1em;
   color: #1da597;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   border: 2px solid #daf7ee;
   border-style: hidden hidden solid hidden;
 }
 
-.table_header-design-img {
-  font-weight: 500;
-  font-size: 1em;
-  color: #1da597;
-  font-family: 'Ubuntu', sans-serif;
-  border: 2px solid #daf7ee;
-  border-style: hidden hidden solid hidden;
-}
-
-.scroll-modal-design {
+.scroll-modal-shops {
   width: 100%;
   overflow-y: hidden;
   overflow-y: scroll;
   max-height: 310px;
 }
 
-.scroll-modal-design::-webkit-scrollbar {
+.scroll-modal-shops::-webkit-scrollbar {
   width: 8px;
   background: #daf7ee;
   border-radius: 0 8px 8px 0;
 }
 
-.scroll-modal-design::-webkit-scrollbar-thumb {
+.scroll-modal-shops::-webkit-scrollbar-thumb {
   background: #daf7ee;
   border-radius: 0 3px 3px 0;
 }
 
-.items_container-design {
+.items_container-shops {
   display: flex;
   width: 100%;
 }
 
-.items-information-container {
+.items-information-shops-container {
   width: 50%;
   height: 50%;
   margin-bottom: 1%;
 }
 
-.items-information-ref {
-  margin-left: 32%;
+.items-information-shops__lot {
+  margin-left: 30%;
 }
 
-.items-information-size {
-  margin-left: 45%;
+.items-information-shops__ref {
+  margin-left: 30%;
 }
 
-.items-information-description {
+.items-information-shops__order {
+  margin-left: 27%;
+}
+
+.items-information-shops__amount {
+  margin-left: 38%;
+}
+
+.items-information-shops__timestamp {
   margin-left: 25%;
 }
 
-.items-information-color {
-  margin-left: 40%;
-}
+/* .items-information-shops__state {
+    margin-left: 25%;
+} */
 
-.table_item-design {
+.table_item-shops {
   width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.table_img-design {
+.table_img-shops {
   width: 100px;
   height: 100px;
 }
 
-.notfoundImg {
+.notfoundImg-shops {
   margin-left: 20%;
 }
 
@@ -181,24 +194,12 @@
   margin-left: 20%;
 }
 
-@media (min-height: 1075px) {
-  .container_table-design {
-    height: 550px;
-    margin-top: 3%;
-  }
-
-  .scroll-modal-design {
-    max-height: 440px;
-  }
-}
-
-@media (min-height: 1400px) {
-  .container_table-design {
+@media (min-width: 1919px) {
+  .container_table-shops {
     height: 650px;
-    margin-top: 3%;
   }
 
-  .scroll-modal-design {
-    max-height: 535px;
+  .scroll-modal-shops {
+    max-height: 540px;
   }
 }

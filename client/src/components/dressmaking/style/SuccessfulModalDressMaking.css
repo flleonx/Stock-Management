@@ -330,6 +330,7 @@ p {
   overflow-y: scroll;
   max-height: 500px;
   height: 390px;
+  z-index: 5000;
 }
 
 .container_table::-webkit-scrollbar {

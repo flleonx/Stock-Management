@@ -37,6 +37,7 @@ function WareHouse() {
   const [updateCode, setUpdateCode] = useState<string>('');
   const [updateAmount, setUpdateAmount] = useState<string>('');
   const [dressMakingReq, setDressMakingReq] = useState<any>([]);
+  const [suppliesData, setSuppliesData] = useState<any>([]);
   const [reRenderUpdate, setReRenderUpdate] = useState<boolean>(false);
   const [infoRequest, setInfoRequest] = useState({});
   const [isOpenDecision, setIsOpenDecision] = useState<boolean>(false);
@@ -59,6 +60,14 @@ function WareHouse() {
     Axios.get(getDressMakingRequest).then((response: AxiosResponse) => {
       setDressMakingReq(response.data);
     });
+
+    Axios.get(invetoryBodegaAPIURL)
+      .then((response: AxiosResponse) => {
+        setSuppliesData(response.data);
+      })
+      .catch((error) => {
+        if (error) throw error;
+      });
   }, []);
 
   interface ICloth {
@@ -189,17 +198,6 @@ function WareHouse() {
     }
   };
 
-  const handleInvetoryTable = (e: any) => {
-    e.preventDefault();
-    const enable = Axios.get(invetoryBodegaAPIURL)
-      .then((response: any) => {
-        dispatch({type: 'INVENTORY_BODEGA', payload: response.data});
-      })
-      .catch((error) => {
-        if (error) throw error;
-      });
-  };
-
   const handlerApprove = (payload: any) => {
     let index = payload;
     console.log(payload);
@@ -293,7 +291,10 @@ function WareHouse() {
         <h2 className="navbar-warehouse__h2">Bodega Insumos</h2>
         <div className="navbar-warehouse-otpions">
           <a href="#new-supplies-section" onClick={handleNavbarClick}>
-            Registrar nuevos insumos / Inventarios
+            Registrar nuevos insumos
+          </a>
+          <a href="#inventory-warehouse-modal-section" onClick={handleNavbarClick}>
+            Inventario
           </a>
           <a href="#update-section" onClick={handleNavbarClick}>
             Actualizar insumos existentes
@@ -354,20 +355,29 @@ function WareHouse() {
               </button>
             </form>
           </div>
-          <div className="inventory-warehouse-open-modal">
-            <div className="bodega-inventory">
-              <h2>Click aquí para desplegar el inventario en Bodega:</h2>
-              <button className="btn" onClick={handleInvetoryTable}>
-                Desplegar
-              </button>
-            </div>
-            {state.isModalOpen && (
-              <ModalInvetoryWareHouse
-                modalContent={state.modalContent}
-                closeModal={closeModal}
-              />
-            )}
+          <div className="information-add-supplies-container">
+            <h2 className="information-add-supplies-container__h2">
+              Registrar nuevos insumos
+            </h2>
+            <p className="information-add-supplies-container__p">
+              ¿Has recibido stock de insumos nuevos? En este apartado puedes agregar estos insumos nuevos al inventario. 
+              Sólo digita el código con el cual identificarás el insumo, el color, metros o cantidad dependiendo si es tela 
+              o otro elemento (botones, correderas, etc), una descripción, el URL de la imágen y seleccina si es tela o insumo 
+              (si es un botón, corredera, etc). Por último, presiona el botón de enviar y listo :) 
+
+            </p>
           </div>
+        </div>
+
+        <div
+          className="inventory-warehouse-modal-section"
+          id="inventory-warehouse-modal-section"
+        >
+          <h3>Inventario de las muestras</h3>
+          <ModalInvetoryWareHouse
+                modalContent={suppliesData}
+                closeModal={closeModal}
+          />
         </div>
 
         <div className="update-container" id="update-section">

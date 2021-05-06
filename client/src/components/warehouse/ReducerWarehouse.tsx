@@ -1,8 +1,4 @@
 export const reducer = (state: any, action: any) => {
-  if (action.type === 'INVENTORY_BODEGA') {
-    const invetoryBodegaContent = action.payload;
-    return {...state, modalContent: invetoryBodegaContent, isModalOpen: true};
-  }
 
   if (action.type === 'SUCCESSFUL_FORM') {
     return {

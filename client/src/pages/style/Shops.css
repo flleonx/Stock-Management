@@ -2,54 +2,172 @@
   width: 100%;
 }
 
-.general-container-shops__h2 {
-  font-size: 1.1rem;
-  font-family: 'Ubuntu', sans-serif;
-  letter-spacing: normal;
-  color: #374663;
-  margin: 20px 0px 0px 10px;
+.scroll-shops {
+  height: 83vh;
+  overflow: hidden;
+  overflow-y: scroll;
+  /* border: 1px solid red; */
+  scroll-behavior: smooth;
 }
 
-.general-container-shops__p {
+.scroll-shops::-webkit-scrollbar {
+  background-color: #f8f9fb;
+  width: 16px;
+}
+
+.scroll-shops::-webkit-scrollbar-track {
+  background-color: #f8f9fb;
+}
+
+.scroll-shops::-webkit-scrollbar-thumb {
+  background-color: #babac0;
+  border-radius: 16px;
+  border: 4px solid #f8f9fb;
+}
+
+.scroll-shops::-webkit-scrollbar-button {
+  display: none;
+}
+
+.navbar-shops {
+  height: 50px;
+  width: 100%;
+  background-color: #43a799;
+  position: sticky;
+  z-index: 2000;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-shops__h2 {
+  color: #f8f8f8;
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.85rem;
-  color: #9ba9af;
-  margin: 12px 0px 0px 10px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-left: 3%;
+  margin-top: 1%;
+}
+
+.navbar-shops-otpions {
+  width: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 3em;
+}
+
+.navbar-shops-otpions a {
+  color: #f8f8f8;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.navbar-shops-otpions a:hover {
+  color: black;
+}
+
+.shops-request-wp {
+  display: flex;
+  /* border: 1px solid blue; */
+  width: 100%;
+  height: 83vh;
 }
 
 .makeReqShopsContainer {
-  width: 97%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  width: 40%;
+  height: 50%;
   background-color: white;
-  margin-top: 1%;
-  padding-left: 12%;
+  margin-left: 2em;
+  margin-top: 9em;
 }
 
-.makeReqShopsContainer .actualAmount {
-  height: 25px;
+.makeReqShopsContainer h4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.7em;
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.8rem;
-  padding-left: 1%;
+  font-size: 0.95rem;
 }
 
 .makeReqShopsContainer__dropdownReference {
-  width: 17%;
+  width: 90%;
+  margin-left: 1.5em;
+  margin-top: 1.7em;
+}
+
+.makeReqShopsContainer #actualAmount {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.7rem;
+  height: 10%;
+  padding-left: .9em;
+  margin-top: 1.7em;
 }
 
 .makeReqShopsContainer__dropdownShop {
-  width: 17%;
+  width: 90%;
+  margin-left: 1.5em;
+  margin-top: 1.2em;
 }
 
 .makeReqButtonContainer {
-  width: 25%;
-  height: 12%;
+  width: 90%;
+  margin-left: 1.8em;
+  height: 9%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  margin-top: 1.7em;
 }
 
-.makeReqButtonContainer button {
+.makeReqButtonContainer:focus {
+  outline: none;
+}
+
+.information-shop-request-wp-container {
+  width: 51%;
+  height: 40%;
+  margin-left: 3.5em;
+  margin-top: 12em;
+}
+
+.information-shop-request-wp-container__h2 {
   font-family: 'Ubuntu', sans-serif;
-  font-size: 0.7rem;
+  font-size: 1.5rem;
+}
+
+.information-shop-request-wp-container__p {
+  font-family: 'Ubuntu', sans-serif;
+  margin-top: 0.8em;
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: #000000;
+  line-height: 2rem;
+}
+
+.products-process-shops-section {
+  width: 100%;
+  height: 83vh;
+  background-color: #e8f5f1;
+}
+
+.products-finished-warehouseproducts-section__h3 {
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.products-send-shops-section {
+  width: 100%;
+  height: 83vh;
+}
+
+.products-send-shops-section__h3 {
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .external_options_container {
@@ -208,3 +326,26 @@
 .option-shopsinfo::hover {
   background: #e7f7f2;
 }
+
+@media (min-width: 1919px) {
+  .makeReqShopsContainer {
+    width: 40%;
+    height: 40%;
+    background-color: white;
+    margin-left: 2em;
+    margin-top: 18em;
+  }
+
+  .information-shop-request-wp-container {
+    width: 51%;
+    height: 40%;
+    margin-left: 3.5em;
+    margin-top: 24em;
+  }
+
+  #actualAmount {
+    margin-left: 2em;
+  }
+  
+}
+
