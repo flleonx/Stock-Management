@@ -7,6 +7,23 @@ import database from "../../config/dbConfig";
 import util from "util";
 const db_query = util.promisify(database.query).bind(database);
 
+const timestamp_generator = () => {
+  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
+  let arrDate = date.split(" ");
+  let s1 = arrDate[0].split("/");
+  s1[0] = s1[0].length < 2 ? "0" + s1[0] : s1[0];
+  s1[1] = s1[1].length < 2 ? "0" + s1[1] : s1[1];
+  let dateFormat = s1.join("-");
+  let s2 = arrDate[1].split(":");
+  s2[0] = s2[0].length < 2 ? "0" + s2[0] : s2[0];
+  s2[1] = s2[1].length < 2 ? "0" + s2[1] : s2[1];
+  s2[2] = s2[2].length < 2 ? "0" + s2[2] : s2[2];
+  let hour = s2.join(":");
+
+  let timestamp = dateFormat + " " + hour;
+  return timestamp;
+};
+
 router.post("/api/shoprequestproducts", (req, res) => {
   interface IWareHouseProducts {
     numero_lote: number;
@@ -70,19 +87,7 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
   let reference = req.body.referenceSelection;
   const amount = parseInt(req.body.actualAmount);
   const idTienda = parseInt(req.body.idShop);
-  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
-  let arrDate = date.split(" ");
-  let s1 = arrDate[0].split("/");
-  if (s1[0].length < 2) s1[0] = "0" + s1[0];
-  if (s1[1].length < 2) s1[1] = "0" + s1[1];
-  let dateFormat = s1.join("-");
-  let s2 = arrDate[1].split(":");
-  if (s2[0].length < 2) s2[0] = "0" + s2[0];
-  if (s2[1].length < 2) s2[1] = "0" + s2[1];
-  if (s2[2].length < 2) s2[2] = "0" + s2[2];
-  let hour = s2.join(":");
-
-  let timestamp = dateFormat + " " + hour;
+  let timestamp = timestamp_generator();
   console.log(timestamp);
   let reqData = {
     referencia: reference,
@@ -144,34 +149,18 @@ router.post("/api/updatereceivedstate", (req, res) => {
 });
 
 router.post("/api/requestsbetweenshops", (req, res) => {
-  console.log(req.body);
-  // let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
-  // let arrDate = date.split(" ");
-  // let s1 = arrDate[0].split("/");
-  // if (s1[0].length < 2) s1[0] = "0" + s1[0];
-  // if (s1[1].length < 2) s1[1] = "0" + s1[1];
-  // let dateFormat = s1.join("-");
-  // let s2 = arrDate[1].split(":");
-  // if (s2[0].length < 2) s2[0] = "0" + s2[0];
-  // if (s2[1].length < 2) s2[1] = "0" + s2[1];
-  // if (s2[2].length < 2) s2[2] = "0" + s2[2];
-  // let hour = s2.join(":");
-
-  // let timestamp = dateFormat + " " + hour;
-
   // const query_check = `UPDATE INVENTARIO_TIENDAS SET id_estado = 1 WHERE numero_de_orden = ${req.body.numero_de_orden}`;
-  const query_inventory_list = ` SELECT NULL AS numero_entrada, NULL AS total FROM dual WHERE (@total := 0) UNION SELECT numero_entrada, @total := @total + cantidad AS total
-  FROM InventoryManagement.INVENTARIO_TIENDAS WHERE @total < ${req.body.cantidad} AND referencia = ${req.body.referencia}`;
+  const query_inventory_list = `SELECT NULL AS numero_entrada, NULL AS total FROM dual WHERE (@total := 0) UNION SELECT numero_entrada, @total := @total + cantidad AS total
+  FROM InventoryManagement.INVENTARIO_TIENDAS WHERE @total < ${req.body.cantidad} AND referencia = ${req.body.referencia} AND idTienda = ${req.body.tienda_origen}
+  AND id_estado = 1`;
   const db_call = async () => {
     const result = await databaseQuery(query_inventory_list);
-    console.log(result);
     res.end(JSON.stringify(result));
   };
 
   const databaseQuery = async (query_request: string) => {
     try {
       const response: any = await db_query(query_request);
-      console.log(response);
       return response;
     } catch (err) {
       console.log("There is an error: ", err);
@@ -181,19 +170,28 @@ router.post("/api/requestsbetweenshops", (req, res) => {
 });
 
 router.post("/api/decisionbetweenshops", (req, res) => {
-  let numeros_de_entrada = "";
-  // DEFINIR NUMEROS DE ENTRADA CON CONCATENACION Y SLICE(0, -1)
-  const query_decision = `UPDATE INVENTARIO_TIENDAS SET id_estado = 0 WHERE numero_entrada IN (${numeros_de_entrada})`;
+  let timestamp = timestamp_generator();
+
+  interface INumeros_Entrada {
+    numero_entrada: number;
+    total: number;
+  }
+  let arr_numeros_de_entrada: string[] = [];
+  req.body.numeros_de_entrada.map((val: INumeros_Entrada) => {
+    arr_numeros_de_entrada.push(val.numero_entrada.toString());
+  });
+  let numeros_de_entrada = arr_numeros_de_entrada.join();
+  console.log(numeros_de_entrada);
+  const query_decision = `UPDATE InventoryManagement.INVENTARIO_TIENDAS SET id_estado = 0, timestamp_envios = "${timestamp}", idTienda = ${req.body.data.tienda_destino}
+                          WHERE numero_entrada IN (${numeros_de_entrada})`;
   const db_call = async () => {
-    const result = await databaseQuery(query_decision);
-    console.log(result);
-    res.end(JSON.stringify(result));
+    const response = await databaseQuery(query_decision);
+    res.end(JSON.stringify("ENVIO_EXITOSO"));
   };
 
   const databaseQuery = async (query_request: string) => {
     try {
       const response: any = await db_query(query_request);
-      console.log(response);
       return response;
     } catch (err) {
       console.log("There is an error: ", err);
@@ -203,7 +201,6 @@ router.post("/api/decisionbetweenshops", (req, res) => {
 });
 
 router.post("/api/check_existing_value", (req, res) => {
-  console.log(req.body);
   var query_check: string = "";
   var result_attribute: string = "";
 
@@ -220,14 +217,12 @@ router.post("/api/check_existing_value", (req, res) => {
 
   const db_call = async () => {
     const result = await databaseQuery(query_check);
-    console.log(result);
     res.end(JSON.stringify(result));
   };
 
   const databaseQuery = async (query_request: string) => {
     try {
       const response: any = await db_query(query_request);
-      console.log(response);
       if (response[0][result_attribute] == req.body.payload) {
         return true;
       }
@@ -237,6 +232,18 @@ router.post("/api/check_existing_value", (req, res) => {
     }
   };
   db_call();
+});
+
+router.post("/api/save_newshop_request", (req, res) => {
+  const timestamp = timestamp_generator();
+  const insertion = { ...req.body, timestamp };
+  console.log(insertion);
+  let query_save_request = `INSERT INTO PETICIONES_ENTRE_TIENDAS SET ?`;
+  console.log(query_save_request);
+  database.query(query_save_request, [insertion], (err: MysqlError | null) => {
+    if (err) throw err;
+    res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
+  });
 });
 
 export default router;

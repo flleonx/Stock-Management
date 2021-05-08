@@ -78,6 +78,11 @@ const Shops = () => {
   const [numberInput, setNumberInput] = useState<string>("");
   const [infoDeliveryState, setInfoDeliveryState] = useState<any>([]);
   const [infoActualInventory, setInfoActualInventory] = useState<any>([]);
+  const [requiredStock, setRequiredStock] = useState<any>([]);
+  const [infoRequestsBetweenShops, setInfoRequestsBetweenShops] = useState<any>(
+    []
+  );
+  const [auxiliar, setAuxiliar] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
 
@@ -97,8 +102,12 @@ const Shops = () => {
     baseURL + "api/shopwarehouseproductsrequest";
   const dbDeliveryState: string = baseURL + "api/deliverystate";
   const dbActualInventory: string = baseURL + "api/getactualinventory";
+  const dbActualRequestsBetweenShops: string =
+    baseURL + "api/getactualrequestbetweenshops";
   const dbUpdateReceivedState: string = baseURL + "api/updatereceivedstate";
   const dbRequestBetweenShops: string = baseURL + "api/requestsbetweenshops";
+  const dbDecisionBetweenShops: string = baseURL + "api/decisionbetweenshops";
+  const dbSaveNewShopRequest: string = baseURL + "api/save_newshop_request";
 
   useEffect(() => {
     Axios.get(dbReferencesURL).then((response: AxiosResponse) => {
@@ -117,6 +126,11 @@ const Shops = () => {
 
     Axios.get(dbDeliveryState).then((response: AxiosResponse) => {
       setInfoDeliveryState(response.data);
+      // console.log(response.data);
+    });
+
+    Axios.get(dbActualRequestsBetweenShops).then((response: AxiosResponse) => {
+      setInfoRequestsBetweenShops(response.data);
       console.log(response.data);
     });
 
@@ -289,11 +303,10 @@ const Shops = () => {
         tienda_origen: valueOriginShopSelected,
         tienda_destino: valueDestinationShopSelected,
       };
-      const response: AxiosResponse | undefined = await query_post(
-        dbRequestBetweenShops,
+      const response: AxiosResponse[] = await query_post(
+        dbSaveNewShopRequest,
         data
       );
-      console.log(response);
     } else {
       // dispatch({ type: "WRONG_INPUT" });
       // refContainer.current.value = "";
@@ -311,13 +324,48 @@ const Shops = () => {
     // });
   };
 
+  const handler_required_stock = async (index: number) => {
+    const response: AxiosResponse[] = await query_post(dbRequestBetweenShops, {
+      data: infoRequestsBetweenShops[index],
+    });
+    console.log(response[0] !== null);
+    setAuxiliar([
+      infoRequestsBetweenShops[index].cantidad,
+      infoRequestsBetweenShops[index].tienda_destino,
+    ]);
+    if (response[0] !== null) {
+      setRequiredStock(response);
+    } else {
+      console.log("NO HAY EXISTENCIAS");
+    }
+  };
+
+  const handler_final_decision = async (id_decision: number) => {
+    if ((id_decision = 1)) {
+      const required_stock_size: number = requiredStock.length;
+      const amount_number: number = parseInt(auxiliar[0]);
+      if (required_stock_size < amount_number) {
+        console.log("FALTAN", amount_number - required_stock_size);
+      } else {
+        console.log("SEGUNDA CONDICION");
+        const response_decision_state:
+          | AxiosResponse
+          | undefined = await query_post(dbDecisionBetweenShops, {
+          numeros_de_entrada: requiredStock,
+          data: { tienda_destino: auxiliar[1] },
+        });
+        console.log(response_decision_state);
+      }
+    } else {
+      // HACER MANEJO DE PETICION EN BACK
+    }
+  };
+
   const handleNavbarClick = (e: any) => {
     e.preventDefault();
-    const target = e.target.getAttribute('href');
+    const target = e.target.getAttribute("href");
     const location = document.querySelector(target).offsetTop;
-    const scrollDiv = document.getElementById(
-      'scroll-shops'
-    ) as HTMLDivElement;
+    const scrollDiv = document.getElementById("scroll-shops") as HTMLDivElement;
 
     scrollDiv.scrollTo(0, location - 108);
   };
@@ -330,16 +378,10 @@ const Shops = () => {
           <a href="#makeReqShopsContainer" onClick={handleNavbarClick}>
             Peticion a bodega productos
           </a>
-          <a
-            href="#products-process-shops-section"
-            onClick={handleNavbarClick}
-          >
+          <a href="#products-process-shops-section" onClick={handleNavbarClick}>
             Productos en procesos
           </a>
-          <a
-            href="#products-send-shops-section"
-            onClick={handleNavbarClick}
-          >
+          <a href="#products-send-shops-section" onClick={handleNavbarClick}>
             Productos enviados
           </a>
         </div>
@@ -347,7 +389,7 @@ const Shops = () => {
 
       <div className="scroll-shops" id="scroll-shops">
         <div className="shops-request-wp">
-          <div className="makeReqShopsContainer" id="makeReqShopsContainer"> 
+          <div className="makeReqShopsContainer" id="makeReqShopsContainer">
             <h4>Enviar peticiones a Bodega Producto</h4>
             <div className="makeReqShopsContainer__dropdownReference">
               <FilterDropdown
@@ -448,9 +490,9 @@ const Shops = () => {
           id="products-process-shops-section"
         >
           <h3 className="products-finished-warehouseproducts-section__h3">
-            Productos En proceso
+            Inventario tiendas
           </h3>
-          <InfoShopsInventory arrayInformation={infoDeliveryState} />
+          <InfoShopsInventory arrayInformation={infoActualInventory} />
         </div>
 
         <div
@@ -458,9 +500,9 @@ const Shops = () => {
           id="products-send-shops-section"
         >
           <h3 className="products-send-shops-section__h3">
-            Productos Enviados
+            Productos en envio
           </h3>
-          <InfoShopsInventory arrayInformation={infoActualInventory} />
+          <InfoShopsInventory arrayInformation={infoDeliveryState} />
         </div>
 
         {/* <div className="productsContainer">
@@ -548,7 +590,7 @@ const Shops = () => {
           Enviar
         </button>
       </div> */}
-      {/* <div className="makeReqShopsContainer">
+      <div className="makeReqShopsContainer">
         <div className="makeReqShopsContainer__dropdownReference">
           <FilterDropdown
             options={references}
@@ -600,7 +642,80 @@ const Shops = () => {
             Enviar
           </button>
         </div>
-      </div> */}
+      </div>
+
+      <div className="shopsRequestContainer">
+        {infoRequestsBetweenShops.map((shop: any, index: number) => {
+          return (
+            <div className="shopRequestCard">
+              <h4 className="shopRequestCard__h4">
+                Información de la petición
+              </h4>
+              <div className="shopRequestCard__order">
+                # de petición: {shop.numero_peticion}
+              </div>
+              <div className="shopRequestCard__reference">
+                Referencia: {shop.referencia}
+              </div>
+              <div className="shopRequestCard__amount">
+                Cantidad: {shop.cantidad}
+              </div>
+              <div className="shopRequestCard__shop">
+                Tienda Origen: {shop.tienda_origen_nombre}
+              </div>
+              <div className="shopRequestCard__shop">
+                Tienda Destino: {shop.tienda_destino_nombre}
+              </div>
+              <div className="shopRequestCard_date">
+                Fecha: {shop.timestamp.replace("T", " ").slice(0, 16)}
+              </div>
+              <button
+                className="btn shopRequestCard__deploy"
+                key={index}
+                data-index={index}
+                // onClick={() => setIsOpenModalReq(true)}
+                onClick={() => handler_required_stock(index)}
+              >
+                Desplegar requerimientos
+              </button>
+              <button
+                className="btn shopRequestCard__deploy"
+                key={index}
+                data-index={index}
+                // onClick={() => setIsOpenModalReq(true)}
+                onClick={() => handler_final_decision(0)}
+              >
+                Rechazar
+              </button>
+              <button
+                className="btn shopRequestCard__deploy"
+                key={index}
+                data-index={index}
+                // onClick={() => setIsOpenModalReq(true)}
+                onClick={() => handler_final_decision(1)}
+              >
+                Aceptar
+              </button>
+              {/* <button
+                className="btn shopRequestCard__refuse"
+                key={index + Math.random()}
+                data-index={index}
+                onClick={() => handlerRefuse(index)}
+              >
+                Rechazar
+              </button>
+              <button
+                className="btn shopRequestCard__approve"
+                key={index + Math.random()}
+                data-index={index}
+                onClick={() => handlerApprove(index)}
+              >
+                Aceptar
+              </button> */}
+            </div>
+          );
+        })}
+      </div>
 
       <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
         <h1 className="modalWarehouseh1">{state.modalContent}</h1>
