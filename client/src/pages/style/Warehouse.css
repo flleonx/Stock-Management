@@ -236,65 +236,47 @@
   outline: none;
 }
 
-.inventory-warehouse-open-modal {
-  width: 60%;
-  margin-top: 1%;
+.information-add-supplies-container {
+  width: 51%;
+  height: 40%;
+  margin-left: 3.5em;
+  margin-top: 9em;
 }
 
-.bodega-inventory {
-  background-color: white;
-  box-shadow: 4px 0px 15px rgb(235, 235, 235);
+.information-add-supplies-container__h2 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.5rem;
+}
+
+.information-add-supplies-container__p {
+  font-family: 'Ubuntu', sans-serif;
+  margin-top: 0.8em;
+  font-size: 1.3rem;
+  font-weight: 300;
+  color: #000000;
+  line-height: 2rem;
+}
+
+.inventory-warehouse-modal-section {
+  border: 1px solid transparent;
+  height: 83vh;
+  background-color: #e7f7f2;
+}
+
+.inventory-warehouse-modal-section h3 {
   display: flex;
-  height: 50px;
-  width: 96%;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.5rem;
   margin-top: 2%;
-  margin-left: 1%;
-}
-
-.bodega-inventory h2 {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.85rem;
-  color: #374663;
-  margin-top: 2.5%;
-  margin-left: 9%;
-}
-
-.bodega-inventory button {
-  height: 25px;
-  width: 20%;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.7rem;
-  margin-left: 5%;
-  margin-top: 1.6%;
-}
-
-.bodega-inventory button:focus {
-  outline: none;
-}
-
-.modal-bodega-form {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.7rem;
-  border: 1px solid #374663;
-  background-color: #7d8eaf;
-  border-radius: 5px;
-  width: 90%;
-  margin: 0px auto;
-  height: 30px;
-  padding-left: 3%;
-  padding-top: 1%;
-}
-
-.modal-bodega-form p {
-  color: #ffffff;
-  font-weight: bold;
 }
 
 .update-container {
   width: 100%;
   display: flex;
   height: 83vh;
-  background-color: #e7f7f2;
+  background-color: #f8f9fb;
 }
 
 .update-container-card {
@@ -411,6 +393,7 @@
 .warehouseReqSection {
   width: 100%;
   height: 83vh;
+  background-color: #e7f7f2;
 }
 
 .warehouseReqSection h3 {
@@ -445,7 +428,7 @@
 }
 
 .dressmakingReqContainer {
-  background-color: rgb(245, 250, 249);
+  background-color: rgb(236, 245, 245);
   margin-top: 1%;
   margin-left: 1.5%;
   width: 89vw;
@@ -538,9 +521,27 @@
 }
 
 @media (min-width: 1919px) {
-  /* .general-container-warehouse {
-    margin-left: -2.5%;
-  } */
+  .warehouse-form-container {
+    margin-top: 2em;
+  }
+
+  .information-add-supplies-container {
+    margin-top: 21.5em;
+  }
+
+  .information-add-supplies-container__h2 {
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 1.7rem;
+  }
+  
+  .information-add-supplies-container__p {
+    font-family: 'Ubuntu', sans-serif;
+    margin-top: 0.8em;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: #000000;
+    line-height: 2rem;
+  }
 
   .update-container {
     width: 100%;
@@ -555,20 +556,17 @@
     margin-top: 7.5%;
   }
 
-  .update-container {
-    height: 83vh;
-  }
-
   .update-container__h2 {
-    margin-top: 6%;
+    margin-top: 7%;
   }
 
   .update-container-card {
-    margin-top: 11%;
+    margin-top: 12%;
+    height: 45%;
   }
 
   .information-update-container {
-    margin-top: 18%;
+    margin-top: 19%;
   }
 
   .information-update-container__h2 {
@@ -577,6 +575,10 @@
 
   .information-update-container__p {
     font-size: 1.6rem;
+  }
+
+  .update-container-form button {
+    height: 12%;
   }
 
   .warehouseReqSection {

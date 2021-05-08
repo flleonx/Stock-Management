@@ -22,20 +22,12 @@ const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
 
   return (
     <div className="container_table-bodega">
-      <div className="container-bodega-top">
-        <div className="table_title-bodega">Información</div>
-        <button
-          onClick={handleClose}
-          className="ModalWarehouseComponent__close-button"
-        >
-          X
-        </button>
-      </div>
+      <div className="table_title-bodega">Información</div>
       <div className="search-warehouse-container">
         <i className="gg-search"></i>
         <input
           type="search"
-          placeholder="Buscar..."
+          placeholder="Buscar por código..."
           className="search-filter-design-warehouse"
           onChange={(e: any) => handlerSearch(e.target.value)}
         ></input>

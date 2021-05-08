@@ -10,6 +10,7 @@ import FilterDropdown from "../components/FilterDropdown";
 import Modal from "../components/Modal";
 import completeImage from "../assets/complete.svg";
 import errorImage from "../assets/error.svg";
+import InfoShopsInventory from "../components/shops/InfoShopsInventory";
 import { StringLiteralLike, updateSourceFile } from "typescript";
 
 const reducer = (state: any, action: any) => {
@@ -239,12 +240,12 @@ const Shops = () => {
 
   const query_post = async (url: string, payload: any) => {
     try {
-      const response:AxiosResponse = await Axios.post(url, payload);
-      console.log("RESPONSE", response.data)
+      const response: AxiosResponse = await Axios.post(url, payload);
+      console.log("RESPONSE", response.data);
       return response.data;
     } catch (err) {
       console.error("There is an error", err);
-      return
+      return;
     }
   };
 
@@ -288,7 +289,10 @@ const Shops = () => {
         tienda_origen: valueOriginShopSelected,
         tienda_destino: valueDestinationShopSelected,
       };
-      const response:AxiosResponse | undefined = await query_post(dbRequestBetweenShops, data);
+      const response: AxiosResponse | undefined = await query_post(
+        dbRequestBetweenShops,
+        data
+      );
       console.log(response);
     } else {
       // dispatch({ type: "WRONG_INPUT" });
@@ -307,116 +311,185 @@ const Shops = () => {
     // });
   };
 
+  const handleNavbarClick = (e: any) => {
+    e.preventDefault();
+    const target = e.target.getAttribute('href');
+    const location = document.querySelector(target).offsetTop;
+    const scrollDiv = document.getElementById(
+      'scroll-shops'
+    ) as HTMLDivElement;
+
+    scrollDiv.scrollTo(0, location - 108);
+  };
+
   return (
     <div className="general-container-shops">
-      <h2 className="general-container-shops__h2">Tiendas</h2>
-      <p className="general-container-shops__p">
-        Aquí puedes hacer peticiones de productos ya producidos que se
-        encuentren en Bodega productos.
-      </p>
-      <div className="makeReqShopsContainer">
-        <div className="makeReqShopsContainer__dropdownReference">
-          <FilterDropdown
-            options={references}
-            id="referencia"
-            label="referencia"
-            prompt="Seleccionar referencia"
-            value={valueReferenceSelect}
-            onChange={(val: any) => setValueReferenceSelect(val)}
-          />
-        </div>
-        <input
-          ref={refContainer}
-          id="actualAmount"
-          name="actualAmount"
-          className="actualAmount"
-          placeholder="Digite la cantidad"
-          type="number"
-          autoComplete="off"
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
-        />
-        <div className="makeReqShopsContainer__dropdownShop">
-          <FilterDropdown
-            options={shops}
-            id="idTienda"
-            label="nombre_tienda"
-            prompt="Seleccionar la tienda"
-            value={valueShopSelect}
-            onChange={(val: any) => setValueShopSelect(val)}
-          />
-        </div>
-        <div className="makeReqButtonContainer">
-          <button className="btn" type="button" onClick={productsRequest}>
-            Enviar
-          </button>
+      <div className="navbar-shops">
+        <h2 className="navbar-shops__h2">Tiendas</h2>
+        <div className="navbar-shops-otpions">
+          <a href="#makeReqShopsContainer" onClick={handleNavbarClick}>
+            Peticion a bodega productos
+          </a>
+          <a
+            href="#products-process-shops-section"
+            onClick={handleNavbarClick}
+          >
+            Productos en procesos
+          </a>
+          <a
+            href="#products-send-shops-section"
+            onClick={handleNavbarClick}
+          >
+            Productos enviados
+          </a>
         </div>
       </div>
 
-      <div className="productsContainer">
-        {infoDeliveryState.map((item: any, index: number) => {
-          return (
-            <div className="productCard">
-              <h4 className="productCard__h4"> Información del producto</h4>
-              <div className="productCard__lot">
-                Numero de Lote: {item.numero_lote}
-              </div>
-              <div className="productCard__reference">
-                Referencia: {item.referencia}
-              </div>
-              <div className="productCard__Order">
-                # de orden: {item.numero_de_orden}
-              </div>
-              <div className="productCard__amount">
-                Cantidad: {item.cantidadTotal}
-              </div>
-              <div className="productCard__date">
-                Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
-              </div>
-              <div className="productCard__date">
-                Estado: {item.nombre_estado}
-              </div>
-              <div className="makeReqButtonContainer">
-                <button
-                  className="btn"
-                  type="button"
-                  onClick={() => handlerReceived(index)}
-                >
-                  Confirmar recibido
-                </button>
-              </div>
+      <div className="scroll-shops" id="scroll-shops">
+        <div className="shops-request-wp">
+          <div className="makeReqShopsContainer" id="makeReqShopsContainer"> 
+            <h4>Enviar peticiones a Bodega Producto</h4>
+            <div className="makeReqShopsContainer__dropdownReference">
+              <FilterDropdown
+                options={references}
+                id="referencia"
+                label="referencia"
+                prompt="Seleccionar referencia"
+                value={valueReferenceSelect}
+                onChange={(val: any) => setValueReferenceSelect(val)}
+              />
             </div>
-          );
-        })}
-      </div>
+            <input
+              ref={refContainer}
+              id="actualAmount"
+              name="actualAmount"
+              className="actualAmount"
+              placeholder="Digite la cantidad"
+              type="number"
+              autoComplete="off"
+              onChange={(e) => {
+                setAmount(e.target.value);
+              }}
+            />
+            <div className="makeReqShopsContainer__dropdownShop">
+              <FilterDropdown
+                options={shops}
+                id="idTienda"
+                label="nombre_tienda"
+                prompt="Seleccionar tienda"
+                value={valueShopSelect}
+                onChange={(val: any) => setValueShopSelect(val)}
+              />
+            </div>
+            {/* <div className="makeReqButtonContainer"> */}
+            <button
+              className="btn makeReqButtonContainer"
+              type="button"
+              onClick={productsRequest}
+            >
+              Enviar
+            </button>
+            {/* </div> */}
+          </div>
 
-      <div className="productsContainer">
-        {infoActualInventory.map((item: any, index: number) => {
-          return (
-            <div className="productCard">
-              <h4 className="productCard__h4"> Información del producto</h4>
-              <div className="productCard__lot">
-                Numero de Lote: {item.numero_lote}
+          <div className="information-shop-request-wp-container">
+            <h2 className="information-shop-request-wp-container__h2">
+              Enviar petición a Bodega Productos
+            </h2>
+            <p className="information-shop-request-wp-container__p">
+              ¿Necesitas stock en alguna tienda? Entonces envía una petición a
+              Bodega Productos para enviar productos a una tienda en concreto.
+              Solo escoge la referencia del producto que necesitas, digita
+              cuantos deseas, selecciona la tienda de destino y preciona el
+              botón de enviar. Así de sencillo :)
+            </p>
+          </div>
+        </div>
+
+        {/* <div className="productsContainer">
+          {infoDeliveryState.map((item: any, index: number) => {
+            return (
+              <div className="productCard">
+                <h4 className="productCard__h4"> Información del producto</h4>
+                <div className="productCard__lot">
+                  Numero de Lote: {item.numero_lote}
+                </div>
+                <div className="productCard__reference">
+                  Referencia: {item.referencia}
+                </div>
+                <div className="productCard__Order">
+                  # de orden: {item.numero_de_orden}
+                </div>
+                <div className="productCard__amount">
+                  Cantidad: {item.cantidadTotal}
+                </div>
+                <div className="productCard__date">
+                  Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
+                </div>
+                <div className="productCard__date">
+                  Estado: {item.nombre_estado}
+                </div>
+                <div className="makeReqButtonContainer">
+                  <button
+                    className="btn"
+                    type="button"
+                    onClick={() => handlerReceived(index)}
+                  >
+                    Confirmar recibido
+                  </button>
+                </div>
               </div>
-              <div className="productCard__reference">
-                Referencia: {item.referencia}
+            );
+          })}
+        </div> */}
+
+        <div
+          className="products-process-shops-section"
+          id="products-process-shops-section"
+        >
+          <h3 className="products-finished-warehouseproducts-section__h3">
+            Productos En proceso
+          </h3>
+          <InfoShopsInventory arrayInformation={infoDeliveryState} />
+        </div>
+
+        <div
+          className="products-send-shops-section"
+          id="products-send-shops-section"
+        >
+          <h3 className="products-send-shops-section__h3">
+            Productos Enviados
+          </h3>
+          <InfoShopsInventory arrayInformation={infoActualInventory} />
+        </div>
+
+        {/* <div className="productsContainer">
+          {infoActualInventory.map((item: any, index: number) => {
+            return (
+              <div className="productCard">
+                <h4 className="productCard__h4"> Información del producto</h4>
+                <div className="productCard__lot">
+                  Numero de Lote: {item.numero_lote}
+                </div>
+                <div className="productCard__reference">
+                  Referencia: {item.referencia}
+                </div>
+                <div className="productCard__Order">
+                  # de orden: {item.numero_de_orden}
+                </div>
+                <div className="productCard__amount">
+                  Cantidad: {item.cantidadTotal}
+                </div>
+                <div className="productCard__date">
+                  Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
+                </div>
+                <div className="productCard__date">
+                  Estado: {item.nombre_estado}
+                </div>
               </div>
-              <div className="productCard__Order">
-                # de orden: {item.numero_de_orden}
-              </div>
-              <div className="productCard__amount">
-                Cantidad: {item.cantidadTotal}
-              </div>
-              <div className="productCard__date">
-                Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
-              </div>
-              <div className="productCard__date">
-                Estado: {item.nombre_estado}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div> */}
       </div>
       {/* <div className="select_box_center-reference">
         <div className="references-container">
@@ -475,7 +548,7 @@ const Shops = () => {
           Enviar
         </button>
       </div> */}
-      <div className="makeReqShopsContainer">
+      {/* <div className="makeReqShopsContainer">
         <div className="makeReqShopsContainer__dropdownReference">
           <FilterDropdown
             options={references}
@@ -527,7 +600,7 @@ const Shops = () => {
             Enviar
           </button>
         </div>
-      </div>
+      </div> */}
 
       <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
         <h1 className="modalWarehouseh1">{state.modalContent}</h1>

@@ -1,43 +1,18 @@
 .container_table-bodega {
   grid-area: modal;
-  width: 85%;
+  width: 55%;
   background: white;
   margin: 0 auto;
   margin-top: 2%;
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
   grid-template-columns: repeat(2, 50%);
-  height: 400px;
-}
-
-.container-bodega-top {
-  display: flex;
-}
-
-.ModalWarehouseComponent__close-button {
-  top: 2px;
-  right: 0;
-  border: 0;
-  background-color: #d8d8d8;
-  padding: 0.5rem 1rem;
-}
-
-.ModalWarehouseComponent__close-button:hover {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-}
-
-.ModalWarehouseComponent__close-button:focus {
-  background-color: red;
-  color: white;
-  cursor: pointer;
-  outline: none;
+  height: 470px;
 }
 
 .table_title-bodega {
   grid-column-start: 1;
   grid-column-end: 3;
-  width: 94%;
+  width: 100%;
   height: 38px;
   background: #daf7ee;
   color: #1da597;
@@ -98,7 +73,7 @@
 }
 
 .scroll-modal-inventory {
-  max-height: 285px;
+  max-height: 365px;
   overflow-y: hidden;
   overflow-y: scroll;
 }
@@ -163,7 +138,12 @@
   }
 }
 
-@media (min-height: 1400px) {
+@media (min-width: 1919px) {
+
+  .table_title-bodega {
+    width: 100%;
+  }
+
   .container_table-bodega {
     height: 630px;
   }
