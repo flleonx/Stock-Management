@@ -1,12 +1,12 @@
 .general-container-design {
   width: 100%;
-  height: 91vh;
+  height: 100vh;
 }
 
 .scroll-design-section {
-  height: 83vh;
+  height: 91.5vh;
   overflow: hidden;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   scroll-behavior: smooth;
 }
 
@@ -30,19 +30,23 @@
 }
 
 .navbar-design {
-  height: 50px;
+  height: 55px;
   width: 100%;
-  background-color: #43a799;
+  /* background-color: #e7f7f2; */
+  background-color: #ffffff;
+  border-left: 1px solid rgb(204, 204, 204);
   position: sticky;
-  z-index: 2000;
+  z-index: 0;
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 4px 4px 15px rgb(221, 221, 221);
 }
 
 .navbar-design__h2 {
-  color: #f8f8f8;
+  /* color: #f8f8f8; */
+  color: black;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
@@ -50,34 +54,54 @@
   margin-top: 0.7em;
 }
 
-.navbar-design-otpions {
+.navbar-design-options {
   width: 40%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-right: 3em;
+  /* border: 1px solid blue; */
 }
 
-.navbar-design-otpions a {
-  color: #f8f8f8;
-  font-family: 'Ubuntu', sans-serif;
+.tabs-design {
+  /* border-bottom: 3px solid #00bfa6; */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: #f5faf9; */
 }
 
-.navbar-design-otpions a:hover {
+.tabs-design a  {
   color: black;
+  display: block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.active-tabs-design {
+  border-bottom: 3px solid #00bfa6;
+}
+
+.active-tabs-design a  {
+  color: #00bfa6;
+  font-weight: 600;
 }
 
 .add-reference-design-container {
   display: flex;
   width: 100%;
-  height: 83vh;
+  height: 91.5vh;
 }
 
 .design-form {
   width: 36%;
-  height: 75%;
+  height: 65%;
   background-color: white;
-  margin-top: 4em;
+  margin-top: 6.5em;
   margin-left: 2.5em;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   border: 1px solid transparent;
@@ -165,7 +189,7 @@
 }
 
 .supplies-added-design {
-  margin-top: 3.6em;
+  margin-top: 4.3em;
   height: 77.5%;
   width: 55%;
   margin-left: 2.5em;
@@ -228,7 +252,7 @@
 
 .inventory-design-modal-section {
   border: 1px solid transparent;
-  height: 83vh;
+  height: 91.5vh;
   background-color: #e7f7f2;
 }
 
@@ -238,7 +262,7 @@
   align-items: center;
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
-  margin-top: 2%;
+  padding-top: 1em;
 }
 
 .insumo-add {

@@ -1,19 +1,19 @@
-import React, {useState, useEffect, useReducer, useRef} from 'react';
-import Axios, {AxiosResponse} from 'axios';
-import SuccessfulModalDressMaking from '../components/dressmaking/SuccessfulModalDressMaking';
+import React, { useState, useEffect, useReducer, useRef } from "react";
+import Axios, { AxiosResponse } from "axios";
+import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
 // REDUCER
-import {reducer} from '../components/dressmaking/ReducerDressMaking';
+import { reducer } from "../components/dressmaking/ReducerDressMaking";
 // import './style/DressMaking.css';
 // import '../components/dressmaking/style/buttonStyle.css';
-import {baseURL} from '../components/app/baseURL';
-import notFoundImage from '../assets/Not Found.svg';
-import Modal from '../components/Modal';
-import completeImage from '../assets/complete.svg';
-import errorImage from '../assets/error.svg';
-import {StringLiteralLike, updateSourceFile} from 'typescript';
-import noDataImage from '../assets/no-data.svg';
-import './style/WareHouseProducts.css';
-import ModalWarehouseProductsReq from '../components/warehouseProducts/ModalWarehouseProductsReq';
+import { baseURL } from "../components/app/baseURL";
+import notFoundImage from "../assets/Not Found.svg";
+import Modal from "../components/Modal";
+import completeImage from "../assets/complete.svg";
+import errorImage from "../assets/error.svg";
+import { StringLiteralLike, updateSourceFile } from "typescript";
+import noDataImage from "../assets/no-data.svg";
+import "./style/WareHouseProducts.css";
+import ModalWarehouseProductsReq from "../components/warehouseProducts/ModalWarehouseProductsReq";
 
 const WareHouseProducts = () => {
   //INTERFACES
@@ -45,19 +45,20 @@ const WareHouseProducts = () => {
   const [actualShopRequests, setActualShopRequest] = useState<IShopRequests[]>(
     []
   );
-  const [reference, setReference] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
+  const [reference, setReference] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
   const [isOpenModalReq, setIsOpenModalReq] = useState<boolean>(false);
   const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
   const [indexModal, setIndexModal] = useState<number>(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [toggleState, setToggleState] = useState(1);
 
-  const dbWareHouseProducts: string = baseURL + 'api/getwarehouseproducts';
-  const dbShopsRequestProducts: string = baseURL + 'api/shoprequestproducts';
-  const dbAcceptShopRequest: string = baseURL + 'api/acceptshoprequest';
-  const dbActualShopsRequests: string = baseURL + 'api/getactualshoprequests';
-  const dbSaveDecision: string = baseURL + 'api/savewarehouseproductsdecision';
-  const dbPartialDelivery: string = baseURL + 'api/updatepartialdelivery';
+  const dbWareHouseProducts: string = baseURL + "api/getwarehouseproducts";
+  const dbShopsRequestProducts: string = baseURL + "api/shoprequestproducts";
+  const dbAcceptShopRequest: string = baseURL + "api/acceptshoprequest";
+  const dbActualShopsRequests: string = baseURL + "api/getactualshoprequests";
+  const dbSaveDecision: string = baseURL + "api/savewarehouseproductsdecision";
+  const dbPartialDelivery: string = baseURL + "api/updatepartialdelivery";
 
   let iterator = 0;
   let enableEmpty = true;
@@ -83,8 +84,8 @@ const WareHouseProducts = () => {
         setCheckReqNumber(2);
         setIndexModal(index);
         setIsOpenModalReq(true);
-      } else if (response.data === 'NO EXISTE') {
-        console.log('NO EXISTE REGISTRO');
+      } else if (response.data === "NO EXISTE") {
+        console.log("NO EXISTE REGISTRO");
         setCheckReqNumber(3);
         setIndexModal(index);
         setIsOpenModalReq(true);
@@ -100,7 +101,7 @@ const WareHouseProducts = () => {
   const handlerApprove = (payload: any) => {
     let index = payload;
     // dispatch({ type: "SUCCESSFUL_REQUEST" });
-    console.log('TODO NICE');
+    console.log("TODO NICE");
     Axios.post(dbSaveDecision, {
       ...actualShopRequests[index],
       neededStock: shopRequestInfo,
@@ -121,15 +122,15 @@ const WareHouseProducts = () => {
       ...actualShopRequests[index],
       idDecision: 0,
     }).then((response: AxiosResponse): void => {
-      if (response.data === 'SUCCESSFUL_SAVING') {
-        console.log('TODO NICE');
+      if (response.data === "SUCCESSFUL_SAVING") {
+        console.log("TODO NICE");
         let filterResult = actualShopRequests.filter(
           (item: IShopRequests) =>
             item.numero_de_orden !== actualShopRequests[index].numero_de_orden
         );
         setActualShopRequest(filterResult);
       } else {
-        console.log('BARRILETE');
+        console.log("BARRILETE");
       }
     });
 
@@ -152,13 +153,17 @@ const WareHouseProducts = () => {
 
   const handleNavbarClick = (e: any) => {
     e.preventDefault();
-    const target = e.target.getAttribute('href');
+    const target = e.target.getAttribute("href");
     const location = document.querySelector(target).offsetTop;
     const scrollDiv = document.getElementById(
-      'scroll-warehouseproducts'
+      "scroll-warehouseproducts"
     ) as HTMLDivElement;
 
-    scrollDiv.scrollTo(0, location - 108);
+    scrollDiv.scrollTo(0, location - 55);
+  };
+
+  const toggleTab = (index: number) => {
+    setToggleState(index);
   };
 
   const handlerSearch = (e: any) => {
@@ -173,18 +178,36 @@ const WareHouseProducts = () => {
       <div className="navbar-warehouseproducts">
         <h2 className="navbar-warehouseproducts__h2">Bodega Productos</h2>
         <div className="navbar-warehouseproducts-otpions">
-          <a
-            href="#products-warehouseproducts-section"
-            onClick={handleNavbarClick}
+          <div
+            className={
+              toggleState === 1
+                ? "tabs-warehouseproducts active-tabs-warehouseproducts"
+                : "tabs-warehouseproducts"
+            }
+            onClick={() => toggleTab(1)}
           >
-            Productos terminados
-          </a>
-          <a
-            href="#shops-request-warehouseproducts-section"
-            onClick={handleNavbarClick}
+            <a
+              href="#products-warehouseproducts-section"
+              onClick={handleNavbarClick}
+            >
+              Productos terminados
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 2
+              ? "tabs-warehouseproducts active-tabs-warehouseproducts"
+              : "tabs-warehouseproducts"
+            }
+            onClick={() => toggleTab(2)}
           >
-            Peticiones
-          </a>
+            <a
+              href="#shops-request-warehouseproducts-section"
+              onClick={handleNavbarClick}
+            >
+              Peticiones
+            </a>
+          </div>
         </div>
       </div>
       <div className="scroll-warehouseproducts" id="scroll-warehouseproducts">
@@ -216,7 +239,7 @@ const WareHouseProducts = () => {
               {wareHouseProducts
                 .filter((val: any) => {
                   iterator += 1;
-                  if (searchTerm === '') {
+                  if (searchTerm === "") {
                     return val;
                   } else if (
                     val.referencia
@@ -253,8 +276,8 @@ const WareHouseProducts = () => {
                           Cantidad: {props.cantidad}
                         </div>
                         <div className="items-information-timestamp">
-                          Fecha:{' '}
-                          {props.timestamp.replace('T', ' ').slice(0, 16)}
+                          Fecha:{" "}
+                          {props.timestamp.replace("T", " ").slice(0, 16)}
                         </div>
                       </div>
                       <div className="table_item-warehouseproduct">
@@ -342,10 +365,10 @@ const WareHouseProducts = () => {
                       Tienda: {shop.nombre_tienda}
                     </div>
                     <div className="shopRequestCard_date">
-                      Fecha: {shop.timestamp.replace('T', ' ').slice(0, 16)}
+                      Fecha: {shop.timestamp.replace("T", " ").slice(0, 16)}
                     </div>
                     <div className="shopRequestCard__address">
-                      Dirección: {shop.direccion ? shop.direccion : '0'}
+                      Dirección: {shop.direccion ? shop.direccion : "0"}
                     </div>
                     <button
                       className="btn shopRequestCard__deploy"

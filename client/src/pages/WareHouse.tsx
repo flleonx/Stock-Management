@@ -1,17 +1,17 @@
-import React, {useState, useEffect, useReducer} from 'react';
-import {withRouter, Link} from 'react-router-dom';
-import Axios, {AxiosResponse} from 'axios';
-import './style/Warehouse.css';
-import ModalInvetoryWareHouse from '../components/warehouse/ModalInventoryWareHouse';
-import {baseURL} from '../components/app/baseURL';
-import Modal from '../components/Modal';
-import completeImage from '../assets/complete.svg';
-import errorImage from '../assets/error.svg';
-import noDataImage from '../assets/no-data.svg';
-import ModalinsufficientSupplies from '../components/warehouse/ModalinsufficientSupplies';
-import ModalDecisionSupplies from '../components/warehouse/ModalDecisionSupplies';
-import {reducer} from '../components/warehouse/ReducerWarehouse';
-import FilterDropdown from '../components/FilterDropdown';
+import React, { useState, useEffect, useReducer } from "react";
+import { withRouter, Link } from "react-router-dom";
+import Axios, { AxiosResponse } from "axios";
+import "./style/Warehouse.css";
+import ModalInvetoryWareHouse from "../components/warehouse/ModalInventoryWareHouse";
+import { baseURL } from "../components/app/baseURL";
+import Modal from "../components/Modal";
+import completeImage from "../assets/complete.svg";
+import errorImage from "../assets/error.svg";
+import noDataImage from "../assets/no-data.svg";
+import ModalinsufficientSupplies from "../components/warehouse/ModalinsufficientSupplies";
+import ModalDecisionSupplies from "../components/warehouse/ModalDecisionSupplies";
+import { reducer } from "../components/warehouse/ReducerWarehouse";
+import FilterDropdown from "../components/FilterDropdown";
 
 const defaultState: any = {
   isModalOpen: false,
@@ -19,37 +19,38 @@ const defaultState: any = {
   isModalUpdateOpen: false,
   isOpenNoSupplies: false,
   modalContent: [],
-  modalFormContent: '',
-  modalUpdateContent: '',
+  modalFormContent: "",
+  modalUpdateContent: "",
   checkNumber: 0,
   imgCheckNumber: 0,
 };
 
 function WareHouse() {
-  const [code, setCode] = useState<string>('');
-  const [color, setColor] = useState<string>('');
-  const [amount, setAmount] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [img, setImg] = useState<string>('');
-  const [type, setType] = useState<string>('');
+  const [code, setCode] = useState<string>("");
+  const [color, setColor] = useState<string>("");
+  const [amount, setAmount] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [img, setImg] = useState<string>("");
+  const [type, setType] = useState<string>("");
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [queryData, setQueryData] = useState<any>([]);
-  const [updateCode, setUpdateCode] = useState<string>('');
-  const [updateAmount, setUpdateAmount] = useState<string>('');
+  const [updateCode, setUpdateCode] = useState<string>("");
+  const [updateAmount, setUpdateAmount] = useState<string>("");
   const [dressMakingReq, setDressMakingReq] = useState<any>([]);
   const [suppliesData, setSuppliesData] = useState<any>([]);
   const [reRenderUpdate, setReRenderUpdate] = useState<boolean>(false);
   const [infoRequest, setInfoRequest] = useState({});
   const [isOpenDecision, setIsOpenDecision] = useState<boolean>(false);
   const [valueCode, setValueCode] = useState<any>(null);
-  const saveClothAPIURL: string = baseURL + 'api/savecloth';
-  const invetoryBodegaAPIURL: string = baseURL + 'api/invetorywarehouse';
-  const invetoryWareHouseAPIURL: string = baseURL + 'api/invetorywarehouse';
+  const [toggleState, setToggleState] = useState(1);
+  const saveClothAPIURL: string = baseURL + "api/savecloth";
+  const invetoryBodegaAPIURL: string = baseURL + "api/invetorywarehouse";
+  const invetoryWareHouseAPIURL: string = baseURL + "api/invetorywarehouse";
   const updateInventoryWareHouseURL: string =
-    baseURL + 'api/updatewarehouseinventory';
-  const getDressMakingRequest: string = baseURL + 'api/dressmakingrequest';
-  const dbSuppliesURL: string = baseURL + 'api/suppliesrequest';
-  const dbSaveDecision: string = baseURL + 'api/savewarehousedecision';
+    baseURL + "api/updatewarehouseinventory";
+  const getDressMakingRequest: string = baseURL + "api/dressmakingrequest";
+  const dbSuppliesURL: string = baseURL + "api/suppliesrequest";
+  const dbSaveDecision: string = baseURL + "api/savewarehousedecision";
 
   useEffect(() => {
     Axios.get(invetoryWareHouseAPIURL).then((response: AxiosResponse) => {
@@ -91,73 +92,73 @@ function WareHouse() {
     };
     let enableAmount = false;
 
-    if (type == 'Tela') {
+    if (type == "Tela") {
       enableAmount = parseFloat(amount) > 0;
     } else {
       enableAmount = Number.isInteger(parseInt(amount)) && parseInt(amount) > 0;
     }
     let enableItems =
-      code !== 'Codigo' &&
-      color !== 'Color' &&
-      description !== 'Descripción' &&
-      img !== 'URL de la imágen' &&
-      type !== 'Seleccionar tela o insumo';
+      code !== "Codigo" &&
+      color !== "Color" &&
+      description !== "Descripción" &&
+      img !== "URL de la imágen" &&
+      type !== "Seleccionar tela o insumo";
     if (enableAmount && enableItems) {
-      let codigoInput = document.getElementById('codigo') as HTMLInputElement;
-      let colorInput = document.getElementById('color') as HTMLInputElement;
-      let amountInput = document.getElementById('amount') as HTMLInputElement;
+      let codigoInput = document.getElementById("codigo") as HTMLInputElement;
+      let colorInput = document.getElementById("color") as HTMLInputElement;
+      let amountInput = document.getElementById("amount") as HTMLInputElement;
       let descripcionInput = document.getElementById(
-        'descripcion'
+        "descripcion"
       ) as HTMLInputElement;
-      let imgInput = document.getElementById('url-img') as HTMLInputElement;
+      let imgInput = document.getElementById("url-img") as HTMLInputElement;
       let selectedOption: any = document.querySelector(
-        '.selected-option-bodega'
+        ".selected-option-bodega"
       );
       Axios.post(saveClothAPIURL, {
         newCloth,
       })
         .then((response: AxiosResponse) => {
           console.log(response.data);
-          if (response.data == 'SUCCESSFUL_ADDING') {
-            dispatch({type: 'SUCCESSFUL_FORM'});
+          if (response.data == "SUCCESSFUL_ADDING") {
+            dispatch({ type: "SUCCESSFUL_FORM" });
             // dispatch({ type: "SUCCESSFUL_ADDING" });
-            codigoInput.value = '';
-            colorInput.value = '';
-            amountInput.value = '';
-            descripcionInput.value = '';
-            imgInput.value = '';
-            selectedOption.innerHTML = 'Seleccionar tela o insumo';
+            codigoInput.value = "";
+            colorInput.value = "";
+            amountInput.value = "";
+            descripcionInput.value = "";
+            imgInput.value = "";
+            selectedOption.innerHTML = "Seleccionar tela o insumo";
             Axios.get(invetoryWareHouseAPIURL).then(
               (response: AxiosResponse) => {
                 setQueryData(response.data);
               }
             );
           }
-          if (response.data == 'EXISTING_CODE') {
-            dispatch({type: 'EXISTING_CODE'});
+          if (response.data == "EXISTING_CODE") {
+            dispatch({ type: "EXISTING_CODE" });
           }
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      dispatch({type: 'WRONG_INPUT'});
+      dispatch({ type: "WRONG_INPUT" });
     }
   };
 
   // UPDATE INVENTORY
   const handleUpdateInventory = () => {
-    let codeSelected = '';
+    let codeSelected = "";
     let isCodeExist = 0;
     let inputUpdateAmount = document.getElementById(
-      'amount-update-inventory'
+      "amount-update-inventory"
     ) as HTMLInputElement;
 
     if (valueCode === null) {
-      codeSelected = '';
-    } else if (typeof valueCode === 'object') {
+      codeSelected = "";
+    } else if (typeof valueCode === "object") {
       codeSelected = valueCode.codigo.toString();
-    } else if (typeof valueCode === 'string') {
+    } else if (typeof valueCode === "string") {
       codeSelected = valueCode;
     }
 
@@ -172,7 +173,7 @@ function WareHouse() {
 
     let enableAmount =
       Number.isInteger(parseInt(updateAmount)) && parseInt(updateAmount) > 0;
-    let enableCode = codeSelected !== '';
+    let enableCode = codeSelected !== "";
 
     if (enableAmount && enableCode) {
       if (isCodeExist === 1) {
@@ -181,20 +182,20 @@ function WareHouse() {
           amount: updateAmount,
         };
         setValueCode(null);
-        inputUpdateAmount.value = '';
+        inputUpdateAmount.value = "";
         Axios.post(updateInventoryWareHouseURL, payloadUpdate).then(
           (response: any) => {
             console.log(response);
-            if (response.data == 'SUCCESSFUL_UPDATE') {
-              dispatch({type: 'SUCCESSFUL_UPDATE'});
+            if (response.data == "SUCCESSFUL_UPDATE") {
+              dispatch({ type: "SUCCESSFUL_UPDATE" });
             }
           }
         );
       } else {
-        dispatch({type: 'CODE_DOES_NOT_EXIST'});
+        dispatch({ type: "CODE_DOES_NOT_EXIST" });
       }
     } else {
-      dispatch({type: 'WRONG_INPUT'});
+      dispatch({ type: "WRONG_INPUT" });
     }
   };
 
@@ -205,9 +206,9 @@ function WareHouse() {
       actualAmount: dressMakingReq[index].cantidad,
       referenceSelection: dressMakingReq[index].referencia,
     }).then((response: AxiosResponse): void => {
-      if (response.data === 'SUCCESSFUL_REQUEST') {
+      if (response.data === "SUCCESSFUL_REQUEST") {
         // dispatch({ type: "SUCCESSFUL_REQUEST" });
-        console.log('TODO NICE');
+        console.log("TODO NICE");
         Axios.post(dbSaveDecision, {
           ...dressMakingReq[index],
           idDecision: 1,
@@ -233,14 +234,14 @@ function WareHouse() {
       ...dressMakingReq[index],
       idDecision: 0,
     }).then((response: AxiosResponse): void => {
-      if (response.data === 'SUCCESSFUL_SAVING') {
-        console.log('TODO NICE');
+      if (response.data === "SUCCESSFUL_SAVING") {
+        console.log("TODO NICE");
         let filterResult = dressMakingReq.filter(
           (item: any) => item.id != dressMakingReq[index].id
         );
         setDressMakingReq(filterResult);
       } else {
-        console.log('BARRILETE');
+        console.log("BARRILETE");
       }
     });
 
@@ -260,29 +261,33 @@ function WareHouse() {
       actualAmount: dressMakingReq[index].cantidad,
       referenceSelection: dressMakingReq[index].referencia,
     }).then((response: AxiosResponse): void => {
-      if (response.data === 'SUCCESSFUL_REQUEST') {
+      if (response.data === "SUCCESSFUL_REQUEST") {
         setIsOpenDecision(true);
       } else {
-        dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
-        console.log('BARRILETE');
+        dispatch({ type: "INSUFFICIENT_SUPPLIES", payload: response.data });
+        console.log("BARRILETE");
       }
     });
   };
 
   const closeModal = () => {
     setIsOpenDecision(false);
-    dispatch({tpye: 'CLOSE_MODAL'});
+    dispatch({ tpye: "CLOSE_MODAL" });
   };
 
   const handleNavbarClick = (e: any) => {
     e.preventDefault();
-    const target = e.target.getAttribute('href');
+    const target = e.target.getAttribute("href");
     const location = document.querySelector(target).offsetTop;
     const scrollDiv = document.getElementById(
-      'scroll-warehouse'
+      "scroll-warehouse"
     ) as HTMLDivElement;
 
-    scrollDiv.scrollTo(0, location - 108);
+    scrollDiv.scrollTo(0, location - 55);
+  };
+
+  const toggleTab = (index: number) => {
+    setToggleState(index);
   };
 
   return (
@@ -290,18 +295,57 @@ function WareHouse() {
       <div className="navbar-warehouse">
         <h2 className="navbar-warehouse__h2">Bodega Insumos</h2>
         <div className="navbar-warehouse-otpions">
-          <a href="#new-supplies-section" onClick={handleNavbarClick}>
-            Registrar nuevos insumos
-          </a>
-          <a href="#inventory-warehouse-modal-section" onClick={handleNavbarClick}>
-            Inventario
-          </a>
-          <a href="#update-section" onClick={handleNavbarClick}>
-            Actualizar insumos existentes
-          </a>
-          <a href="#request-section" onClick={handleNavbarClick}>
-            Peticiones
-          </a>
+          <div
+            className={
+              toggleState === 1
+                ? "tabs-warehouse active-tabs-warehouse"
+                : "tabs-warehouse"
+            }
+            onClick={() => toggleTab(1)}
+          >
+            <a href="#new-supplies-section" onClick={handleNavbarClick}>
+              Registrar nuevos insumos
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 2
+                ? "tabs-warehouse active-tabs-warehouse"
+                : "tabs-warehouse"
+            }
+            onClick={() => toggleTab(2)}
+          >
+            <a
+              href="#inventory-warehouse-modal-section"
+              onClick={handleNavbarClick}
+            >
+              Inventario
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 3
+                ? "tabs-warehouse active-tabs-warehouse"
+                : "tabs-warehouse"
+            }
+            onClick={() => toggleTab(3)}
+          >
+            <a href="#update-section" onClick={handleNavbarClick}>
+              Actualizar insumos existentes
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 4
+                ? "tabs-warehouse active-tabs-warehouse"
+                : "tabs-warehouse"
+            }
+            onClick={() => toggleTab(4)}
+          >
+            <a href="#request-section" onClick={handleNavbarClick}>
+              Peticiones
+            </a>
+          </div>
         </div>
       </div>
       <div className="scroll-warehouse" id="scroll-warehouse">
@@ -360,11 +404,13 @@ function WareHouse() {
               Registrar nuevos insumos
             </h2>
             <p className="information-add-supplies-container__p">
-              ¿Has recibido stock de insumos nuevos? En este apartado puedes agregar estos insumos nuevos al inventario. 
-              Sólo digita el código con el cual identificarás el insumo, el color, metros o cantidad dependiendo si es tela 
-              o otro elemento (botones, correderas, etc), una descripción, el URL de la imágen y seleccina si es tela o insumo 
-              (si es un botón, corredera, etc). Por último, presiona el botón de enviar y listo :) 
-
+              ¿Has recibido stock de insumos nuevos? En este apartado puedes
+              agregar estos insumos nuevos al inventario. Sólo digita el código
+              con el cual identificarás el insumo, el color, metros o cantidad
+              dependiendo si es tela o otro elemento (botones, correderas, etc),
+              una descripción, el URL de la imágen y seleccina si es tela o
+              insumo (si es un botón, corredera, etc). Por último, presiona el
+              botón de enviar y listo :)
             </p>
           </div>
         </div>
@@ -373,10 +419,10 @@ function WareHouse() {
           className="inventory-warehouse-modal-section"
           id="inventory-warehouse-modal-section"
         >
-          <h3>Inventario de las muestras</h3>
+          <h3>Inventario de los insumos</h3>
           <ModalInvetoryWareHouse
-                modalContent={suppliesData}
-                closeModal={closeModal}
+            modalContent={suppliesData}
+            closeModal={closeModal}
           />
         </div>
 
@@ -404,7 +450,7 @@ function WareHouse() {
                 onChange={(e: any) => setUpdateAmount(e.target.value)}
               />
               <button className="btn" onClick={handleUpdateInventory}>
-                {' '}
+                {" "}
                 Actualizar
               </button>
             </div>
@@ -523,22 +569,22 @@ function WareHouse() {
 }
 
 const triggerListeners = (setType: any, setUpdateCode: any) => {
-  var selectedOption: any = document.querySelector('.selected-option-bodega');
-  var options: any = document.querySelectorAll('.option-bodega');
+  var selectedOption: any = document.querySelector(".selected-option-bodega");
+  var options: any = document.querySelectorAll(".option-bodega");
 
-  selectedOption.addEventListener('click', () => {
-    selectedOption.parentElement.classList.toggle('active-bodega');
+  selectedOption.addEventListener("click", () => {
+    selectedOption.parentElement.classList.toggle("active-bodega");
   });
 
   options.forEach((option: any) => {
-    option.addEventListener('click', () => {
+    option.addEventListener("click", () => {
       setTimeout(() => {
         selectedOption.innerHTML = option.innerHTML;
         // SET CURRENT REFERENCE VALUE
         setType(option.innerHTML);
       }, 300);
 
-      selectedOption.parentElement.classList.remove('active-bodega');
+      selectedOption.parentElement.classList.remove("active-bodega");
     });
   });
 

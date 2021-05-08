@@ -16,7 +16,7 @@ import ProtectedRoute from './app/ProtectedRoute';
 const Routes = ({rol, isAuth, enableRoutes}: any) => {
   if (enableRoutes) {
     return (
-      <div style={{margin: '55px 0px 0px 0px'}}>
+      <div>
         <Switch>
           {rol.idRol === 1 && (
             <ProtectedRoute

@@ -1,14 +1,12 @@
 .general-container-warehouse {
   width: 100%;
-  height: 91vh;
-  border: 1px solid transparent;
+  height: 100vh;
 }
 
 .scroll-warehouse {
-  height: 83vh;
+  height: 91.5vh;
   overflow: hidden;
-  overflow-y: scroll;
-  /* border: 1px solid red; */
+  /* overflow-y: scroll; */
   scroll-behavior: smooth;
 }
 
@@ -32,42 +30,38 @@
 }
 
 .navbar-warehouse {
-  height: 50px;
+  height: 55px;
   width: 100%;
-  background-color: #43a799;
+  /* background-color: #e7f7f2; */
+  background-color: #ffffff;
+  border-left: 1px solid rgb(204, 204, 204);
   position: sticky;
-  z-index: 2000;
+  z-index: 0;
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 4px 4px 15px rgb(221, 221, 221);
 }
 
 .navbar-warehouse__h2 {
-  color: #f8f8f8;
+  color: black;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
-  margin-left: 3%;
-  margin-top: 1%;
+  margin-left: 2em;
+  margin-top: 0.7em;
 }
 
 .navbar-warehouse-otpions {
   width: 60%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 2%;
+  margin-right: 3em;
 }
 
-.navbar-warehouse-otpions a {
-  color: #f8f8f8;
-  font-family: 'Ubuntu', sans-serif;
-}
-
-.navbar-warehouse-otpions a:hover {
-  color: black;
-}
 
 .general-container-warehouse__h2 {
   font-size: 1.1rem;
@@ -75,6 +69,33 @@
   letter-spacing: normal;
   color: #374663;
   margin: 20px 0px 0px 37px;
+}
+
+.tabs-warehouse {
+  /* border-bottom: 3px solid #00bfa6; */
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: #f5faf9; */
+}
+
+.tabs-warehouse a  {
+  color: black;
+  display: block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.active-tabs-warehouse {
+  border-bottom: 3px solid #00bfa6;
+}
+
+.active-tabs-warehouse a  {
+  color: #00bfa6;
+  font-weight: 600;
 }
 
 .general-container-warehouse__p {
@@ -88,7 +109,7 @@
   display: flex;
   /* border: 1px solid blue; */
   width: 100%;
-  height: 83vh;
+  height: 91.5vh;
 }
 
 .warehouse-form-container {
@@ -98,9 +119,9 @@
 
 .warehouse-form {
   width: 90%;
-  margin-left: 7%;
-  margin-top: 3%;
-  height: 92%;
+  margin-left: 3em;
+  margin-top: 4.5em;
+  height: 75%;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   border: 1px solid transparent;
@@ -110,7 +131,9 @@
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.9rem;
   color: #374663;
-  margin-left: 22%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 3%;
 }
 
@@ -240,7 +263,7 @@
   width: 51%;
   height: 40%;
   margin-left: 3.5em;
-  margin-top: 9em;
+  margin-top: 11em;
 }
 
 .information-add-supplies-container__h2 {
@@ -258,8 +281,8 @@
 }
 
 .inventory-warehouse-modal-section {
-  border: 1px solid transparent;
-  height: 83vh;
+  width: 100%;
+  height: 91.5vh;
   background-color: #e7f7f2;
 }
 
@@ -269,13 +292,13 @@
   align-items: center;
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
-  margin-top: 2%;
+  padding-top: 1em;
 }
 
 .update-container {
-  width: 100%;
   display: flex;
-  height: 83vh;
+  width: 100%;
+  height: 91.5vh;
   background-color: #f8f9fb;
 }
 
@@ -283,7 +306,7 @@
   width: 36%;
   height: 50%;
   margin-left: 2em;
-  margin-top: 7em;
+  margin-top: 10em;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
 }
@@ -297,7 +320,7 @@
   align-items: center;
   width: 100%;
   height: 20%;
-  margin-top: 0.7em;
+  margin-top: 1.4em;
 }
 
 .update-container-form {
@@ -346,7 +369,7 @@
   width: 51%;
   height: 40%;
   margin-left: 3.5em;
-  margin-top: 10em;
+  margin-top: 14em;
 }
 
 .information-update-container__h2 {
@@ -392,7 +415,7 @@
 
 .warehouseReqSection {
   width: 100%;
-  height: 83vh;
+  height: 91.5vh;
   background-color: #e7f7f2;
 }
 
@@ -400,7 +423,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1%;
+  padding-top: 1em;
 }
 
 .no-data-image-warehouse-container {
@@ -500,44 +523,33 @@
 
 /* RESPONSIVE */
 
-@media (min-height: 800px) {
-  .warehouse-form {
-    height: 560px;
-  }
-
-  .bodega-inventory h2 {
-    margin-top: 1.7%;
-    margin-left: 17%;
-  }
-
-  .bodega-inventory button {
-    margin-left: 5%;
-    margin-top: 1.2%;
-  }
-
-  .update-container {
-    height: 15%;
-  }
-}
-
 @media (min-width: 1919px) {
   .warehouse-form-container {
+    margin-top: 4em;
+  }
+
+  .warehouse-form {
+    margin-top: 8em;
+    height: 68%;
+  }
+  
+  .warehouse-form h2 {
     margin-top: 2em;
   }
 
   .information-add-supplies-container {
-    margin-top: 21.5em;
+    margin-top: 22em;
   }
 
   .information-add-supplies-container__h2 {
     font-family: 'Ubuntu', sans-serif;
-    font-size: 1.7rem;
+    font-size: 2.3rem;
   }
   
   .information-add-supplies-container__p {
     font-family: 'Ubuntu', sans-serif;
     margin-top: 0.8em;
-    font-size: 1.5rem;
+    font-size: 1.9rem;
     font-weight: 300;
     color: #000000;
     line-height: 2rem;
@@ -545,11 +557,7 @@
 
   .update-container {
     width: 100%;
-    height: 83vh;
-  }
-
-  .warehouse-form {
-    margin-top: 20%;
+    height: 91.5vh;
   }
 
   .inventory-warehouse-open-modal {
@@ -557,24 +565,26 @@
   }
 
   .update-container__h2 {
-    margin-top: 7%;
+    margin-top: 2.5em;
+    font-size: 1.7rem;
   }
 
   .update-container-card {
-    margin-top: 12%;
+    margin-top: 15em;
     height: 45%;
   }
 
   .information-update-container {
-    margin-top: 19%;
+    margin-top: 23em;
+    margin-left: 4em;
   }
 
   .information-update-container__h2 {
-    font-size: 1.9rem;
+    font-size: 2.2rem;
   }
 
   .information-update-container__p {
-    font-size: 1.6rem;
+    font-size: 1.9rem;
   }
 
   .update-container-form button {
@@ -582,7 +592,8 @@
   }
 
   .warehouseReqSection {
-    height: 83vh;
+    width: 100%;
+    height: 91.5vh;
   }
 
   .requestWarehouseContainer__h4 {

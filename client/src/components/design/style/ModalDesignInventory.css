@@ -4,14 +4,14 @@
   margin: 0 auto;
   margin-top: -40px;
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
-  height: 415px;
+  height: 500px;
   margin-top: 2%;
   z-index: 5000;
 }
 
 .table_title-design {
   height: 38px;
-  background: #daf7ee;
+  background: #ffffff;
   color: #1da597;
   display: flex;
   justify-content: center;
@@ -24,7 +24,7 @@
 .search-design-container {
   display: flex;
   height: 40px;
-  background-color: #fae5dd;
+  background-color: #daf7ee;
 }
 
 .gg-search {
@@ -58,7 +58,7 @@
   padding-left: 2%;
   height: 40px;
   width: 98%;
-  background: #fae5dd;
+  background: #daf7ee;
   border: 0;
   color: #404040;
   font-family: 'Ubuntu', sans-serif;
@@ -117,7 +117,7 @@
   width: 100%;
   overflow-y: hidden;
   overflow-y: scroll;
-  max-height: 310px;
+  max-height: 395px;
 }
 
 .scroll-modal-design::-webkit-scrollbar {
@@ -183,12 +183,12 @@
 
 @media (min-height: 1075px) {
   .container_table-design {
-    height: 550px;
+    height: 650px;
     margin-top: 3%;
   }
 
   .scroll-modal-design {
-    max-height: 440px;
+    max-height: 540px;
   }
 }
 

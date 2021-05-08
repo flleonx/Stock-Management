@@ -6,7 +6,7 @@
   margin-top: 2%;
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
   grid-template-columns: repeat(2, 50%);
-  height: 470px;
+  height: 500px;
 }
 
 .table_title-bodega {
@@ -14,7 +14,7 @@
   grid-column-end: 3;
   width: 100%;
   height: 38px;
-  background: #daf7ee;
+  background: #ffffff;
   color: #1da597;
   display: flex;
   justify-content: center;
@@ -29,13 +29,13 @@
   grid-column-end: 3;
   display: flex;
   height: 40px;
-  background-color: #fae5dd;
+  background-color: #daf7ee;
 }
 
 .search-filter-design-warehouse {
   padding-left: 2%;
   height: 40px;
-  background: #fae5dd;
+  background: #daf7ee;
   border: 2px solid #daf7ee;
   border: 0;
   color: #404040;
@@ -73,7 +73,7 @@
 }
 
 .scroll-modal-inventory {
-  max-height: 365px;
+  max-height: 390px;
   overflow-y: hidden;
   overflow-y: scroll;
 }
@@ -145,10 +145,10 @@
   }
 
   .container_table-bodega {
-    height: 630px;
+    height: 720px;
   }
 
   .scroll-modal-inventory {
-    max-height: 515px;
+    max-height: 610px;
   }
 }

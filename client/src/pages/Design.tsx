@@ -1,17 +1,17 @@
-import React, {useState, useEffect, useReducer} from 'react';
-import Axios, {AxiosResponse} from 'axios';
-import {withRouter} from 'react-router-dom';
+import React, { useState, useEffect, useReducer } from "react";
+import Axios, { AxiosResponse } from "axios";
+import { withRouter } from "react-router-dom";
 
-import {reducer} from '../components/design/ReducerDesign';
-import './style/Design.css';
-import ModalDesignInventory from '../components/design/ModalDesignInventory';
-import {baseURL} from '../components/app/baseURL';
-import Modal from '../components/Modal';
-import completeImage from '../assets/complete.svg';
-import errorImage from '../assets/error.svg';
-import noDataImage from '../assets/no-data.svg';
-import ModalAddSupplies from '../components/design/ModalDesignAddSupplies';
-import FilterDropdown from '../components/FilterDropdown';
+import { reducer } from "../components/design/ReducerDesign";
+import "./style/Design.css";
+import ModalDesignInventory from "../components/design/ModalDesignInventory";
+import { baseURL } from "../components/app/baseURL";
+import Modal from "../components/Modal";
+import completeImage from "../assets/complete.svg";
+import errorImage from "../assets/error.svg";
+import noDataImage from "../assets/no-data.svg";
+import ModalAddSupplies from "../components/design/ModalDesignAddSupplies";
+import FilterDropdown from "../components/FilterDropdown";
 
 interface ISupplyInformation {
   supplyCode: string;
@@ -38,22 +38,22 @@ const defaultState: any = {
 };
 
 const Design = () => {
-  const dbWareHouseCodesURL: string = baseURL + 'api/warehousecodes';
-  const dbSaveNewReference: string = baseURL + 'api/savenewreference';
-  const productionAPIURL: string = baseURL + 'api/production';
-  const [addReference, setAddReference] = useState<string>('');
+  const dbWareHouseCodesURL: string = baseURL + "api/warehousecodes";
+  const dbSaveNewReference: string = baseURL + "api/savenewreference";
+  const productionAPIURL: string = baseURL + "api/production";
+  const [addReference, setAddReference] = useState<string>("");
   // const [addSize, setAddSize] = useState<string>('');
-  const [addDescription, setAddDescription] = useState<string>('');
-  const [addColor, setAddColor] = useState<string>('');
-  const [addImageName, setAddImageName] = useState<string>('');
+  const [addDescription, setAddDescription] = useState<string>("");
+  const [addColor, setAddColor] = useState<string>("");
+  const [addImageName, setAddImageName] = useState<string>("");
   const [valueSizeSelect, setValueSizeSelect] = useState<any>(null);
   const sizesArray: any = [
-    {codigo: '1', label: '1'},
-    {codigo: '2', label: '2'},
-    {codigo: '3', label: '3'},
-    {codigo: '4', label: '4'},
+    { codigo: "1", label: "1" },
+    { codigo: "2", label: "2" },
+    { codigo: "3", label: "3" },
+    { codigo: "4", label: "4" },
   ];
-  let addSize: any = '';
+  let addSize: any = "";
   // const [addedInformation, setAddedInformation] = useState<
   //   ISupplyInformation[]
   // >([]);
@@ -63,12 +63,16 @@ const Design = () => {
   ] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [modalAddSupplies, setModalAddSupplies] = useState<boolean>(false);
+  const [toggleState, setToggleState] = useState(1);
 
   useEffect(() => {
     Axios.get(dbWareHouseCodesURL).then((response: AxiosResponse) => {});
     Axios.get(productionAPIURL)
       .then((response: any) => {
-        dispatch({type: 'SUCCESSFUL_SAMPLE_INVENTORY', payload: response.data});
+        dispatch({
+          type: "SUCCESSFUL_SAMPLE_INVENTORY",
+          payload: response.data,
+        });
       })
       .catch((error) => {});
   }, []);
@@ -79,15 +83,15 @@ const Design = () => {
 
   const handlerSaveNewReference = () => {
     let selectedOptionSize: any = document.querySelector(
-      '.selected-option-size'
+      ".selected-option-size"
     );
     let isCodeExist = 0;
 
     if (valueSizeSelect === null) {
-      addSize = '';
-    } else if (typeof valueSizeSelect === 'object') {
+      addSize = "";
+    } else if (typeof valueSizeSelect === "object") {
       addSize = valueSizeSelect.codigo.toString();
-    } else if (typeof valueSizeSelect === 'string') {
+    } else if (typeof valueSizeSelect === "string") {
       addSize = valueSizeSelect;
     }
 
@@ -110,66 +114,69 @@ const Design = () => {
     };
 
     let enable =
-      addReference != '' &&
-      addSize != '' &&
-      addDescription != '' &&
-      addColor != '' &&
-      addImageName != '' &&
+      addReference != "" &&
+      addSize != "" &&
+      addDescription != "" &&
+      addColor != "" &&
+      addImageName != "" &&
       addedInformationFromModal.length != 0;
     if (enable) {
       if (isCodeExist === 1) {
         Axios.post(dbSaveNewReference, requestPayload).then(
           (response: AxiosResponse): void => {
-            if (response.data === 'SUCCESSFUL_REQUEST') {
+            if (response.data === "SUCCESSFUL_REQUEST") {
               setEmptyValues();
-              dispatch({type: 'SUCCESSFUL_REQUEST'});
+              dispatch({ type: "SUCCESSFUL_REQUEST" });
             }
-            if (response.data === 'FAILED_REQUEST') {
-              dispatch({type: 'FAILED_REQUEST'});
+            if (response.data === "FAILED_REQUEST") {
+              dispatch({ type: "FAILED_REQUEST" });
             }
-            if (response.data === 'INVALID_REFERENCE') {
-              dispatch({type: 'INVALID_REFERENCE'});
+            if (response.data === "INVALID_REFERENCE") {
+              dispatch({ type: "INVALID_REFERENCE" });
             }
           }
         );
       } else {
-        dispatch({type: 'CODE_DOES_NOT_EXIST'});
+        dispatch({ type: "CODE_DOES_NOT_EXIST" });
       }
     } else {
-      dispatch({type: 'WRONG_INPUT'});
+      dispatch({ type: "WRONG_INPUT" });
     }
   };
 
   const closeModal = () => {
-    dispatch({tpye: 'CLOSE_MODAL'});
+    dispatch({ tpye: "CLOSE_MODAL" });
   };
 
   const setEmptyValues = () => {
     let addReferenceOption: any = document.querySelector(
-      '.add-reference-input'
+      ".add-reference-input"
     );
     // let addSizeOption: any = document.querySelector('.selected-option-size');
     let addDescriptionOption: any = document.querySelector(
-      '.add-description-input'
+      ".add-description-input"
     );
-    let addColorOption: any = document.querySelector('.add-color-input');
+    let addColorOption: any = document.querySelector(".add-color-input");
     let addImageNameOption: any = document.querySelector(
-      '.add-imagename-input'
+      ".add-imagename-input"
     );
     // let : any = document.querySelector(".selected-option");
 
-    addReferenceOption.value = '';
+    addReferenceOption.value = "";
     setValueSizeSelect(null);
-    addDescriptionOption.value = '';
-    addColorOption.value = '';
-    addImageNameOption.value = '';
+    addDescriptionOption.value = "";
+    addColorOption.value = "";
+    addImageNameOption.value = "";
     setAddedInformationFromModal([]);
   };
 
   const handleInventory = () => {
     Axios.get(productionAPIURL)
       .then((response: any) => {
-        dispatch({type: 'SUCCESSFUL_SAMPLE_INVENTORY', payload: response.data});
+        dispatch({
+          type: "SUCCESSFUL_SAMPLE_INVENTORY",
+          payload: response.data,
+        });
       })
       .catch((error) => {});
   };
@@ -180,26 +187,40 @@ const Design = () => {
 
   const handleNavbarClick = (e: any) => {
     e.preventDefault();
-    const target = e.target.getAttribute('href');
+    const target = e.target.getAttribute("href");
     const location = document.querySelector(target).offsetTop;
     const scrollDiv = document.getElementById(
-      'scroll-design-section'
+      "scroll-design-section"
     ) as HTMLDivElement;
 
-    scrollDiv.scrollTo(0, location - 108);
+    scrollDiv.scrollTo(0, location - 55);
   };
+
+  const toggleTab = (index: number) => {
+    setToggleState(index);
+  }
 
   return (
     <div className="general-container-design">
       <div className="navbar-design">
         <h2 className="navbar-design__h2">Taller diseño</h2>
-        <div className="navbar-design-otpions">
-          <a href="#add-reference-design-container" onClick={handleNavbarClick}>
-            Agregar una nueva muestra
-          </a>
-          <a href="#inventory-design-modal-section" onClick={handleNavbarClick}>
-            Inventario de las muestras
-          </a>
+        <div className="navbar-design-options">
+          <div className={toggleState === 1 ? "tabs-design active-tabs-design": "tabs-design"} onClick={() => toggleTab(1)}>
+            <a
+              href="#add-reference-design-container"
+              onClick={handleNavbarClick}
+            >
+              Agregar una nueva muestra
+            </a>
+          </div>
+          <div className={toggleState === 2 ? "tabs-design active-tabs-design": "tabs-design"} onClick={() => toggleTab(2)}>
+            <a
+              href="#inventory-design-modal-section"
+              onClick={handleNavbarClick}
+            >
+              Inventario de las muestras
+            </a>
+          </div>
         </div>
       </div>
       <div className="scroll-design-section" id="scroll-design-section">

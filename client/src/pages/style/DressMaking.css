@@ -1,13 +1,11 @@
 .general-container-dressmaking {
   width: 100%;
-  height: 91vh;
+  height: 100vh;
 }
 
 .scroll-dressmaking-section {
-  height: 83vh;
-  overflow: hidden;
-  overflow-y: scroll;
-  /* border: 1px solid red; */
+  height: 91.5vh;
+  overflow-y: hidden;
   scroll-behavior: smooth;
 }
 
@@ -33,47 +31,68 @@
 /* NAVBAR */
 
 .navbar-dressmaking {
-  height: 50px;
+  height: 55px;
   width: 100%;
-  background-color: #43a799;
+  /* background-color: #e7f7f2; */
+  background-color: #ffffff;
+  border-left: 1px solid rgb(204, 204, 204);
   position: sticky;
-  z-index: 2000;
+  z-index: 0;
   top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 4px 4px 15px rgb(221, 221, 221);
 }
 
 .navbar-dressmaking__h2 {
-  color: #f8f8f8;
+  color: black;
   font-family: 'Ubuntu', sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
-  margin-left: 3%;
-  margin-top: 1%;
+  margin-left: 2em;
+  margin-top: 0.7em;
 }
 
 .navbar-dressmaking-otpions {
   width: 50%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 3%;
+  margin-right: 3em;
 }
 
-.navbar-dressmaking-otpions a {
-  color: #f8f8f8;
-  font-family: 'Ubuntu', sans-serif;
+.tabs-dressmaking {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* background-color: #f5faf9; */
 }
 
-.navbar-dressmaking-otpions a:hover {
+.tabs-dressmaking a  {
   color: black;
+  display: block;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.active-tabs-dressmaking {
+  border-bottom: 3px solid #00bfa6;
+}
+
+.active-tabs-dressmaking a  {
+  color: #00bfa6;
+  font-weight: 600;
 }
 
 .dressmaking-request-container {
   display: flex;
-  height: 45%;
-  height: 83vh;
+  width: 100%;
+  height: 91.5vh;
 }
 
 .dressmaking-request-card {
@@ -168,7 +187,7 @@
 
 .dressmaking-process-container {
   width: 100%;
-  height: 83vh;
+  height: 91.5vh;
   background-color: #e7f7f2;
 }
 
@@ -301,7 +320,7 @@
 
 .requests-history-section {
   width: 100%;
-  height: 83vh;
+  height: 91.5vh;
   background-color: #f8f9fb;
 }
 
@@ -380,17 +399,35 @@
 
 .request-card-container {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   margin-bottom: 1%;
   background-color: #f8f9fb;
 }
 
+.request-card-container__order {
+  margin-left: 6em;
+}
+
+.request-card-container__reference {
+  margin-left: 3em;
+}
+
+.request-card-container__amount {
+  margin-left: 2em;
+}
+
+.request-card-container__decision {
+  margin-left: 0.5em;
+}
+
+.request-card-container__date {
+  margin-left: 2em;
+}
+
 /* RESPONSIVE */
 
-@media (min-height: 1075px) {
+@media (min-width: 1919px) {
   .dressmaking-request-card {
     height: 50%;
     margin-top: 13%;
@@ -398,7 +435,7 @@
 
   .dressmaking-request-card__h2 {
     font-size: 1.4rem;
-    margin-top: 7%;
+    margin-top: 10%;
   }
 
   .information-dressmaking-request-container {
@@ -449,6 +486,31 @@
 
   .label-history-request-dressmanking__timestamp {
     margin-left: 20%;
+  }
+
+  .dressmaking-request-form #actualAmount {
+    margin-left: 2.5em;
+    height: 10%;
+  }
+
+  .request-card-container__order {
+    margin-left: 9em;
+  }
+  
+  .request-card-container__reference {
+    margin-left: 6em;
+  }
+  
+  .request-card-container__amount {
+    margin-left: 5em;
+  }
+  
+  .request-card-container__decision {
+    margin-left: 3.5em;
+  }
+  
+  .request-card-container__date {
+    margin-left: 5em;
   }
 }
 

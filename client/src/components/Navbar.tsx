@@ -27,8 +27,8 @@ function Navbar({switchActive}: any) {
     switchActive();
     return (
       <div className="navbar-user-container">
-        <NavbarContainer />
-        <UserSection username={user} />
+        <NavbarContainer user={user} />
+        {/* <UserSection username={user} /> */}
       </div>
     );
   }
@@ -36,7 +36,7 @@ function Navbar({switchActive}: any) {
   return <></>;
 }
 
-const NavbarContainer = () => {
+const NavbarContainer = (props: any) => {
   return (
     <div className="navbar-container">
       <Brand />
@@ -60,6 +60,7 @@ const NavbarContainer = () => {
         title="Cerrar Sesion"
         url="/logout"
       />
+      <UserSection user={props.user} />
     </div>
   );
 };
@@ -101,15 +102,14 @@ const NavbarOption = (props: INavbarOption) => {
 };
 
 const UserSection = (props: any) => {
-  const {username} = props;
-  return (
+  return(
     <div className="user-section">
-      <h4 className="user-section__h4">{username}</h4>
       <div className="user-section__icon">
-        <i className="gg-user"></i>
-      </div>
+          <i className="gg-user"></i>
+        </div>
+      <h4>{props.user}</h4>
     </div>
   );
-};
+}
 
 export default withRouter(Navbar);
