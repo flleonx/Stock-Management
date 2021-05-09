@@ -325,13 +325,16 @@ const Shops = () => {
   };
 
   const handler_required_stock = async (index: number) => {
+    console.log(infoRequestsBetweenShops[index]);
+    const actualTarget = infoRequestsBetweenShops[index];
     const response: AxiosResponse[] = await query_post(dbRequestBetweenShops, {
-      data: infoRequestsBetweenShops[index],
+      ...infoRequestsBetweenShops[index],
     });
     console.log(response[0] !== null);
     setAuxiliar([
-      infoRequestsBetweenShops[index].cantidad,
-      infoRequestsBetweenShops[index].tienda_destino,
+      actualTarget.cantidad,
+      actualTarget.tienda_destino,
+      actualTarget.numero_peticion,
     ]);
     if (response[0] !== null) {
       setRequiredStock(response);
@@ -341,23 +344,34 @@ const Shops = () => {
   };
 
   const handler_final_decision = async (id_decision: number) => {
-    if ((id_decision = 1)) {
+    console.log("MANEJO DECISION", id_decision);
+    if (id_decision === 1) {
+      // ACCEPT
       const required_stock_size: number = requiredStock.length;
       const amount_number: number = parseInt(auxiliar[0]);
       if (required_stock_size < amount_number) {
         console.log("FALTAN", amount_number - required_stock_size);
       } else {
-        console.log("SEGUNDA CONDICION");
         const response_decision_state:
           | AxiosResponse
           | undefined = await query_post(dbDecisionBetweenShops, {
           numeros_de_entrada: requiredStock,
-          data: { tienda_destino: auxiliar[1] },
+          data: {
+            tienda_destino: auxiliar[1],
+            numero_peticion: auxiliar[2],
+            id_decision,
+          },
         });
         console.log(response_decision_state);
       }
-    } else {
-      // HACER MANEJO DE PETICION EN BACK
+    } else if (id_decision === 0) {
+      // REFUSE
+      const response_decision_state:
+        | AxiosResponse
+        | undefined = await query_post(dbDecisionBetweenShops, {
+        data: { numero_peticion: auxiliar[2], id_decision },
+      });
+      console.log(response_decision_state);
     }
   };
 

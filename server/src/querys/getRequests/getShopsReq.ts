@@ -42,7 +42,7 @@ router.get("/api/getactualinventory", (req, res) => {
 router.get("/api/getactualrequestbetweenshops", (req, res) => {
   let queryShopsInfo =
     `SELECT pet.*, ti1.nombre_tienda as tienda_origen_nombre, ti2.nombre_tienda as tienda_destino_nombre FROM PETICIONES_ENTRE_TIENDAS pet
-     left join tienda ti1 on pet.tienda_origen = ti1.idTienda left join tienda ti2 on pet.tienda_destino = ti2.idTienda`
+     left join tienda ti1 on pet.tienda_origen = ti1.idTienda left join tienda ti2 on pet.tienda_destino = ti2.idTienda WHERE id_decision = 2`
 
   database.query(queryShopsInfo, async (err: MysqlError | null, result) => {
     if (err) {

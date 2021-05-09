@@ -170,25 +170,14 @@ router.post("/api/requestsbetweenshops", (req, res) => {
 });
 
 router.post("/api/decisionbetweenshops", (req, res) => {
-  let timestamp = timestamp_generator();
+  console.log("DECISIOOOON");
+  var query_update_inventory = "";
+  var query_update_decision = "";
+  var arr_numeros_de_entrada: string[] = [];
+  var numeros_de_entrada = "";
+  var timestamp = timestamp_generator();
 
-  interface INumeros_Entrada {
-    numero_entrada: number;
-    total: number;
-  }
-  let arr_numeros_de_entrada: string[] = [];
-  req.body.numeros_de_entrada.map((val: INumeros_Entrada) => {
-    arr_numeros_de_entrada.push(val.numero_entrada.toString());
-  });
-  let numeros_de_entrada = arr_numeros_de_entrada.join();
-  console.log(numeros_de_entrada);
-  const query_decision = `UPDATE InventoryManagement.INVENTARIO_TIENDAS SET id_estado = 0, timestamp_envios = "${timestamp}", idTienda = ${req.body.data.tienda_destino}
-                          WHERE numero_entrada IN (${numeros_de_entrada})`;
-  const db_call = async () => {
-    const response = await databaseQuery(query_decision);
-    res.end(JSON.stringify("ENVIO_EXITOSO"));
-  };
-
+  // QUERY FUNCTIONS
   const databaseQuery = async (query_request: string) => {
     try {
       const response: any = await db_query(query_request);
@@ -197,7 +186,38 @@ router.post("/api/decisionbetweenshops", (req, res) => {
       console.log("There is an error: ", err);
     }
   };
-  db_call();
+
+  const db_call = async (query: string) => {
+    await databaseQuery(query);
+    return;
+  };
+
+  // CHECK DECISION
+  switch (req.body.data.id_decision) {
+    case 0:
+      query_update_decision = `UPDATE InventoryManagement.PETICIONES_ENTRE_TIENDAS SET id_decision = 0 WHERE numero_peticion = ${req.body.data.numero_peticion}`;
+      db_call(query_update_decision);
+      res.end(JSON.stringify("SUCCESSFUL_UPDATE"));
+      break;
+
+    case 1:
+      interface INumeros_Entrada {
+        numero_entrada: number;
+        total: number;
+      }
+      req.body.numeros_de_entrada.map((val: INumeros_Entrada) => {
+        arr_numeros_de_entrada.push(val.numero_entrada.toString());
+      });
+      numeros_de_entrada = arr_numeros_de_entrada.join();
+
+      query_update_inventory = `UPDATE InventoryManagement.INVENTARIO_TIENDAS SET id_estado = 0, timestamp_envios = "${timestamp}", idTienda = ${req.body.data.tienda_destino}
+                          WHERE numero_entrada IN (${numeros_de_entrada})`;
+      query_update_decision = `UPDATE InventoryManagement.PETICIONES_ENTRE_TIENDAS SET id_decision = 1 WHERE numero_peticion = ${req.body.data.numero_peticion}`;
+      db_call(query_update_inventory);
+      db_call(query_update_decision);
+      res.end(JSON.stringify("SUCCESSFUL_UPDATE"));
+      break;
+  }
 });
 
 router.post("/api/check_existing_value", (req, res) => {
