@@ -369,31 +369,47 @@ const Shops = () => {
     }
   };
 
-  const handler_final_decision = async (id_decision: number, isCompleteStock: boolean) => {
+  const handler_final_decision = async (
+    id_decision: number,
+    isCompleteStock: boolean
+  ) => {
     console.log("MANEJO DECISION", id_decision);
     console.log("Is complete stock?", isCompleteStock);
-    // if (id_decision === 1) {
-    //   // ACCEPT
-    //   const response_decision_state:
-    //     | AxiosResponse
-    //     | undefined = await query_post(dbDecisionBetweenShops, {
-    //     numeros_de_entrada: requiredStock,
-    //     data: {
-    //       tienda_destino: auxiliar[1],
-    //       numero_peticion: auxiliar[2],
-    //       id_decision,
-    //     },
-    //   });
-    //   console.log(response_decision_state);
-    // } else if (id_decision === 0) {
-    //   // REFUSE
-    //   const response_decision_state:
-    //     | AxiosResponse
-    //     | undefined = await query_post(dbDecisionBetweenShops, {
-    //     data: { numero_peticion: auxiliar[2], id_decision },
-    //   });
-    //   console.log(response_decision_state);
-    // }
+    if (id_decision === 1) {
+      // ACCEPT
+      const response_decision_state:
+        | AxiosResponse
+        | undefined = await query_post(dbDecisionBetweenShops, {
+        numeros_de_entrada: requiredStock,
+        data: {
+          tienda_destino: auxiliar[1],
+          numero_peticion: auxiliar[2],
+          id_decision,
+        },
+      });
+      console.log(response_decision_state);
+    } else if (id_decision === 0) {
+      // REFUSE
+      const response_decision_state:
+        | AxiosResponse
+        | undefined = await query_post(dbDecisionBetweenShops, {
+        data: { numero_peticion: auxiliar[2], id_decision },
+      });
+      console.log(response_decision_state);
+    } else if (id_decision === 2) {
+      const response_decision_state:
+        | AxiosResponse
+        | undefined = await query_post(dbDecisionBetweenShops, {
+        numeros_de_entrada: requiredStock,
+        data: {
+          tienda_destino: auxiliar[1],
+          numero_peticion: auxiliar[2],
+          id_decision,
+          envio_real: stockMissingAmount,
+        },
+      });
+      console.log(response_decision_state);
+    }
   };
 
   const handlerShowInfo = (index: any) => {};
@@ -838,19 +854,18 @@ const Shops = () => {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
-        { isOpenModalReq  && (
-          <ModalShopsReq
-            isOpen={true}
-            closeModal={closeModal}
-            checkReqNumber={checkReqNumber}
-            indexReq={indexModal}
-            handleDecision={handler_final_decision}
-            stockMissingAmount={stockMissingAmount}
-            stockAvailableAmount={stockAvailableAmount}
-            requiredStock={requiredStock}
-          />
-        )}
-      
+      {isOpenModalReq && (
+        <ModalShopsReq
+          isOpen={true}
+          closeModal={closeModal}
+          checkReqNumber={checkReqNumber}
+          indexReq={indexModal}
+          handleDecision={handler_final_decision}
+          stockMissingAmount={stockMissingAmount}
+          stockAvailableAmount={stockAvailableAmount}
+          requiredStock={requiredStock}
+        />
+      )}
     </div>
   );
 };

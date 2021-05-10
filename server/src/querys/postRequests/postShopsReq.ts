@@ -134,7 +134,7 @@ router.post("/api/updatereceivedstate", (req, res) => {
 
 router.post("/api/requestsbetweenshops", (req, res) => {
   // const query_check = `UPDATE INVENTARIO_TIENDAS SET id_estado = 1 WHERE numero_de_orden = ${req.body.numero_de_orden}`;
-  const query_inventory_list = `SELECT NULL AS numero_entrada, NULL AS numero_lote , NULL AS referencia, NULL AS numero_de_orden, NULL AS total FROM dual WHERE (@total := 0) 
+  const query_inventory_list = `SELECT NULL AS numero_entrada, NULL AS numero_lote , NULL AS referencia, NULL AS numero_de_orden, NULL AS total FROM dual WHERE (@total := 0)
   UNION SELECT numero_entrada, numero_lote, referencia, numero_de_orden, @total := @total + cantidad AS total
   FROM InventoryManagement.INVENTARIO_TIENDAS WHERE @total < ${req.body.cantidad} AND referencia = ${req.body.referencia} AND idTienda = ${req.body.tienda_origen}
   AND id_estado = 1`;
@@ -155,12 +155,15 @@ router.post("/api/requestsbetweenshops", (req, res) => {
 });
 
 router.post("/api/decisionbetweenshops", (req, res) => {
-  console.log("DECISIOOOON");
   var query_update_inventory = "";
   var query_update_decision = "";
   var arr_numeros_de_entrada: string[] = [];
   var numeros_de_entrada = "";
   var timestamp = timestamp_generator();
+  interface INumeros_Entrada {
+    numero_entrada: number;
+    total: number;
+  }
 
   // QUERY FUNCTIONS
   const databaseQuery = async (query_request: string) => {
@@ -186,10 +189,6 @@ router.post("/api/decisionbetweenshops", (req, res) => {
       break;
 
     case 1:
-      interface INumeros_Entrada {
-        numero_entrada: number;
-        total: number;
-      }
       req.body.numeros_de_entrada.map((val: INumeros_Entrada) => {
         arr_numeros_de_entrada.push(val.numero_entrada.toString());
       });
@@ -198,6 +197,20 @@ router.post("/api/decisionbetweenshops", (req, res) => {
       query_update_inventory = `UPDATE InventoryManagement.INVENTARIO_TIENDAS SET id_estado = 0, timestamp_envios = "${timestamp}", idTienda = ${req.body.data.tienda_destino}
                           WHERE numero_entrada IN (${numeros_de_entrada})`;
       query_update_decision = `UPDATE InventoryManagement.PETICIONES_ENTRE_TIENDAS SET id_decision = 1 WHERE numero_peticion = ${req.body.data.numero_peticion}`;
+      db_call(query_update_inventory);
+      db_call(query_update_decision);
+      res.end(JSON.stringify("SUCCESSFUL_UPDATE"));
+      break;
+
+    case 2:
+      req.body.numeros_de_entrada.map((val: INumeros_Entrada) => {
+        arr_numeros_de_entrada.push(val.numero_entrada.toString());
+      });
+      numeros_de_entrada = arr_numeros_de_entrada.join();
+
+      query_update_inventory = `UPDATE InventoryManagement.INVENTARIO_TIENDAS SET id_estado = 0, timestamp_envios = "${timestamp}", idTienda = ${req.body.data.tienda_destino}
+                          WHERE numero_entrada IN (${numeros_de_entrada})`;
+      query_update_decision = `UPDATE InventoryManagement.PETICIONES_ENTRE_TIENDAS SET id_decision = 1, cantidad = ${req.body.data.envio_real} WHERE numero_peticion = ${req.body.data.numero_peticion}`;
       db_call(query_update_inventory);
       db_call(query_update_decision);
       res.end(JSON.stringify("SUCCESSFUL_UPDATE"));
@@ -241,7 +254,7 @@ router.post("/api/check_existing_value", (req, res) => {
 
 router.post("/api/save_newshop_request", (req, res) => {
   const timestamp = timestamp_generator();
-  const insertion = { ...req.body, timestamp };
+  const insertion = { ...req.body, timestamp, id_decision: 2 };
   console.log(insertion);
   let query_save_request = `INSERT INTO PETICIONES_ENTRE_TIENDAS SET ?`;
   console.log(query_save_request);
@@ -253,7 +266,7 @@ router.post("/api/save_newshop_request", (req, res) => {
 
 router.post("/api/modalrequiredstock", (req, res) => {
   var array_auxiliar: any = [];
-  var numeros_de_entrada = '';
+  var numeros_de_entrada = "";
 
   req.body.map((value: any) => {
     array_auxiliar.push(value.numero_entrada.toString());
