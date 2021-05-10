@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import './style/ModalWarehouseProductsReq.css';
-import errorIMG from '../../assets/error.svg';
+import "./style/ModalWarehouseProductsReq.css";
+import errorIMG from "../../assets/error.svg";
 
 const IDWarehouseProductsReq: any = document.getElementById(
-  'warehouseProductsReq'
+  "warehouseProductsReq"
 );
 
 const ModalWarehouseProductsReq = (props: any) => {
@@ -27,8 +27,7 @@ const ModalWarehouseProductsReq = (props: any) => {
     props.handlerAccept(props.index);
     props.closeModal();
   };
-  console.log(props.infoReq)
-
+  console.log(props.infoReq);
 
   if (!props.isOpen) return null;
   if (props.checkReqNumber === 1) {
@@ -64,7 +63,7 @@ const ModalWarehouseProductsReq = (props: any) => {
                   Cantidad: {info.cantidad}
                 </div>
                 <div className="successModalCard__date">
-                  Fecha: {info.timestamp.replace('T', ' ').slice(0, 16)}
+                  Fecha: {info.timestamp.replace("T", " ").slice(0, 16)}
                 </div>
               </div>
             );
@@ -123,7 +122,7 @@ const ModalWarehouseProductsReq = (props: any) => {
                   Cantidad: {info.cantidad}
                 </div>
                 <div className="successModalCard__date">
-                  Fecha: {info.timestamp.replace('T', ' ').slice(0, 16)}
+                  Fecha: {info.timestamp.replace("T", " ").slice(0, 16)}
                 </div>
               </div>
             );
@@ -133,7 +132,7 @@ const ModalWarehouseProductsReq = (props: any) => {
               className="btn buttonRejectContainer__Reject"
               onClick={handlerPartialDelivery}
             >
-               PET PARCIAL
+              PET PARCIAL
             </button>
             <button
               className="btn buttonRejectContainer__Reject"

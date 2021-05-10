@@ -16,13 +16,13 @@
   margin: 0 auto;
   margin-top: -40px;
   box-shadow: 4px 0px 15px rgb(192, 188, 188);
-  height: 415px;
+  height: 500px;
   margin-top: 2%;
 }
 
 .table_title-shops {
   height: 38px;
-  background: #daf7ee;
+  background: white;
   color: #1da597;
   display: flex;
   justify-content: center;
@@ -35,7 +35,7 @@
 .search-shops-container {
   display: flex;
   height: 40px;
-  background-color: #fae5dd;
+  background-color: #daf7ee;
 }
 
 .gg-search {
@@ -69,7 +69,7 @@
   padding-left: 2%;
   height: 40px;
   width: 98%;
-  background: #fae5dd;
+  background: #daf7ee;
   border: 0;
   color: #404040;
   font-family: "Ubuntu", sans-serif;
@@ -122,7 +122,7 @@
   width: 100%;
   overflow-y: hidden;
   overflow-y: scroll;
-  max-height: 310px;
+  max-height: 390px;
 }
 
 .scroll-modal-shops::-webkit-scrollbar {
@@ -167,9 +167,12 @@
   margin-left: 25%;
 }
 
-/* .items-information-shops__state {
-    margin-left: 25%;
-} */
+.items-information-shops__button {
+  font-family: 'Ubuntu';
+  font-size: 0.7rem;
+  width: 60%;
+  margin-left: 6em;
+}
 
 .table_item-shops {
   width: 50%;
@@ -201,5 +204,30 @@
 
   .scroll-modal-shops {
     max-height: 540px;
+  }
+
+  .items-information-shops__lot {
+    margin-left: 38%;
+  }
+  
+  .items-information-shops__ref {
+    margin-left: 37%;
+  }
+  
+  .items-information-shops__order {
+    margin-left: 35%;
+  }
+  
+  .items-information-shops__amount {
+    margin-left: 43%;
+  }
+  
+  .items-information-shops__timestamp {
+    margin-left: 32%;
+  }
+  
+  .items-information-shops__button {
+    width: 45%;
+    margin-left: 12.5em;
   }
 }

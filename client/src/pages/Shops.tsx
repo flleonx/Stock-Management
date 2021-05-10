@@ -10,7 +10,9 @@ import FilterDropdown from "../components/FilterDropdown";
 import Modal from "../components/Modal";
 import completeImage from "../assets/complete.svg";
 import errorImage from "../assets/error.svg";
+import noDataImage from "../assets/no-data.svg";
 import InfoShopsInventory from "../components/shops/InfoShopsInventory";
+import ModalShopsReq from "../components/shops/ModalShopsReq";
 import { StringLiteralLike, updateSourceFile } from "typescript";
 
 const reducer = (state: any, action: any) => {
@@ -82,6 +84,9 @@ const Shops = () => {
   const [infoRequestsBetweenShops, setInfoRequestsBetweenShops] = useState<any>(
     []
   );
+  const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
+  const [indexModal, setIndexModal] = useState<number>(0);
+  const [isOpenModalReq, setIsOpenModalReq] = useState<boolean>(false);
   const [auxiliar, setAuxiliar] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
@@ -95,6 +100,7 @@ const Shops = () => {
   const [value_destination_shop, set_value_destination_shop] = useState<any>(
     null
   );
+  const [toggleState, setToggleState] = useState(1);
   // DATABASE URLS
   const dbReferencesURL: string = baseURL + "api/references";
   const dbShopsInfoURL: string = baseURL + "api/shopsinformation";
@@ -240,6 +246,7 @@ const Shops = () => {
   };
 
   const closeModal = () => {
+    setIsOpenModalReq(false);
     dispatch({ type: "CLOSE_MODAL" });
   };
 
@@ -331,15 +338,27 @@ const Shops = () => {
       ...infoRequestsBetweenShops[index],
     });
     console.log(response[0] !== null);
+    console.log(response);
     setAuxiliar([
       actualTarget.cantidad,
       actualTarget.tienda_destino,
       actualTarget.numero_peticion,
     ]);
+    setIndexModal(index);
+    setIsOpenModalReq(true);
     if (response[0] !== null) {
-      setRequiredStock(response);
+      const required_stock_size: number = response.length;
+      const amount_number: number = parseInt(auxiliar[0]);
+      if (required_stock_size < amount_number) {
+        console.log("FALTAN", amount_number - required_stock_size);
+        setCheckReqNumber(2);
+      } else {
+        console.log("TODO BIEN");
+        setCheckReqNumber(1);
+      }
     } else {
       console.log("NO HAY EXISTENCIAS");
+      setCheckReqNumber(3);
     }
   };
 
@@ -347,23 +366,17 @@ const Shops = () => {
     console.log("MANEJO DECISION", id_decision);
     if (id_decision === 1) {
       // ACCEPT
-      const required_stock_size: number = requiredStock.length;
-      const amount_number: number = parseInt(auxiliar[0]);
-      if (required_stock_size < amount_number) {
-        console.log("FALTAN", amount_number - required_stock_size);
-      } else {
-        const response_decision_state:
-          | AxiosResponse
-          | undefined = await query_post(dbDecisionBetweenShops, {
-          numeros_de_entrada: requiredStock,
-          data: {
-            tienda_destino: auxiliar[1],
-            numero_peticion: auxiliar[2],
-            id_decision,
-          },
-        });
-        console.log(response_decision_state);
-      }
+      const response_decision_state:
+        | AxiosResponse
+        | undefined = await query_post(dbDecisionBetweenShops, {
+        numeros_de_entrada: requiredStock,
+        data: {
+          tienda_destino: auxiliar[1],
+          numero_peticion: auxiliar[2],
+          id_decision,
+        },
+      });
+      console.log(response_decision_state);
     } else if (id_decision === 0) {
       // REFUSE
       const response_decision_state:
@@ -375,13 +388,19 @@ const Shops = () => {
     }
   };
 
+  const handlerShowInfo = (index: any) => {};
+
   const handleNavbarClick = (e: any) => {
     e.preventDefault();
     const target = e.target.getAttribute("href");
     const location = document.querySelector(target).offsetTop;
     const scrollDiv = document.getElementById("scroll-shops") as HTMLDivElement;
 
-    scrollDiv.scrollTo(0, location - 108);
+    scrollDiv.scrollTo(0, location - 55);
+  };
+
+  const toggleTab = (index: number) => {
+    setToggleState(index);
   };
 
   return (
@@ -389,21 +408,68 @@ const Shops = () => {
       <div className="navbar-shops">
         <h2 className="navbar-shops__h2">Tiendas</h2>
         <div className="navbar-shops-otpions">
-          <a href="#makeReqShopsContainer" onClick={handleNavbarClick}>
-            Peticion a bodega productos
-          </a>
-          <a href="#products-process-shops-section" onClick={handleNavbarClick}>
-            Productos en procesos
-          </a>
-          <a href="#products-send-shops-section" onClick={handleNavbarClick}>
-            Productos enviados
-          </a>
+          <div
+            className={
+              toggleState === 1 ? "tabs-shops active-tabs-shops" : "tabs-shops"
+            }
+            onClick={() => toggleTab(1)}
+          >
+            <a href="#shops-request-wp" onClick={handleNavbarClick}>
+              Peticion a bodega productos
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 2 ? "tabs-shops active-tabs-shops" : "tabs-shops"
+            }
+            onClick={() => toggleTab(2)}
+          >
+            <a
+              href="#products-process-shops-section"
+              onClick={handleNavbarClick}
+            >
+              Productos en procesos
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 3 ? "tabs-shops active-tabs-shops" : "tabs-shops"
+            }
+            onClick={() => toggleTab(3)}
+          >
+            <a href="#products-send-shops-section" onClick={handleNavbarClick}>
+              Productos enviados
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 4 ? "tabs-shops active-tabs-shops" : "tabs-shops"
+            }
+            onClick={() => toggleTab(4)}
+          >
+            <a href="#reqs-between-shops-section" onClick={handleNavbarClick}>
+              Petición entre tiendas
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 5 ? "tabs-shops active-tabs-shops" : "tabs-shops"
+            }
+            onClick={() => toggleTab(5)}
+          >
+            <a
+              href="#active-req-between-shops-section"
+              onClick={handleNavbarClick}
+            >
+              Peticiones activas entre tiendas
+            </a>
+          </div>
         </div>
       </div>
 
       <div className="scroll-shops" id="scroll-shops">
-        <div className="shops-request-wp">
-          <div className="makeReqShopsContainer" id="makeReqShopsContainer">
+        <div className="shops-request-wp" id="shops-request-wp">
+          <div className="makeReqShopsContainer">
             <h4>Enviar peticiones a Bodega Producto</h4>
             <div className="makeReqShopsContainer__dropdownReference">
               <FilterDropdown
@@ -506,7 +572,13 @@ const Shops = () => {
           <h3 className="products-finished-warehouseproducts-section__h3">
             Inventario tiendas
           </h3>
-          <InfoShopsInventory arrayInformation={infoActualInventory} />
+          <p className="products-finished-warehouseproducts-section__p">
+            En este apartado se encuentra el inventario de todas las tiendas.
+          </p>
+          <InfoShopsInventory
+            arrayInformation={infoActualInventory}
+            checkNumber={0}
+          />
         </div>
 
         <div
@@ -516,219 +588,233 @@ const Shops = () => {
           <h3 className="products-send-shops-section__h3">
             Productos en envio
           </h3>
-          <InfoShopsInventory arrayInformation={infoDeliveryState} />
+          <p className="products-send-shops-section__p">
+            Aquí se encuentran los productos que están en camino hacia una o
+            varias tiendas. Por favor, informe que ya ha llegado el pedido
+            presionando el botón 'Confirmar recibido'.
+          </p>
+          <InfoShopsInventory
+            arrayInformation={infoDeliveryState}
+            checkNumber={1}
+            receivedFunction={handlerReceived}
+          />
         </div>
 
-        {/* <div className="productsContainer">
-          {infoActualInventory.map((item: any, index: number) => {
+        <div
+          className="reqs-between-shops-section"
+          id="reqs-between-shops-section"
+        >
+          <div className="reqs-between-shops">
+            <h4>Enviar petición entre tiendas</h4>
+            <div className="reqs-between-shops__dropdownReference">
+              <FilterDropdown
+                options={references}
+                id="referencia"
+                label="referencia"
+                prompt="Seleccionar referencia"
+                value={value_reference_request}
+                onChange={(val: any) => set_value_reference_request(val)}
+              />
+            </div>
+            <input
+              ref={refContainer}
+              id="actualAmount"
+              name="actualAmount"
+              className="actualAmount"
+              placeholder="Digite la cantidad"
+              type="number"
+              autoComplete="off"
+              onChange={(e) => {
+                set_amount_request(e.target.value);
+              }}
+            />
+            <div className="reqs-between-shops__dropdownShop">
+              <FilterDropdown
+                options={shops}
+                id="idTienda"
+                label="nombre_tienda"
+                prompt="Seleccionar la tienda origen"
+                value={value_origin_shop}
+                onChange={(val: any) => set_value_origin_shop(val)}
+              />
+            </div>
+            <div className="reqs-between-shops__dropdownShop">
+              <FilterDropdown
+                options={shops}
+                id="idTienda"
+                label="nombre_tienda"
+                prompt="Seleccionar la tienda de destino"
+                value={value_destination_shop}
+                onChange={(val: any) => set_value_destination_shop(val)}
+              />
+            </div>
+            <div className="reqs-between-shops-buttonContainer">
+              <button
+                className="btn"
+                type="button"
+                onClick={request_betweenshops_handler}
+              >
+                Enviar
+              </button>
+            </div>
+          </div>
+
+          <div className="information-between-shops-container">
+            <h2 className="information-between-shops-container__h2">
+              Enviar petición entre tiendas
+            </h2>
+            <p className="information-between-shops-container__p">
+              ¿Necesitas urgente un producto que solicita un cliente y está en
+              otra tienda? Entonces envía una petición entre tiendas. Solo
+              escoge la referencia del producto que necesitas, digita la
+              cantidad que requieres, escoge la tienda donde se encuentra el
+              producto, luego escoge la tienda de destino y presiona el botón
+              enviar. Así de fácil :)
+            </p>
+          </div>
+        </div>
+
+        <div
+          className="active-req-between-shops-section"
+          id="active-req-between-shops-section"
+        >
+          <h3 className="active-req-between-shops-section__h3">
+            Peticiones activas entre tiendas
+          </h3>
+          <p className="active-req-between-shops-section__p">
+            En este apartado se encuentran la peticiones de las tiendas que han
+            solicitado productos de otras tiendas.
+          </p>
+          {infoRequestsBetweenShops.length == 0 && (
+            <>
+              <div className="no-data-image-shops-container">
+                <img
+                  src={noDataImage}
+                  alt="no-data"
+                  className="no-data-image-shops-container__img"
+                />
+              </div>
+              <p className="no-data-image-shops-paragraph">
+                Aún no hay peticiones
+              </p>
+            </>
+          )}
+          {infoRequestsBetweenShops.length !== 0 && (
+            <div className="activeRequestBetweenShopsContainer">
+              {infoRequestsBetweenShops.map((shop: any, index: any) => {
+                return (
+                  <div className="activeRequestBetweenShopsCard">
+                    <h4 className="activeRequestBetweenShopsCard__h4">
+                      Información de la petición
+                    </h4>
+                    <div className="activeRequestBetweenShopsCard__order">
+                      # de petición: {shop.numero_peticion}
+                    </div>
+                    <div className="activeRequestBetweenShopsCard__reference">
+                      Referencia: {shop.referencia}
+                    </div>
+                    <div className="activeRequestBetweenShopsCard__amount">
+                      Cantidad: {shop.cantidad}
+                    </div>
+                    <div className="activeRequestBetweenShopsCard__shop">
+                      Tienda Origen: {shop.tienda_origen_nombre}
+                    </div>
+                    <div className="activeRequestBetweenShopsCard__shop">
+                      Tienda Destino: {shop.tienda_destino_nombre}
+                    </div>
+                    <div className="activeRequestBetweenShopsCard__date">
+                      Fecha: {shop.timestamp.replace("T", " ").slice(0, 16)}
+                    </div>
+                    <button
+                      className="btn activeRequestBetweenShopsCard__deploy"
+                      key={index}
+                      data-index={index}
+                      // onClick={() => setIsOpenModalReq(true)}
+                      onClick={() => handler_required_stock(index)}
+                    >
+                      Desplegar requerimientos
+                    </button>
+                    {/* <button
+                      className="btn shopRequestCard__deploy"
+                      key={index}
+                      data-index={index}
+                      // onClick={() => setIsOpenModalReq(true)}
+                      onClick={() => handler_final_decision(0)}
+                    >
+                      Rechazar
+                    </button>
+                    <button
+                      className="btn shopRequestCard__deploy"
+                      key={index}
+                      data-index={index}
+                      // onClick={() => setIsOpenModalReq(true)}
+                      onClick={() => handler_final_decision(1)}
+                    >
+                      Aceptar
+                    </button> */}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* <div className="shopsRequestContainer">
+          {infoRequestsBetweenShops.map((shop: any, index: number) => {
             return (
-              <div className="productCard">
-                <h4 className="productCard__h4"> Información del producto</h4>
-                <div className="productCard__lot">
-                  Numero de Lote: {item.numero_lote}
+              <div className="shopRequestCard">
+                <h4 className="shopRequestCard__h4">
+                  Información de la petición
+                </h4>
+                <div className="shopRequestCard__order">
+                  # de petición: {shop.numero_peticion}
                 </div>
-                <div className="productCard__reference">
-                  Referencia: {item.referencia}
+                <div className="shopRequestCard__reference">
+                  Referencia: {shop.referencia}
                 </div>
-                <div className="productCard__Order">
-                  # de orden: {item.numero_de_orden}
+                <div className="shopRequestCard__amount">
+                  Cantidad: {shop.cantidad}
                 </div>
-                <div className="productCard__amount">
-                  Cantidad: {item.cantidadTotal}
+                <div className="shopRequestCard__shop">
+                  Tienda Origen: {shop.tienda_origen_nombre}
                 </div>
-                <div className="productCard__date">
-                  Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
+                <div className="shopRequestCard__shop">
+                  Tienda Destino: {shop.tienda_destino_nombre}
                 </div>
-                <div className="productCard__date">
-                  Estado: {item.nombre_estado}
+                <div className="shopRequestCard_date">
+                  Fecha: {shop.timestamp.replace("T", " ").slice(0, 16)}
                 </div>
+                <button
+                  className="btn shopRequestCard__deploy"
+                  key={index}
+                  data-index={index}
+                  // onClick={() => setIsOpenModalReq(true)}
+                  onClick={() => handler_required_stock(index)}
+                >
+                  Desplegar requerimientos
+                </button>
+                <button
+                  className="btn shopRequestCard__deploy"
+                  key={index}
+                  data-index={index}
+                  // onClick={() => setIsOpenModalReq(true)}
+                  onClick={() => handler_final_decision(0)}
+                >
+                  Rechazar
+                </button>
+                <button
+                  className="btn shopRequestCard__deploy"
+                  key={index}
+                  data-index={index}
+                  // onClick={() => setIsOpenModalReq(true)}
+                  onClick={() => handler_final_decision(1)}
+                >
+                  Aceptar
+                </button>
               </div>
             );
           })}
         </div> */}
-      </div>
-      {/* <div className="select_box_center-reference">
-        <div className="references-container">
-          <div className="title">Seleccione la referencia:</div>
-          <div className="select-container">
-            <p className="selected-option-shops">Seleccionar</p>
-            <ul className="options-container">
-              {references.map((reference: IReference) => {
-                return (
-                  <li key={reference.referencia} className="option">
-                    {reference.referencia}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div className="select_box_center-amount">
-        <div className="title">Cantidad:</div>
-        <input
-          ref={refContainer}
-          id="actualAmount"
-          name="actualAmount"
-          className="actualAmount"
-          type="number"
-          autoComplete="off"
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
-        />
-        <div className="select_box_center-reference">
-          <div className="references-container">
-            <div className="title">Seleccione la tienda:</div>
-            <div className="select-container">
-              <p className="selected-option-shopsinfo">Seleccionar</p>
-              <ul className="options-container">
-                {shops.map((shops: IShops) => {
-                  return (
-                    <li
-                      key={shops.nombre_tienda}
-                      data-id={shops.idTienda}
-                      className="option-shopsinfo"
-                    >
-                      {shops.nombre_tienda}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="select_box_center-button">
-        <button className="btn" type="button" onClick={productsRequest}>
-          Enviar
-        </button>
-      </div> */}
-      <div className="makeReqShopsContainer">
-        <div className="makeReqShopsContainer__dropdownReference">
-          <FilterDropdown
-            options={references}
-            id="referencia"
-            label="referencia"
-            prompt="Seleccionar referencia"
-            value={value_reference_request}
-            onChange={(val: any) => set_value_reference_request(val)}
-          />
-        </div>
-        <input
-          ref={refContainer}
-          id="actualAmount"
-          name="actualAmount"
-          className="actualAmount"
-          placeholder="Digite la cantidad"
-          type="number"
-          autoComplete="off"
-          onChange={(e) => {
-            set_amount_request(e.target.value);
-          }}
-        />
-        <div className="makeReqShopsContainer__dropdownShop">
-          <FilterDropdown
-            options={shops}
-            id="idTienda"
-            label="nombre_tienda"
-            prompt="Seleccionar la tienda"
-            value={value_origin_shop}
-            onChange={(val: any) => set_value_origin_shop(val)}
-          />
-        </div>
-        <div className="makeReqShopsContainer__dropdownShop">
-          <FilterDropdown
-            options={shops}
-            id="idTienda"
-            label="nombre_tienda"
-            prompt="Seleccionar la tienda"
-            value={value_destination_shop}
-            onChange={(val: any) => set_value_destination_shop(val)}
-          />
-        </div>
-        <div className="makeReqButtonContainer">
-          <button
-            className="btn"
-            type="button"
-            onClick={request_betweenshops_handler}
-          >
-            Enviar
-          </button>
-        </div>
-      </div>
-
-      <div className="shopsRequestContainer">
-        {infoRequestsBetweenShops.map((shop: any, index: number) => {
-          return (
-            <div className="shopRequestCard">
-              <h4 className="shopRequestCard__h4">
-                Información de la petición
-              </h4>
-              <div className="shopRequestCard__order">
-                # de petición: {shop.numero_peticion}
-              </div>
-              <div className="shopRequestCard__reference">
-                Referencia: {shop.referencia}
-              </div>
-              <div className="shopRequestCard__amount">
-                Cantidad: {shop.cantidad}
-              </div>
-              <div className="shopRequestCard__shop">
-                Tienda Origen: {shop.tienda_origen_nombre}
-              </div>
-              <div className="shopRequestCard__shop">
-                Tienda Destino: {shop.tienda_destino_nombre}
-              </div>
-              <div className="shopRequestCard_date">
-                Fecha: {shop.timestamp.replace("T", " ").slice(0, 16)}
-              </div>
-              <button
-                className="btn shopRequestCard__deploy"
-                key={index}
-                data-index={index}
-                // onClick={() => setIsOpenModalReq(true)}
-                onClick={() => handler_required_stock(index)}
-              >
-                Desplegar requerimientos
-              </button>
-              <button
-                className="btn shopRequestCard__deploy"
-                key={index}
-                data-index={index}
-                // onClick={() => setIsOpenModalReq(true)}
-                onClick={() => handler_final_decision(0)}
-              >
-                Rechazar
-              </button>
-              <button
-                className="btn shopRequestCard__deploy"
-                key={index}
-                data-index={index}
-                // onClick={() => setIsOpenModalReq(true)}
-                onClick={() => handler_final_decision(1)}
-              >
-                Aceptar
-              </button>
-              {/* <button
-                className="btn shopRequestCard__refuse"
-                key={index + Math.random()}
-                data-index={index}
-                onClick={() => handlerRefuse(index)}
-              >
-                Rechazar
-              </button>
-              <button
-                className="btn shopRequestCard__approve"
-                key={index + Math.random()}
-                data-index={index}
-                onClick={() => handlerApprove(index)}
-              >
-                Aceptar
-              </button> */}
-            </div>
-          );
-        })}
       </div>
 
       <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
@@ -744,6 +830,14 @@ const Shops = () => {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
+
+      <ModalShopsReq
+        isOpen={isOpenModalReq}
+        closeModal={closeModal}
+        checkReqNumber={checkReqNumber}
+        indexReq={indexModal}
+        handleDecision={handler_final_decision}
+      />
     </div>
   );
 };

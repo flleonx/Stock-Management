@@ -196,8 +196,8 @@ const WareHouseProducts = () => {
           <div
             className={
               toggleState === 2
-              ? "tabs-warehouseproducts active-tabs-warehouseproducts"
-              : "tabs-warehouseproducts"
+                ? "tabs-warehouseproducts active-tabs-warehouseproducts"
+                : "tabs-warehouseproducts"
             }
             onClick={() => toggleTab(2)}
           >
@@ -330,6 +330,10 @@ const WareHouseProducts = () => {
           <h3 className="shops-request-warehouseproducts-section__h3">
             Peticiones
           </h3>
+           <p className="shops-request-warehouseproducts-section__p">
+            En este apartado se encuentran la peticiones realizadas por las
+            tiendas que necesitan stock.
+          </p>
           {actualShopRequests.length == 0 && (
             <>
               <div className="no-data-image-warehouseproducts-container">
@@ -379,22 +383,6 @@ const WareHouseProducts = () => {
                     >
                       Desplegar requerimientos
                     </button>
-                    {/* <button
-                className="btn shopRequestCard__refuse"
-                key={index + Math.random()}
-                data-index={index}
-                onClick={() => handlerRefuse(index)}
-              >
-                Rechazar
-              </button>
-              <button
-                className="btn shopRequestCard__approve"
-                key={index + Math.random()}
-                data-index={index}
-                onClick={() => handlerApprove(index)}
-              >
-                Aceptar
-              </button> */}
                   </div>
                 );
               })}

@@ -46,7 +46,7 @@
 
 .navbar-warehouseproducts__h2 {
   color: black;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-weight: 600;
   font-size: 1.2rem;
   margin-left: 2em;
@@ -71,7 +71,7 @@
   /* background-color: #f5faf9; */
 }
 
-.tabs-warehouseproducts a  {
+.tabs-warehouseproducts a {
   color: black;
   display: block;
   height: 100%;
@@ -95,7 +95,7 @@
 }
 
 .products-finished-warehouseproducts-section__h3 {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -121,7 +121,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-weight: 500;
   font-size: 1.2em;
 }
@@ -146,7 +146,7 @@
   margin-top: 10px;
 }
 .gg-search::after {
-  content: '';
+  content: "";
   display: block;
   box-sizing: border-box;
   position: absolute;
@@ -166,7 +166,7 @@
   background: #daf7ee;
   border: 0;
   color: #404040;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-weight: 500;
   font-size: 1.2rem;
 }
@@ -204,7 +204,7 @@
   font-weight: 500;
   font-size: 1em;
   color: #1da597;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   border: 2px solid #daf7ee;
   border-style: hidden hidden solid hidden;
 }
@@ -213,7 +213,7 @@
   font-weight: 500;
   font-size: 1em;
   color: #1da597;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   border: 2px solid #daf7ee;
   border-style: hidden hidden solid hidden;
 }
@@ -292,42 +292,6 @@
 
 /* FINAL TABLE */
 
-/* .productsContainer {
-  border: 1px solid transparent;
-  margin-left: 3%;
-  width: 100%;
-  height: 91.5vh;
-  display: inline-flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.productCard {
-  border: 1px solid transparent;
-  margin-top: 1.5%;
-  width: 25%;
-  height: 25%;
-  background-color: white;
-  margin-left: 6%;
-}
-
-.productCard__h4 {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.95rem;
-  margin-left: 4%;
-  margin-top: 3%;
-}
-
-.productCard__lot,
-.productCard__reference,
-.productCard__Order,
-.productCard__amount,
-.productCard__date {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.95rem;
-  margin-left: 4%;
-} */
-
 .shops-request-warehouseproducts-section {
   width: 100%;
   height: 91.5vh;
@@ -335,11 +299,20 @@
 }
 
 .shops-request-warehouseproducts-section__h3 {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 1em;
+  padding-top: 0.5em;
+}
+
+.shops-request-warehouseproducts-section__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1rem;
+  color: black;
+  /* margin-left: 1.5%; */
+  display: flex;
+  justify-content: center;
 }
 
 .no-data-image-warehouseproducts-container {
@@ -359,7 +332,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 1.3rem;
   font-weight: 300;
   margin-top: 1%;
@@ -368,13 +341,12 @@
 
 .shopsRequestContainer {
   background-color: rgb(245, 250, 249);
-  margin-top: 1%;
   margin-left: 1.5%;
   width: 89vw;
   display: inline-flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  height: 85%;
+  height: 82%;
   overflow-y: hidden;
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -403,13 +375,13 @@
   border: 1px solid transparent;
   margin-top: 1.5%;
   width: 25%;
-  height: 49%;
+  height: 43%;
   background-color: white;
   margin-left: 6%;
 }
 
 .shopRequestCard__h4 {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 0.95rem;
   margin-left: 4%;
   margin-top: 3%;
@@ -421,7 +393,7 @@
 .shopRequestCard__shop,
 .shopRequestCard_date,
 .shopRequestCard__address {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 0.95rem;
   margin-left: 4%;
 }
@@ -429,7 +401,7 @@
 .shopRequestCard__deploy {
   width: 80%;
   height: 12%;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 0.8rem;
   margin-left: 4%;
   background-color: #e2e3e5;
@@ -448,7 +420,7 @@
 
 .shopRequestCard__refuse {
   width: 80%;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 0.8rem;
   margin-left: 10%;
   background-color: #f8d7da;
@@ -467,7 +439,7 @@
 
 .shopRequestCard__approve {
   width: 80%;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: "Ubuntu", sans-serif;
   font-size: 0.8rem;
   margin-left: 10%;
   background-color: #d1e7dd;
@@ -488,7 +460,7 @@
 
 @media (min-width: 1919px) {
   .shopRequestCard {
-    height: 32%;
+    height: 29%;
   }
 
   .products-finished-warehouseproducts-section__h3 {
