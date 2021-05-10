@@ -4,6 +4,7 @@ import { runInNewContext } from "node:vm";
 
 //PERSONAL MODULES:
 import database from "../../config/dbConfig";
+import timestamp_generator from "../../chunks/timestamp_generator";
 
 const router = routerStatement.Router();
 
@@ -17,19 +18,7 @@ router.post("/api/savewarehouseproductsdecision", (req, res) => {
     restante?: number;
   }
 
-  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
-  let arrDate = date.split(" ");
-  let s1 = arrDate[0].split("/");
-  if (s1[0].length < 2) s1[0] = "0" + s1[0];
-  if (s1[1].length < 2) s1[1] = "0" + s1[1];
-  let dateFormat = s1.join("-");
-  let s2 = arrDate[1].split(":");
-  if (s2[0].length < 2) s2[0] = "0" + s2[0];
-  if (s2[1].length < 2) s2[1] = "0" + s2[1];
-  if (s2[2].length < 2) s2[2] = "0" + s2[2];
-  let hour = s2.join(":");
-
-  let timestamp = dateFormat + " " + hour;
+  let timestamp = timestamp_generator();
   let saveData = {
     numero_de_orden: req.body.numero_de_orden,
     referencia: req.body.referencia,
@@ -120,19 +109,7 @@ router.post("/api/updatepartialdelivery", (req, res) => {
     restante?: number;
   }
 
-  let date = new Date().toLocaleString("es-ES", { timeZone: "America/Bogota" });
-  let arrDate = date.split(" ");
-  let s1 = arrDate[0].split("/");
-  if (s1[0].length < 2) s1[0] = "0" + s1[0];
-  if (s1[1].length < 2) s1[1] = "0" + s1[1];
-  let dateFormat = s1.join("-");
-  let s2 = arrDate[1].split(":");
-  if (s2[0].length < 2) s2[0] = "0" + s2[0];
-  if (s2[1].length < 2) s2[1] = "0" + s2[1];
-  if (s2[2].length < 2) s2[2] = "0" + s2[2];
-  let hour = s2.join(":");
-
-  let timestamp = dateFormat + " " + hour;
+  let timestamp = timestamp_generator();
   let saveData = {
     numero_de_orden: req.body.numero_de_orden,
     referencia: req.body.referencia,
