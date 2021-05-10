@@ -87,6 +87,8 @@ const Shops = () => {
   const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
   const [indexModal, setIndexModal] = useState<number>(0);
   const [isOpenModalReq, setIsOpenModalReq] = useState<boolean>(false);
+  const [stockMissingAmount, setStockMissingAmount] = useState<number>(0);
+  const [stockAvailableAmount, setStockAvailableAmount] = useState<number>(0);
   const [auxiliar, setAuxiliar] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const refContainer: any = useRef(null);
@@ -352,6 +354,8 @@ const Shops = () => {
         console.log("FALTAN", amount_number - required_stock_size);
         setCheckReqNumber(2);
         setIsOpenModalReq(true);
+        setStockMissingAmount(amount_number - required_stock_size);
+        setStockAvailableAmount(required_stock_size);
       } else {
         console.log("TODO BIEN");
         setCheckReqNumber(1);
@@ -365,30 +369,31 @@ const Shops = () => {
     }
   };
 
-  const handler_final_decision = async (id_decision: number) => {
+  const handler_final_decision = async (id_decision: number, isCompleteStock: boolean) => {
     console.log("MANEJO DECISION", id_decision);
-    if (id_decision === 1) {
-      // ACCEPT
-      const response_decision_state:
-        | AxiosResponse
-        | undefined = await query_post(dbDecisionBetweenShops, {
-        numeros_de_entrada: requiredStock,
-        data: {
-          tienda_destino: auxiliar[1],
-          numero_peticion: auxiliar[2],
-          id_decision,
-        },
-      });
-      console.log(response_decision_state);
-    } else if (id_decision === 0) {
-      // REFUSE
-      const response_decision_state:
-        | AxiosResponse
-        | undefined = await query_post(dbDecisionBetweenShops, {
-        data: { numero_peticion: auxiliar[2], id_decision },
-      });
-      console.log(response_decision_state);
-    }
+    console.log("Is complete stock?", isCompleteStock);
+    // if (id_decision === 1) {
+    //   // ACCEPT
+    //   const response_decision_state:
+    //     | AxiosResponse
+    //     | undefined = await query_post(dbDecisionBetweenShops, {
+    //     numeros_de_entrada: requiredStock,
+    //     data: {
+    //       tienda_destino: auxiliar[1],
+    //       numero_peticion: auxiliar[2],
+    //       id_decision,
+    //     },
+    //   });
+    //   console.log(response_decision_state);
+    // } else if (id_decision === 0) {
+    //   // REFUSE
+    //   const response_decision_state:
+    //     | AxiosResponse
+    //     | undefined = await query_post(dbDecisionBetweenShops, {
+    //     data: { numero_peticion: auxiliar[2], id_decision },
+    //   });
+    //   console.log(response_decision_state);
+    // }
   };
 
   const handlerShowInfo = (index: any) => {};
@@ -840,6 +845,8 @@ const Shops = () => {
             checkReqNumber={checkReqNumber}
             indexReq={indexModal}
             handleDecision={handler_final_decision}
+            stockMissingAmount={stockMissingAmount}
+            stockAvailableAmount={stockAvailableAmount}
             requiredStock={requiredStock}
           />
         )}

@@ -58,7 +58,50 @@
     align-items: center;
   }
 
-  .buttonssuccessShopsModalContainer__reject {
+  .ModalShopsCard {
+    border: 1px solid rgb(247, 247, 247);
+    background-color: rgb(247, 247, 247);
+    border-radius: 10px;
+    margin-bottom: 0.5em;
+  }
+  
+  .ModalShopsCard__h4,
+  .ModalShopsCard__lot,
+  .ModalShopsCard__reference,
+  .ModalShopsCard__order,
+  .ModalShopsCard__amount,
+  .ModalShopsCard__date {
+    font-family: 'Ubuntu', sans-serif;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .buttonsModalShopsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn.buttonsModalShopsContainer__approve {
+    width: 40%;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.8rem;
+    height: 22%;
+    background-color: #d1e7dd;
+    border: 1px solid #0f5132;
+    color: #0f5132;
+  }
+  
+  .buttonsModalShopsContainer__approve:hover {
+    background-color: #009751;
+    color: white;
+  }
+  
+  .buttonsModalShopsContainer__approve:focus {
+    outline: none;
+  }
+
+  .buttonsModalShopsContainer__reject {
     width: 40%;
     font-family: 'Ubuntu', sans-serif;
     font-size: 0.8rem;
@@ -68,12 +111,37 @@
     color: #842029;
   }
   
-  .buttonssuccessShopsModalContainer__reject:hover {
+  .buttonsModalShopsContainer__reject:hover {
     background-color: rgb(253, 76, 76);
     color: white;
   }
   
-  .buttonssuccessShopsModalContainer__reject:focus {
+  .buttonsModalShopsContainer__reject:focus {
+    outline: none;
+  }
+
+  .buttonsRejectShopsModalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .buttonsRejectShopsModalContainer__reject {
+    width: 40%;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 0.8rem;
+    height: 22%;
+    background-color: #f8d7da;
+    border: 1px solid #842029;
+    color: #842029;
+  }
+  
+  .buttonsRejectShopsModalContainer__reject:hover {
+    background-color: rgb(253, 76, 76);
+    color: white;
+  }
+  
+  .buttonsRejectShopsModalContainer__reject:focus {
     outline: none;
   }
 

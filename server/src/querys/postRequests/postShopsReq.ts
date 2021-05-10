@@ -264,7 +264,7 @@ router.post("/api/modalrequiredstock", (req, res) => {
   database.query(query_required_stock, (err: MysqlError | null, result) => {
     if (err) throw err;
     console.log(result);
-    res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
+    res.end(JSON.stringify(result));
   });
 });
 

@@ -18,7 +18,7 @@ const InfoShopsInventory = (props: any) => {
 
   const handlerReceived = (index: number) => {
     props.receivedFunction(index);
-  }
+  };
 
   if (props.checkNumber === 1) {
     return (
@@ -77,7 +77,14 @@ const InfoShopsInventory = (props: any) => {
                     <div className="items-information-shops__timestamp">
                       Fecha: {props.timestamp.replace("T", " ").slice(0, 16)}
                     </div>
-                    <button className="btn items-information-shops__button" onClick={() => handlerReceived(index)}>Confirmar Producto</button>
+                    <div className="items-information-shops-button-container">
+                      <button
+                        className="btn items-information-shops__button"
+                        onClick={() => handlerReceived(index)}
+                      >
+                        Confirmar Producto
+                      </button>
+                    </div>
                   </div>
                   <div className="table_item-shops">
                     <img

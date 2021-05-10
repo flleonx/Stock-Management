@@ -147,31 +147,26 @@
   margin-bottom: 1%;
 }
 
-.items-information-shops__lot {
-  margin-left: 30%;
-}
-
-.items-information-shops__ref {
-  margin-left: 30%;
-}
-
-.items-information-shops__order {
-  margin-left: 27%;
-}
-
-.items-information-shops__amount {
-  margin-left: 38%;
-}
-
+.items-information-shops__lot,
+.items-information-shops__ref,
+.items-information-shops__order,
+.items-information-shops__amount,
 .items-information-shops__timestamp {
-  margin-left: 25%;
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.items-information-shops-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .items-information-shops__button {
   font-family: 'Ubuntu';
   font-size: 0.7rem;
-  width: 60%;
-  margin-left: 6em;
+  width: 50%;
 }
 
 .table_item-shops {
@@ -205,29 +200,8 @@
   .scroll-modal-shops {
     max-height: 540px;
   }
-
-  .items-information-shops__lot {
-    margin-left: 38%;
-  }
-  
-  .items-information-shops__ref {
-    margin-left: 37%;
-  }
-  
-  .items-information-shops__order {
-    margin-left: 35%;
-  }
-  
-  .items-information-shops__amount {
-    margin-left: 43%;
-  }
-  
-  .items-information-shops__timestamp {
-    margin-left: 32%;
-  }
   
   .items-information-shops__button {
     width: 45%;
-    margin-left: 12.5em;
   }
 }
