@@ -17,8 +17,8 @@ const ModalShopsReq = (props: any) => {
     props.closeModal();
   };
 
-  const handleDecision = (decisionNumber: number, isCompleteStock: boolean) => {
-    props.handleDecision(decisionNumber, isCompleteStock);
+  const handleDecision = (decisionNumber: number) => {
+    props.handleDecision(decisionNumber);
     props.closeModal();
   };
 
@@ -67,13 +67,13 @@ const ModalShopsReq = (props: any) => {
           <div className="buttonsModalShopsContainer">
             <button
               className="btn buttonsModalShopsContainer__approve"
-              onClick={() => handleDecision(1, true)}
+              onClick={() => handleDecision(1)}
             >
               Aceptar
             </button>
             <button
               className="btn buttonsModalShopsContainer__reject"
-              onClick={() => handleDecision(0, true)}
+              onClick={() => handleDecision(0)}
             >
               Rechazar
             </button>
@@ -119,13 +119,13 @@ const ModalShopsReq = (props: any) => {
           <div className="buttonsModalShopsContainer">
             <button
               className="btn buttonsModalShopsContainer__approve"
-              onClick={() => handleDecision(1, false)}
+              onClick={() => handleDecision(2)}
             >
               Aceptar
             </button>
             <button
               className="btn buttonsModalShopsContainer__reject"
-              onClick={() => handleDecision(0, false)}
+              onClick={() => handleDecision(0)}
             >
               Rechazar
             </button>
@@ -157,7 +157,7 @@ const ModalShopsReq = (props: any) => {
           <div className="buttonsRejectShopsModalContainer">
             <button
               className="btn buttonsRejectShopsModalContainer__reject"
-              onClick={() => handleDecision(0, false)}
+              onClick={() => handleDecision(0)}
             >
               Rechazar Petición
             </button>

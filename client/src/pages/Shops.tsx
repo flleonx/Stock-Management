@@ -71,6 +71,8 @@ const Shops = () => {
 
   const [references, setReferences] = useState<IReference[]>([]);
   const [shops, setShops] = useState<IShops[]>([]);
+  const [shopsOrigin, setShopsOrigin] = useState<IShops[]>([]);
+  const [shopsDestination, setShopsDestination] = useState<IShops[]>([]);
   const [valueReferenceSelect, setValueReferenceSelect] = useState<any>(null);
   const [valueShopSelect, setValueShopSelect] = useState<any>(null);
   const [amount, setAmount] = useState<string>("");
@@ -83,6 +85,9 @@ const Shops = () => {
   const [requiredStock, setRequiredStock] = useState<any>([]);
   const [infoRequestsBetweenShops, setInfoRequestsBetweenShops] = useState<any>(
     []
+  );
+  const [isShopOriginSelected, setIsShopOriginSelected] = useState<boolean>(
+    false
   );
   const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
   const [indexModal, setIndexModal] = useState<number>(0);
@@ -125,6 +130,8 @@ const Shops = () => {
 
     Axios.get(dbShopsInfoURL).then((response: AxiosResponse) => {
       setShops(response.data);
+      setShopsOrigin(response.data);
+      setShopsDestination(response.data);
       // triggerListeners('.selected-option-shopsinfo', '.option-shopsinfo', 1);
     });
 
@@ -369,12 +376,8 @@ const Shops = () => {
     }
   };
 
-  const handler_final_decision = async (
-    id_decision: number,
-    isCompleteStock: boolean
-  ) => {
+  const handler_final_decision = async (id_decision: number) => {
     console.log("MANEJO DECISION", id_decision);
-    console.log("Is complete stock?", isCompleteStock);
     if (id_decision === 1) {
       // ACCEPT
       const response_decision_state:
@@ -412,7 +415,21 @@ const Shops = () => {
     }
   };
 
-  const handlerShowInfo = (index: any) => {};
+  const handleDropdownChange = (val: any) => {
+    const nameShopSelected = JSON.stringify(val.nombre_tienda).replace(
+      /['"]+/g,
+      ""
+    );
+    Axios.get(dbShopsInfoURL).then((response: AxiosResponse) => {
+      const shopsNames = response.data;
+      const shopsNamesFiltered = shopsNames.filter(
+        (shop: any) => shop.nombre_tienda !== nameShopSelected
+      );
+      setShopsDestination(shopsNamesFiltered);
+      set_value_destination_shop(null);
+      setIsShopOriginSelected(true);
+    });
+  };
 
   const handleNavbarClick = (e: any) => {
     e.preventDefault();
@@ -654,23 +671,28 @@ const Shops = () => {
             />
             <div className="reqs-between-shops__dropdownShop">
               <FilterDropdown
-                options={shops}
+                options={shopsOrigin}
                 id="idTienda"
                 label="nombre_tienda"
                 prompt="Seleccionar la tienda origen"
                 value={value_origin_shop}
-                onChange={(val: any) => set_value_origin_shop(val)}
+                onChange={(val: any) => {
+                  set_value_origin_shop(val);
+                  handleDropdownChange(val);
+                }}
               />
             </div>
             <div className="reqs-between-shops__dropdownShop">
-              <FilterDropdown
-                options={shops}
-                id="idTienda"
-                label="nombre_tienda"
-                prompt="Seleccionar la tienda de destino"
-                value={value_destination_shop}
-                onChange={(val: any) => set_value_destination_shop(val)}
-              />
+              {isShopOriginSelected ? (
+                <FilterDropdown
+                  options={shopsDestination}
+                  id="idTienda"
+                  label="nombre_tienda"
+                  prompt="Seleccionar la tienda de destino"
+                  value={value_destination_shop}
+                  onChange={(val: any) => set_value_destination_shop(val)}
+                />
+              ) : null}
             </div>
             <div className="reqs-between-shops-buttonContainer">
               <button
