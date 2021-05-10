@@ -134,7 +134,8 @@ router.post("/api/updatereceivedstate", (req, res) => {
 
 router.post("/api/requestsbetweenshops", (req, res) => {
   // const query_check = `UPDATE INVENTARIO_TIENDAS SET id_estado = 1 WHERE numero_de_orden = ${req.body.numero_de_orden}`;
-  const query_inventory_list = `SELECT NULL AS numero_entrada, NULL AS total FROM dual WHERE (@total := 0) UNION SELECT numero_entrada, @total := @total + cantidad AS total
+  const query_inventory_list = `SELECT NULL AS numero_entrada, NULL AS numero_lote , NULL AS referencia, NULL AS numero_de_orden, NULL AS total FROM dual WHERE (@total := 0) 
+  UNION SELECT numero_entrada, numero_lote, referencia, numero_de_orden, @total := @total + cantidad AS total
   FROM InventoryManagement.INVENTARIO_TIENDAS WHERE @total < ${req.body.cantidad} AND referencia = ${req.body.referencia} AND idTienda = ${req.body.tienda_origen}
   AND id_estado = 1`;
   const db_call = async () => {
@@ -246,6 +247,23 @@ router.post("/api/save_newshop_request", (req, res) => {
   console.log(query_save_request);
   database.query(query_save_request, [insertion], (err: MysqlError | null) => {
     if (err) throw err;
+    res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
+  });
+});
+
+router.post("/api/modalrequiredstock", (req, res) => {
+  var array_auxiliar: any = [];
+  var numeros_de_entrada = '';
+
+  req.body.map((value: any) => {
+    array_auxiliar.push(value.numero_entrada.toString());
+  });
+
+  numeros_de_entrada = array_auxiliar.join();
+  let query_required_stock = `SELECT it.*, SUM(cantidad) as cantidadTotal FROM INVENTARIO_TIENDAS it WHERE numero_entrada IN (${numeros_de_entrada}) GROUP BY numero_lote`;
+  database.query(query_required_stock, (err: MysqlError | null, result) => {
+    if (err) throw err;
+    console.log(result);
     res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
   });
 });

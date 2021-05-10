@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
+import Axios from "axios";
 
 import "./style/ModalShopsReq.css";
 import errorIMG from "../../assets/error.svg";
+import { baseURL } from "../app/baseURL";
 
 const modalShopsReqId: any = document.getElementById("ModalShopsReq");
 
 const ModalShopsReq = (props: any) => {
+  const url = baseURL + "api/modalrequiredstock";
+  const requiredStock = props.requiredStock;
+
   const handleClose = () => {
     props.closeModal();
   };
@@ -15,6 +20,16 @@ const ModalShopsReq = (props: any) => {
     props.handleDecision(decisionNumber);
     props.closeModal();
   };
+
+  console.log(props.checkReqNumber);
+
+  useEffect(() => {
+    if (props.checkReqNumber !== 3) {
+        Axios.post(url, requiredStock ).then((response: any) => {
+            console.log(response.data);
+          });
+    }
+  }, []);
 
   if (!props.isOpen) return null;
 
@@ -29,7 +44,7 @@ const ModalShopsReq = (props: any) => {
             X
           </button>
           <h2 className="ModalShopsComponent__h2">
-            Lotes necesarios para cumplir con el pedido
+            No hay existencias de esta referencia en esta tienda
           </h2>
           <div className="imgErrorShopsContainer">
             <img

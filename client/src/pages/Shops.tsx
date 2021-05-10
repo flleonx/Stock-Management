@@ -345,20 +345,23 @@ const Shops = () => {
       actualTarget.numero_peticion,
     ]);
     setIndexModal(index);
-    setIsOpenModalReq(true);
-    if (response[0] !== null) {
+    if (response[0] !== undefined) {
       const required_stock_size: number = response.length;
       const amount_number: number = parseInt(auxiliar[0]);
       if (required_stock_size < amount_number) {
         console.log("FALTAN", amount_number - required_stock_size);
         setCheckReqNumber(2);
+        setIsOpenModalReq(true);
       } else {
         console.log("TODO BIEN");
         setCheckReqNumber(1);
+        setRequiredStock(response);
+        setIsOpenModalReq(true);
       }
     } else {
       console.log("NO HAY EXISTENCIAS");
       setCheckReqNumber(3);
+      setIsOpenModalReq(true);
     }
   };
 
@@ -830,14 +833,17 @@ const Shops = () => {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
-
-      <ModalShopsReq
-        isOpen={isOpenModalReq}
-        closeModal={closeModal}
-        checkReqNumber={checkReqNumber}
-        indexReq={indexModal}
-        handleDecision={handler_final_decision}
-      />
+        { isOpenModalReq  && (
+          <ModalShopsReq
+            isOpen={true}
+            closeModal={closeModal}
+            checkReqNumber={checkReqNumber}
+            indexReq={indexModal}
+            handleDecision={handler_final_decision}
+            requiredStock={requiredStock}
+          />
+        )}
+      
     </div>
   );
 };
