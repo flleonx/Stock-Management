@@ -142,20 +142,13 @@
   margin-bottom: 1%;
 }
 
-.items-information-ref {
-  margin-left: 32%;
-}
-
-.items-information-size {
-  margin-left: 45%;
-}
-
-.items-information-description {
-  margin-left: 25%;
-}
-
+.items-information-ref,
+.items-information-size,
+.items-information-description, 
 .items-information-color {
-  margin-left: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .table_item-design {

@@ -199,6 +199,7 @@
   margin-bottom: 3%;
   word-spacing: 0.5rem;
   justify-content: space-between;
+  align-items: center;
 }
 
 .supplie-add h2 {
@@ -283,5 +284,19 @@
 @media screen and (min-width: 1919px) {
   .added-container-supplies {
     height: 75%;
+  }
+
+  .supplie-add {
+    height: 8%;
+    color: #6c818a;
+    padding-left: 5%;
+    padding-top: 0.6%;
+    margin-bottom: 3%;
+    word-spacing: 0.5rem;
+    background-color: rgb(243, 243, 243);
+  }
+
+  .supplie-add h2 {
+    margin-top: 0.5em;
   }
 }

@@ -1,11 +1,16 @@
-import React from 'react';
-import {withRouter} from 'react-router-dom';
-import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet';
+import React, { useState } from "react";
+import { withRouter } from "react-router-dom";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-import './style/Home.css';
-import {tiendasData} from '../components/home/tiendasData';
+import "./style/Home.css";
+import { tiendasData } from "../components/home/tiendasData";
 
 const Home = () => {
+  const [a, setA] = useState("");
+  const handleClick = () => {
+    console.log("EEEEEEEEEEEEEEEEE");
+  };
+
   return (
     <div className="general-container-home">
       <h2 className="general-container-home__h2">Dashboard</h2>
@@ -24,10 +29,10 @@ const Home = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         {tiendasData.map((tienda: any) => (
-          <Marker
-            key={tienda.id}
-            position={[tienda.latitude, tienda.longitude]}
-          />
+            <Marker
+              key={tienda.id}
+              position={[tienda.latitude, tienda.longitude]}
+            />
         ))}
       </MapContainer>
     </div>

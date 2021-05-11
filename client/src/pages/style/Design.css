@@ -277,13 +277,13 @@
   display: flex;
   background-color: white;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
-  height: 7%;
+  height: 6%;
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.91rem;
   color: #6c818a;
   font-weight: 400;
   padding-left: 27%;
-  padding-top: 0.6%;
+  padding-top: 0.7em;
   margin-bottom: 3%;
   word-spacing: 0.5rem;
 }
