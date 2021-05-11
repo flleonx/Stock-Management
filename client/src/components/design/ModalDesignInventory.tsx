@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import Axios from 'axios';
-import {baseURL} from '../app/baseURL';
+import React, { useEffect, useState } from "react";
+import Axios from "axios";
+import { baseURL } from "../app/baseURL";
 
-import notFoundImage from '../../assets/Not Found.svg';
-import ModalInformationDesign from './ModalInformationDesign';
-import './style/ModalDesignInventory.css';
+import notFoundImage from "../../assets/Not Found.svg";
+import ModalInformationDesign from "./ModalInformationDesign";
+import "./style/ModalDesignInventory.css";
 
-const ModalDesignInventory = ({modalContent, closeModal}: any) => {
+const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
   useEffect(() => {
     setTimeout(() => {
       closeModal();
     }, 40000);
   });
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [referenceNumber, setReferenceNumber] = useState<string>('');
+  const [referenceNumber, setReferenceNumber] = useState<string>("");
   const [referenceArray, setReferenceArray] = useState([]);
-  const getreferenceconsumptionURL = baseURL + 'api/getreferenceconsumption';
+  const getreferenceconsumptionURL = baseURL + "api/getreferenceconsumption";
   let iterator = 0;
   let enableEmpty = true;
   let showEmptySearch = false;
@@ -33,7 +33,7 @@ const ModalDesignInventory = ({modalContent, closeModal}: any) => {
     setReferenceNumber(payload);
     console.log(payload);
     const referenceSelection = payload;
-    Axios.post(getreferenceconsumptionURL, {referenceSelection})
+    Axios.post(getreferenceconsumptionURL, { referenceSelection })
       .then((response) => {
         setReferenceArray(response.data);
       })
@@ -66,7 +66,7 @@ const ModalDesignInventory = ({modalContent, closeModal}: any) => {
         {modalContent
           .filter((val: any) => {
             iterator += 1;
-            if (searchTerm === '') {
+            if (searchTerm === "") {
               return val;
             } else if (
               val.referencia

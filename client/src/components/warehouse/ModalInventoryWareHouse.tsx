@@ -66,7 +66,7 @@ const ModalInvetoryBodega = ({modalContent, closeModal}: any) => {
                       Descripción: {props.descripcion}
                     </div>
                     <div className="table_item-bodega">
-                      Cantidad: {props.metros} metros
+                      Cantidad: {props.metros}
                     </div>
                   </div>
                   <div className="table_item-bodega">

@@ -50,7 +50,7 @@ const WareHouseProducts = () => {
   const [isOpenModalReq, setIsOpenModalReq] = useState<boolean>(false);
   const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
   const [indexModal, setIndexModal] = useState<number>(0);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [toggleState, setToggleState] = useState(1);
 
   const dbWareHouseProducts: string = baseURL + "api/getwarehouseproducts";
@@ -228,7 +228,7 @@ const WareHouseProducts = () => {
               <i className="gg-search"></i>
               <input
                 type="search"
-                placeholder="Buscar..."
+                placeholder="Buscar por referencia..."
                 className="search-filter-warehouseproducts"
                 onChange={(e: any) => handlerSearch(e.target.value)}
               ></input>
@@ -253,10 +253,7 @@ const WareHouseProducts = () => {
                   ) {
                     enableEmpty = false;
                     return val;
-                  } else if (
-                    iterator == wareHouseProducts.length &&
-                    enableEmpty == true
-                  ) {
+                  } else if (iterator == wareHouseProducts.length && enableEmpty == true) {
                     showEmptySearch = true;
                   }
                 })
