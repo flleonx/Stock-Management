@@ -4,7 +4,7 @@
 }
 
 .scroll-warehouseproducts {
-  height: 91.5vh;
+  height: 94vh;
   overflow: hidden;
   /* overflow-y: scroll; */
   scroll-behavior: smooth;
@@ -91,7 +91,7 @@
 
 #products-warehouseproducts-section {
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
 }
 
 .products-finished-warehouseproducts-section__h3 {
@@ -100,6 +100,14 @@
   justify-content: center;
   align-items: center;
   padding-top: 1em;
+}
+
+.products-finished-warehouseproducts-section__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1rem;
+  color: black;
+  display: flex;
+  justify-content: center;
 }
 
 /* TABLE */
@@ -247,24 +255,14 @@
   margin-bottom: 1%;
 }
 
-.items-information-wp-lot {
-  margin-left: 30%;
-}
-
-.items-information-wp-ref {
-  margin-left: 30%;
-}
-
-.items-information-wp-order {
-  margin-left: 27%;
-}
-
-.items-information-amount {
-  margin-left: 38%;
-}
-
+.items-information-wp-lot,
+.items-information-wp-ref,
+.items-information-wp-order,
+.items-information-amount,
 .items-information-timestamp {
-  margin-left: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .table_item-warehouseproduct {
@@ -294,7 +292,7 @@
 
 .shops-request-warehouseproducts-section {
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #e7f7f2;
 }
 
@@ -459,21 +457,35 @@
 /* RESPONSIVE */
 
 @media (min-width: 1919px) {
+  .navbar-warehouseproducts-otpions {
+    width: 22%;
+    margin-right: 8em;
+  }
+
   .shopRequestCard {
     height: 29%;
   }
 
   .products-finished-warehouseproducts-section__h3 {
-    margin-top: 2%;
+    margin-top: 0.5em;
   }
 
   .container_table-warehouseproducts {
-    height: 650px;
-    margin-top: 4%;
+    height: 700px;
+    margin-top: 2em;
   }
 
   .scroll-modal-warehouseproducts {
-    max-height: 500px;
+    max-height: 590px;
+  }
+
+  .shops-request-warehouseproducts-section__h3 {
+    padding-top: 1em;
+  }
+
+  .notfoundImg-warehouseproducts {
+    margin-left: 10%;
+    width: 80%;
   }
 }
 

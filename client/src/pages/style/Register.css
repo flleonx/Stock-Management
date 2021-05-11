@@ -25,7 +25,7 @@
   width: 33%;
   height: 55vh;
   background-color: white;
-  margin-top: 8.8%;
+  margin-top: 13em;
   margin-left: 13%;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   border: 1px solid transparent;
@@ -36,7 +36,7 @@
   font-size: 0.95rem;
   color: #374663;
   margin-left: 32%;
-  margin-top: 3%;
+  margin-top: 1.3em;
 }
 
 .register-form .border-div {
@@ -85,6 +85,7 @@
   height: 75%;
   font-family: 'Ubuntu', sans-serif;
   padding-left: 2%;
+  background-color: white;
   border: 1px solid #9ba9af;
   color: #667076;
   font-weight: 400;

@@ -4,7 +4,7 @@
 }
 
 .scroll-warehouse {
-  height: 91.5vh;
+  height: 94vh;
   overflow: hidden;
   /* overflow-y: scroll; */
   scroll-behavior: smooth;
@@ -109,7 +109,7 @@
   display: flex;
   /* border: 1px solid blue; */
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
 }
 
 .warehouse-form-container {
@@ -171,6 +171,7 @@
   margin: 15px auto;
   margin-top: -2px;
   position: relative;
+  margin-bottom: 1em;
 }
 
 .selected-option-bodega {
@@ -282,7 +283,7 @@
 
 .inventory-warehouse-modal-section {
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #e7f7f2;
 }
 
@@ -295,10 +296,18 @@
   padding-top: 1em;
 }
 
+.inventory-warehouse-modal-section p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: #000000;
+}
+
 .update-container {
   display: flex;
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #f8f9fb;
 }
 
@@ -415,7 +424,7 @@
 
 .warehouseReqSection {
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #e7f7f2;
 }
 
@@ -424,6 +433,14 @@
   justify-content: center;
   align-items: center;
   padding-top: 1em;
+}
+
+.warehouseReqSection p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: #000000;
 }
 
 .no-data-image-warehouse-container {
@@ -452,13 +469,12 @@
 
 .dressmakingReqContainer {
   background-color: rgb(236, 245, 245);
-  margin-top: 1%;
   margin-left: 1.5%;
   width: 89vw;
   display: inline-flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  height: 85%;
+  height: 83%;
   overflow-y: hidden;
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -489,7 +505,7 @@
   width: 25%;
   height: 30%;
   background-color: white;
-  margin-left: 6%;
+  margin-right: 2.2em;
 }
 
 .requestWarehouseContainer__h4 {
@@ -529,8 +545,8 @@
   }
 
   .warehouse-form {
-    margin-top: 8em;
-    height: 68%;
+    margin-top: 6.3em;
+    height: 70%;
   }
   
   .warehouse-form h2 {
@@ -538,18 +554,18 @@
   }
 
   .information-add-supplies-container {
-    margin-top: 22em;
+    margin-top: 21em;
   }
 
   .information-add-supplies-container__h2 {
     font-family: 'Ubuntu', sans-serif;
-    font-size: 2.3rem;
+    font-size: 2.1rem;
   }
   
   .information-add-supplies-container__p {
     font-family: 'Ubuntu', sans-serif;
     margin-top: 0.8em;
-    font-size: 1.9rem;
+    font-size: 1.7rem;
     font-weight: 300;
     color: #000000;
     line-height: 2rem;
@@ -557,7 +573,7 @@
 
   .update-container {
     width: 100%;
-    height: 91.5vh;
+    height: 94vh;
   }
 
   .inventory-warehouse-open-modal {
@@ -565,17 +581,17 @@
   }
 
   .update-container__h2 {
-    margin-top: 2.5em;
+    margin-top: 1.2em;
     font-size: 1.7rem;
   }
 
   .update-container-card {
-    margin-top: 15em;
-    height: 45%;
+    margin-top: 17em;
+    height: 33%;
   }
 
   .information-update-container {
-    margin-top: 23em;
+    margin-top: 20.5em;
     margin-left: 4em;
   }
 
@@ -588,24 +604,30 @@
   }
 
   .update-container-form button {
-    height: 12%;
+    height: 14%;
   }
 
   .warehouseReqSection {
     width: 100%;
-    height: 91.5vh;
+    height: 94vh;
+  }
+
+  .requestWarehouseContainer {
+    width: 25%;
+    height: 25%;
+    margin-left: 6%;
   }
 
   .requestWarehouseContainer__h4 {
-    margin-top: 8%;
-  }
-
-  .requestWarehouseContainer__reference {
     margin-top: 5%;
   }
 
+  .requestWarehouseContainer__reference {
+    margin-top: 1em;
+  }
+
   .requestWarehouseDecisionBTNContainer button {
-    margin-top: 7%;
+    margin-top: 1.5em;
   }
 
   .warehouseReqSection h3 {

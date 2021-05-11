@@ -4,7 +4,7 @@
 }
 
 .scroll-dressmaking-section {
-  height: 91.5vh;
+  height: 94vh;
   overflow-y: hidden;
   scroll-behavior: smooth;
 }
@@ -92,7 +92,7 @@
 .dressmaking-request-container {
   display: flex;
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
 }
 
 .dressmaking-request-card {
@@ -187,7 +187,7 @@
 
 .dressmaking-process-container {
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #e7f7f2;
 }
 
@@ -195,6 +195,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-top: 1em;
+}
+
+.dressmaking-process-container p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: black;
 }
 
 .no-data-image-approved-req-dressmaking-container {
@@ -222,14 +231,14 @@
 }
 
 .approved-requests-dressmaking-container {
-  background-color: #e8f5f1;
-  margin-top: 1%;
+  background-color: #effcf8;
+  margin-top: 0.3em;
   margin-left: 1.5%;
   width: 89vw;
   display: inline-flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  height: 85%;
+  height: 82%;
   overflow-y: hidden;
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -320,7 +329,7 @@
 
 .requests-history-section {
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #f8f9fb;
 }
 
@@ -328,18 +337,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 1%;
+  padding-top: 1em;
+}
+
+.requests-history-section p{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: #000000;
 }
 
 .requets-history-dressmaking-container {
   background-color: #f7fffd;
-  margin-top: 1%;
   margin-left: 1.5%;
   width: 89vw;
   display: inline-flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  height: 85%;
+  height: 83%;
   overflow-y: hidden;
   overflow-y: scroll;
   scroll-behavior: smooth;
@@ -429,17 +445,18 @@
 
 @media (min-width: 1919px) {
   .dressmaking-request-card {
-    height: 50%;
-    margin-top: 13%;
+    height: 32%;
+    margin-top: 19em;
+    margin-left: 4em;
   }
 
   .dressmaking-request-card__h2 {
     font-size: 1.4rem;
-    margin-top: 10%;
+    margin-top: 1em;
   }
 
   .information-dressmaking-request-container {
-    margin-top: 20%;
+    margin-top: 19.5%;
   }
 
   .information-dressmaking-request-container__h2 {
@@ -490,7 +507,11 @@
 
   .dressmaking-request-form #actualAmount {
     margin-left: 2.5em;
-    height: 10%;
+    height: 13%;
+    margin-top: 2em;
+  }
+  .dressmaking-request-form button {
+    margin-top: 2em;
   }
 
   .request-card-container__order {

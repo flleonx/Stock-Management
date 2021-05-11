@@ -156,3 +156,10 @@
 .InsuficcientButtonRejectContainer button:focus {
   outline: none;
 }
+
+@media screen and (min-width: 1919px) {
+  .ModalNoSuppliesComponent__container {
+    height: 800px;
+    width: 40vw;
+  }
+}

@@ -4,7 +4,7 @@
 }
 
 .scroll-design-section {
-  height: 91.5vh;
+  height: 94vh;
   overflow: hidden;
   /* overflow-y: scroll; */
   scroll-behavior: smooth;
@@ -94,7 +94,7 @@
 .add-reference-design-container {
   display: flex;
   width: 100%;
-  height: 91.5vh;
+  height: 94vh;
 }
 
 .design-form {
@@ -252,7 +252,7 @@
 
 .inventory-design-modal-section {
   border: 1px solid transparent;
-  height: 91.5vh;
+  height: 94vh;
   background-color: #e7f7f2;
 }
 
@@ -263,6 +263,14 @@
   font-family: 'Ubuntu', sans-serif;
   font-size: 1.5rem;
   padding-top: 1em;
+}
+
+.inventory-design-modal-section p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: black;
 }
 
 .insumo-add {
@@ -302,17 +310,36 @@
 
   .inventory-design-modal-section h3 {
     font-size: 1.9rem;
-    margin-top: 7%;
+  }
+
+  .design-form__information {
+    font-size: 0.7rem;
+    width: 90%;
+    margin-left: 3em;
+    margin-bottom: 1.5em;
   }
 
   .design-form {
-    height: 65%;
-    margin-top: 7%;
+    height: 57%;
+    margin-top: 12em;
+  }
+
+  .design-form h2{
+    margin-top: 1.7em;
   }
 
   .design-form input {
-    margin-bottom: 6%;
+    margin-bottom: 2em;
     height: 6%;
+  }
+  
+  #insumoBTN {
+    height: 6%;
+    margin-left: 2.5em;
+  }
+
+  .supplies-added-design {
+    margin-top: 6em;
   }
 }
 

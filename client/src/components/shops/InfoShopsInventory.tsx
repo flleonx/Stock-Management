@@ -71,6 +71,9 @@ const InfoShopsInventory = (props: any) => {
                     <div className="items-information-shops__order">
                       Numero de orden: {props.numero_de_orden}
                     </div>
+                    <div className="items-information-shops__shop">
+                      Tienda destino: {props.idTienda}
+                    </div>
                     <div className="items-information-shops__amount">
                       Cantidad: {props.cantidad}
                     </div>
@@ -82,7 +85,7 @@ const InfoShopsInventory = (props: any) => {
                         className="btn items-information-shops__button"
                         onClick={() => handlerReceived(index)}
                       >
-                        Confirmar Producto
+                        Confirmar Recibido
                       </button>
                     </div>
                   </div>
@@ -155,6 +158,9 @@ const InfoShopsInventory = (props: any) => {
                     </div>
                     <div className="items-information-shops__order">
                       Numero de orden: {props.numero_de_orden}
+                    </div>
+                    <div className="items-information-shops__shop">
+                      Tienda: {props.idTienda}
                     </div>
                     <div className="items-information-shops__amount">
                       Cantidad: {props.cantidad}

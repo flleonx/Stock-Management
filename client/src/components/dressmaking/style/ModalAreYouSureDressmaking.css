@@ -103,3 +103,9 @@
 .ARYDressmakingButtonsContainer__cancel:focus {
   outline: none;
 }
+
+@media screen and (min-width: 1919px) {
+  .ModalAYSDressmakingComponent__container {
+    top: 25rem;
+  }
+}

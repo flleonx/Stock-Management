@@ -174,3 +174,10 @@
 .DecisionButtonsContainer__reject:focus {
   outline: none;
 }
+
+@media screen and (min-width: 1919px) {
+  .ModalDecisionSuppliesComponent__container {
+    width: 800px;
+    height: 91%;
+  }
+}

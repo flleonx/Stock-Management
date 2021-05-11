@@ -484,14 +484,13 @@
 
 @media screen and  (min-width: 1919px) {
   .user-section {
-    margin-top: 14.5em;
+    margin-top: 11.5em;
     border: 0;
   }
-/*   
-  .user-section__icon {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    margin-top: 0.8em;
-  } */
+
+  .navbar-user-container {
+    width: 100px;
+    height: 100vh;
+  }
+
 }

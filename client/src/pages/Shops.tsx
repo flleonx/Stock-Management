@@ -86,9 +86,8 @@ const Shops = () => {
   const [infoRequestsBetweenShops, setInfoRequestsBetweenShops] = useState<any>(
     []
   );
-  const [isShopOriginSelected, setIsShopOriginSelected] = useState<boolean>(
-    false
-  );
+  const [isShopOriginSelected, setIsShopOriginSelected] =
+    useState<boolean>(false);
   const [checkReqNumber, setCheckReqNumber] = useState<number>(0);
   const [indexModal, setIndexModal] = useState<number>(0);
   const [isOpenModalReq, setIsOpenModalReq] = useState<boolean>(false);
@@ -96,17 +95,17 @@ const Shops = () => {
   const [stockAvailableAmount, setStockAvailableAmount] = useState<number>(0);
   const [auxiliar, setAuxiliar] = useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
-  const refContainer: any = useRef(null);
+  const refInputBetweenShops: any = useRef(null);
+  const refInputReqToWarehouseProducts: any = useRef(null);
+  const [switchUseEffect, setSwitchUseEffect] = useState<boolean>(false);
 
   // REQUEST BETWEEN SHOPS useStates
-  const [value_reference_request, set_value_reference_request] = useState<any>(
-    null
-  );
+  const [value_reference_request, set_value_reference_request] =
+    useState<any>(null);
   const [amount_request, set_amount_request] = useState<string>("");
   const [value_origin_shop, set_value_origin_shop] = useState<any>(null);
-  const [value_destination_shop, set_value_destination_shop] = useState<any>(
-    null
-  );
+  const [value_destination_shop, set_value_destination_shop] =
+    useState<any>(null);
   const [toggleState, setToggleState] = useState(1);
   // DATABASE URLS
   const dbReferencesURL: string = baseURL + "api/references";
@@ -136,6 +135,7 @@ const Shops = () => {
     });
 
     Axios.get(dbActualInventory).then((response: AxiosResponse) => {
+      console.log(response.data);
       setInfoActualInventory(response.data);
     });
 
@@ -179,7 +179,7 @@ const Shops = () => {
         });
       });
     };
-  }, []);
+  }, [switchUseEffect]);
 
   // GENERAL DATABASE CHECK
   const check_existing_value = async (check_case: number, payload: string) => {
@@ -246,11 +246,10 @@ const Shops = () => {
         dispatch({ type: "SUCCESSFUL_REQUEST" });
         setValueReferenceSelect(null);
         setValueShopSelect(null);
-        refContainer.current.value = "";
+        refInputReqToWarehouseProducts.current.value = "";
       });
     } else {
       dispatch({ type: "WRONG_INPUT" });
-      refContainer.current.value = "";
     }
   };
 
@@ -266,6 +265,7 @@ const Shops = () => {
         setInfoActualInventory(response.data[1]);
       }
     );
+    setSwitchUseEffect(!switchUseEffect);
   };
 
   const query_post = async (url: string, payload: any) => {
@@ -323,10 +323,15 @@ const Shops = () => {
         dbSaveNewShopRequest,
         data
       );
+      set_value_reference_request(null);
+      refInputBetweenShops.current.value = "";
+      set_value_origin_shop(null);
+      set_value_destination_shop(null);
+      setIsShopOriginSelected(false);
+      setSwitchUseEffect(!switchUseEffect);
+      dispatch({ type: "SUCCESSFUL_REQUEST" });
     } else {
-      // dispatch({ type: "WRONG_INPUT" });
-      // refContainer.current.value = "";
-      console.log("WRONG");
+      dispatch({ type: "WRONG_INPUT" });
     }
 
     // const payload = {
@@ -346,8 +351,6 @@ const Shops = () => {
     const response: AxiosResponse[] = await query_post(dbRequestBetweenShops, {
       ...infoRequestsBetweenShops[index],
     });
-    console.log(response[0] !== null);
-    console.log(response);
     setAuxiliar([
       actualTarget.cantidad,
       actualTarget.tienda_destino,
@@ -380,37 +383,37 @@ const Shops = () => {
     console.log("MANEJO DECISION", id_decision);
     if (id_decision === 1) {
       // ACCEPT
-      const response_decision_state:
-        | AxiosResponse
-        | undefined = await query_post(dbDecisionBetweenShops, {
-        numeros_de_entrada: requiredStock,
-        data: {
-          tienda_destino: auxiliar[1],
-          numero_peticion: auxiliar[2],
-          id_decision,
-        },
-      });
+      const response_decision_state: AxiosResponse | undefined =
+        await query_post(dbDecisionBetweenShops, {
+          numeros_de_entrada: requiredStock,
+          data: {
+            tienda_destino: auxiliar[1],
+            numero_peticion: auxiliar[2],
+            id_decision,
+          },
+        });
+      setSwitchUseEffect(!switchUseEffect);
       console.log(response_decision_state);
     } else if (id_decision === 0) {
       // REFUSE
-      const response_decision_state:
-        | AxiosResponse
-        | undefined = await query_post(dbDecisionBetweenShops, {
-        data: { numero_peticion: auxiliar[2], id_decision },
-      });
+      const response_decision_state: AxiosResponse | undefined =
+        await query_post(dbDecisionBetweenShops, {
+          data: { numero_peticion: auxiliar[2], id_decision },
+        });
+      setSwitchUseEffect(!switchUseEffect);
       console.log(response_decision_state);
     } else if (id_decision === 2) {
-      const response_decision_state:
-        | AxiosResponse
-        | undefined = await query_post(dbDecisionBetweenShops, {
-        numeros_de_entrada: requiredStock,
-        data: {
-          tienda_destino: auxiliar[1],
-          numero_peticion: auxiliar[2],
-          id_decision,
-          envio_real: stockMissingAmount,
-        },
-      });
+      const response_decision_state: AxiosResponse | undefined =
+        await query_post(dbDecisionBetweenShops, {
+          numeros_de_entrada: requiredStock,
+          data: {
+            tienda_destino: auxiliar[1],
+            numero_peticion: auxiliar[2],
+            id_decision,
+            envio_real: stockMissingAmount,
+          },
+        });
+      setSwitchUseEffect(!switchUseEffect);
       console.log(response_decision_state);
     }
   };
@@ -508,7 +511,7 @@ const Shops = () => {
         </div>
       </div>
 
-      <div className="scroll-shops" id="scroll-shops">
+      <div className="scroll-shops-section" id="scroll-shops">
         <div className="shops-request-wp" id="shops-request-wp">
           <div className="makeReqShopsContainer">
             <h4>Enviar peticiones a Bodega Producto</h4>
@@ -523,7 +526,7 @@ const Shops = () => {
               />
             </div>
             <input
-              ref={refContainer}
+              ref={refInputReqToWarehouseProducts}
               id="actualAmount"
               name="actualAmount"
               className="actualAmount"
@@ -544,7 +547,6 @@ const Shops = () => {
                 onChange={(val: any) => setValueShopSelect(val)}
               />
             </div>
-            {/* <div className="makeReqButtonContainer"> */}
             <button
               className="btn makeReqButtonContainer"
               type="button"
@@ -552,7 +554,6 @@ const Shops = () => {
             >
               Enviar
             </button>
-            {/* </div> */}
           </div>
 
           <div className="information-shop-request-wp-container">
@@ -569,51 +570,14 @@ const Shops = () => {
           </div>
         </div>
 
-        {/* <div className="productsContainer">
-          {infoDeliveryState.map((item: any, index: number) => {
-            return (
-              <div className="productCard">
-                <h4 className="productCard__h4"> Información del producto</h4>
-                <div className="productCard__lot">
-                  Numero de Lote: {item.numero_lote}
-                </div>
-                <div className="productCard__reference">
-                  Referencia: {item.referencia}
-                </div>
-                <div className="productCard__Order">
-                  # de orden: {item.numero_de_orden}
-                </div>
-                <div className="productCard__amount">
-                  Cantidad: {item.cantidadTotal}
-                </div>
-                <div className="productCard__date">
-                  Fecha: {item.timestamp.replace("T", " ").slice(0, 16)}
-                </div>
-                <div className="productCard__date">
-                  Estado: {item.nombre_estado}
-                </div>
-                <div className="makeReqButtonContainer">
-                  <button
-                    className="btn"
-                    type="button"
-                    onClick={() => handlerReceived(index)}
-                  >
-                    Confirmar recibido
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div> */}
-
         <div
           className="products-process-shops-section"
           id="products-process-shops-section"
         >
-          <h3 className="products-finished-warehouseproducts-section__h3">
+          <h3 className="products-process-shops-section__h3">
             Inventario tiendas
           </h3>
-          <p className="products-finished-warehouseproducts-section__p">
+          <p className="products-process-shops-section__p">
             En este apartado se encuentra el inventario de todas las tiendas.
           </p>
           <InfoShopsInventory
@@ -658,7 +622,7 @@ const Shops = () => {
               />
             </div>
             <input
-              ref={refContainer}
+              ref={refInputBetweenShops}
               id="actualAmount"
               name="actualAmount"
               className="actualAmount"
@@ -780,87 +744,12 @@ const Shops = () => {
                     >
                       Desplegar requerimientos
                     </button>
-                    {/* <button
-                      className="btn shopRequestCard__deploy"
-                      key={index}
-                      data-index={index}
-                      // onClick={() => setIsOpenModalReq(true)}
-                      onClick={() => handler_final_decision(0)}
-                    >
-                      Rechazar
-                    </button>
-                    <button
-                      className="btn shopRequestCard__deploy"
-                      key={index}
-                      data-index={index}
-                      // onClick={() => setIsOpenModalReq(true)}
-                      onClick={() => handler_final_decision(1)}
-                    >
-                      Aceptar
-                    </button> */}
                   </div>
                 );
               })}
             </div>
           )}
         </div>
-
-        {/* <div className="shopsRequestContainer">
-          {infoRequestsBetweenShops.map((shop: any, index: number) => {
-            return (
-              <div className="shopRequestCard">
-                <h4 className="shopRequestCard__h4">
-                  Información de la petición
-                </h4>
-                <div className="shopRequestCard__order">
-                  # de petición: {shop.numero_peticion}
-                </div>
-                <div className="shopRequestCard__reference">
-                  Referencia: {shop.referencia}
-                </div>
-                <div className="shopRequestCard__amount">
-                  Cantidad: {shop.cantidad}
-                </div>
-                <div className="shopRequestCard__shop">
-                  Tienda Origen: {shop.tienda_origen_nombre}
-                </div>
-                <div className="shopRequestCard__shop">
-                  Tienda Destino: {shop.tienda_destino_nombre}
-                </div>
-                <div className="shopRequestCard_date">
-                  Fecha: {shop.timestamp.replace("T", " ").slice(0, 16)}
-                </div>
-                <button
-                  className="btn shopRequestCard__deploy"
-                  key={index}
-                  data-index={index}
-                  // onClick={() => setIsOpenModalReq(true)}
-                  onClick={() => handler_required_stock(index)}
-                >
-                  Desplegar requerimientos
-                </button>
-                <button
-                  className="btn shopRequestCard__deploy"
-                  key={index}
-                  data-index={index}
-                  // onClick={() => setIsOpenModalReq(true)}
-                  onClick={() => handler_final_decision(0)}
-                >
-                  Rechazar
-                </button>
-                <button
-                  className="btn shopRequestCard__deploy"
-                  key={index}
-                  data-index={index}
-                  // onClick={() => setIsOpenModalReq(true)}
-                  onClick={() => handler_final_decision(1)}
-                >
-                  Aceptar
-                </button>
-              </div>
-            );
-          })}
-        </div> */}
       </div>
 
       <Modal isOpen={state.isModalOpen} closeModal={closeModal}>

@@ -181,14 +181,18 @@
   margin-left: 20%;
 }
 
-@media (min-height: 1075px) {
+@media screen and (min-width: 1919px) {
   .container_table-design {
-    height: 650px;
-    margin-top: 3%;
+    height: 700px;
   }
 
   .scroll-modal-design {
-    max-height: 540px;
+    max-height: 590px;
+  }
+
+  .notfoundImg {
+    margin-left: 10%;
+    width: 80%;
   }
 }
 

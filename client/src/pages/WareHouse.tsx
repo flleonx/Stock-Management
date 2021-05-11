@@ -43,6 +43,7 @@ function WareHouse() {
   const [isOpenDecision, setIsOpenDecision] = useState<boolean>(false);
   const [valueCode, setValueCode] = useState<any>(null);
   const [toggleState, setToggleState] = useState(1);
+  const [switchUseEffect, setSwitchUseEffect] = useState<boolean>(false);
   const saveClothAPIURL: string = baseURL + "api/savecloth";
   const invetoryBodegaAPIURL: string = baseURL + "api/invetorywarehouse";
   const invetoryWareHouseAPIURL: string = baseURL + "api/invetorywarehouse";
@@ -69,7 +70,7 @@ function WareHouse() {
       .catch((error) => {
         if (error) throw error;
       });
-  }, []);
+  }, [switchUseEffect]);
 
   interface ICloth {
     code: string;
@@ -133,6 +134,7 @@ function WareHouse() {
                 setQueryData(response.data);
               }
             );
+            setSwitchUseEffect(!switchUseEffect);
           }
           if (response.data == "EXISTING_CODE") {
             dispatch({ type: "EXISTING_CODE" });
@@ -188,6 +190,7 @@ function WareHouse() {
             console.log(response);
             if (response.data == "SUCCESSFUL_UPDATE") {
               dispatch({ type: "SUCCESSFUL_UPDATE" });
+              setSwitchUseEffect(!switchUseEffect);
             }
           }
         );
@@ -420,6 +423,10 @@ function WareHouse() {
           id="inventory-warehouse-modal-section"
         >
           <h3>Inventario de los insumos</h3>
+          <p>
+            En este apartado se despliega el inventario de los insumos (telas,
+            botones, correderas, etcétera).
+          </p>
           <ModalInvetoryWareHouse
             modalContent={suppliesData}
             closeModal={closeModal}
@@ -471,6 +478,11 @@ function WareHouse() {
 
         <div className="warehouseReqSection" id="request-section">
           <h3>Peticiones</h3>
+          <p>
+            En este apartado se muestran las peticiones realizadas por taller
+            confección. Recuerda presionar el botón 'Tomar decisión' para
+            aceptar o rechazar las peticiones.
+          </p>
           {dressMakingReq.length == 0 && (
             <>
               <div className="no-data-image-warehouse-container">

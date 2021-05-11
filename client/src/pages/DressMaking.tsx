@@ -296,6 +296,12 @@ const DressMaking: React.FC = () => {
           id="dressmaking-process-container"
         >
           <h3>Artículos en proceso</h3>
+          <p>
+            En este apartado se muestra los artículos que se están produciendo.
+            Puedes ir descontando la cantidad en proceso de los artículos a
+            medida que los vas produciendo. Solo digita la cantidad producida y
+            presiona aceptar.{" "}
+          </p>
           {approvedRequests.length == 0 && (
             <>
               <div className="no-data-image-approved-req-dressmaking-container">
@@ -357,6 +363,10 @@ const DressMaking: React.FC = () => {
         </div>
         <div className="requests-history-section" id="requests-history-section">
           <h3>Historial de peticiones</h3>
+          <p>
+            Aquí se despliega el historial de peticiones realizadas de taller
+            confección a bodega insumos.
+          </p>
           <div className="requets-history-dressmaking-container">
             <div className="label-history-request-dressmanking">
               <div className="label-history-request-dressmanking__number-of-order">
@@ -378,11 +388,22 @@ const DressMaking: React.FC = () => {
             {requestsHistory.map((request: any) => {
               return (
                 <div className="request-card-container">
-                  <div className="request-card-container__order">{request.numero_de_orden}</div>
-                  <div className="request-card-container__reference">{request.referencia}</div>
-                  <div className="request-card-container__amount">{request.cantidad}</div>
-                  <div className="request-card-container__decision">{request.decision}</div>
-                  <div className="request-card-container__date"> {request.timestamp.replace("T", " ").slice(0, 16)}</div>
+                  <div className="request-card-container__order">
+                    {request.numero_de_orden}
+                  </div>
+                  <div className="request-card-container__reference">
+                    {request.referencia}
+                  </div>
+                  <div className="request-card-container__amount">
+                    {request.cantidad}
+                  </div>
+                  <div className="request-card-container__decision">
+                    {request.decision}
+                  </div>
+                  <div className="request-card-container__date">
+                    {" "}
+                    {request.timestamp.replace("T", " ").slice(0, 16)}
+                  </div>
                 </div>
               );
             })}

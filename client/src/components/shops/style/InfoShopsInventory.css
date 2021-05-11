@@ -151,7 +151,8 @@
 .items-information-shops__ref,
 .items-information-shops__order,
 .items-information-shops__amount,
-.items-information-shops__timestamp {
+.items-information-shops__timestamp,
+.items-information-shops__shop {
   font-family: 'Ubuntu', sans-serif;
   display: flex;
   justify-content: center;
@@ -194,14 +195,20 @@
 
 @media (min-width: 1919px) {
   .container_table-shops {
-    height: 650px;
+    height: 700px;
   }
 
   .scroll-modal-shops {
-    max-height: 540px;
+    max-height: 593px;
   }
   
   .items-information-shops__button {
     width: 45%;
   }
+
+  .notfoundImg-shops {
+    margin-left: 10%;
+    width: 80%;
+  }
+  
 }

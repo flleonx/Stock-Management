@@ -57,10 +57,8 @@ const Design = () => {
   // const [addedInformation, setAddedInformation] = useState<
   //   ISupplyInformation[]
   // >([]);
-  const [
-    addedInformationFromModal,
-    setAddedInformationFromModal,
-  ] = useState<any>([]);
+  const [addedInformationFromModal, setAddedInformationFromModal] =
+    useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [modalAddSupplies, setModalAddSupplies] = useState<boolean>(false);
   const [toggleState, setToggleState] = useState(1);
@@ -198,14 +196,21 @@ const Design = () => {
 
   const toggleTab = (index: number) => {
     setToggleState(index);
-  }
+  };
 
   return (
     <div className="general-container-design">
       <div className="navbar-design">
         <h2 className="navbar-design__h2">Taller diseño</h2>
         <div className="navbar-design-options">
-          <div className={toggleState === 1 ? "tabs-design active-tabs-design": "tabs-design"} onClick={() => toggleTab(1)}>
+          <div
+            className={
+              toggleState === 1
+                ? "tabs-design active-tabs-design"
+                : "tabs-design"
+            }
+            onClick={() => toggleTab(1)}
+          >
             <a
               href="#add-reference-design-container"
               onClick={handleNavbarClick}
@@ -213,7 +218,14 @@ const Design = () => {
               Agregar una nueva muestra
             </a>
           </div>
-          <div className={toggleState === 2 ? "tabs-design active-tabs-design": "tabs-design"} onClick={() => toggleTab(2)}>
+          <div
+            className={
+              toggleState === 2
+                ? "tabs-design active-tabs-design"
+                : "tabs-design"
+            }
+            onClick={() => toggleTab(2)}
+          >
             <a
               href="#inventory-design-modal-section"
               onClick={handleNavbarClick}
@@ -233,6 +245,11 @@ const Design = () => {
             <div className="border-design-div"></div>
             <p className="design-form__information">
               En este formulario puedes asociar insumos a una nueva muestra.
+              Digita la referencia, selecciona la talla, agrega una descripcion,
+              digita el color y la URL de la imágen. Luego, presiona el botón
+              'Añadir/Eliminar Insumos' para agregar o eliminar los insumos que
+              consume esta nueva muestra. Por ultimo, presiona el botón de
+              'Guardar'.
             </p>
             <input
               className="add-reference-input"
@@ -318,6 +335,11 @@ const Design = () => {
           id="inventory-design-modal-section"
         >
           <h3>Inventario de las muestras</h3>
+          <p>
+            En este apartado se despliega el inventario de las muestras. Si
+            quieres saber que telas e insumos consume una muestra en especifico,
+            presiona el botón 'Información de consumo'.
+          </p>
           <ModalDesignInventory
             closeModal={closeModal}
             modalContent={state.modalInventoryContent}

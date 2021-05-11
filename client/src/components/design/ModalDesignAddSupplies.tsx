@@ -190,8 +190,7 @@ const ModalDesignAddSupplies = (props: any) => {
         </button>
         <h4>Añadir telas o insumos</h4>
         <p className="ModalAddSuppliesComponent__p">
-          Aquí puedes añadir telas o insumos para la referencia que estás
-          intentando guardar.
+          Aquí puedes añadir las telas y/o insumos que consume esta referencia.
         </p>
         <div className="addSuppliesZone">
           <div style={{width: 250}}>

@@ -218,6 +218,10 @@ const WareHouseProducts = () => {
           <h3 className="products-finished-warehouseproducts-section__h3">
             Productos terminados
           </h3>
+          <p className="products-finished-warehouseproducts-section__p">
+            En este apartado se muestra el inventario de los productos
+            terminados listos para ser enviado a las tiendas.
+          </p>
           <div className="container_table-warehouseproducts">
             <div className="table_title-warehouseproducts ">Información</div>
             <div className="search-warehouseproducts-container">
@@ -330,7 +334,7 @@ const WareHouseProducts = () => {
           <h3 className="shops-request-warehouseproducts-section__h3">
             Peticiones
           </h3>
-           <p className="shops-request-warehouseproducts-section__p">
+          <p className="shops-request-warehouseproducts-section__p">
             En este apartado se encuentran la peticiones realizadas por las
             tiendas que necesitan stock.
           </p>
