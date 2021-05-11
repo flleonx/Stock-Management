@@ -72,7 +72,7 @@ const InfoShopsInventory = (props: any) => {
                       Numero de orden: {props.numero_de_orden}
                     </div>
                     <div className="items-information-shops__shop">
-                      Tienda destino: {props.idTienda}
+                      Tienda destino: {props.nombre_tienda}
                     </div>
                     <div className="items-information-shops__amount">
                       Cantidad: {props.cantidad}
@@ -160,7 +160,7 @@ const InfoShopsInventory = (props: any) => {
                       Numero de orden: {props.numero_de_orden}
                     </div>
                     <div className="items-information-shops__shop">
-                      Tienda: {props.idTienda}
+                      Tienda: {props.nombre_tienda}
                     </div>
                     <div className="items-information-shops__amount">
                       Cantidad: {props.cantidad}

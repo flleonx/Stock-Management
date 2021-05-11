@@ -135,13 +135,12 @@ const Shops = () => {
     });
 
     Axios.get(dbActualInventory).then((response: AxiosResponse) => {
-      console.log(response.data);
       setInfoActualInventory(response.data);
     });
 
     Axios.get(dbDeliveryState).then((response: AxiosResponse) => {
       setInfoDeliveryState(response.data);
-      // console.log(response.data);
+      console.log(response.data);
     });
 
     Axios.get(dbActualRequestsBetweenShops).then((response: AxiosResponse) => {
