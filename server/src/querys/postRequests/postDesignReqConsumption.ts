@@ -1,4 +1,4 @@
-import bodyParser from 'body-parser';
+import bodyParser, { json } from 'body-parser';
 import e from 'express';
 import routerStatement from 'express';
 import {MysqlError} from 'mysql';
@@ -70,6 +70,12 @@ router.post('/api/getreferenceconsumption', (req, res) => {
       });
     }
   );
+});
+
+router.post('/api/barcode', (req, res) => {
+  console.log(req.body);
+
+  res.end(JSON.stringify("SUccessful"));
 });
 
 export default router;

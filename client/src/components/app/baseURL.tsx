@@ -1,1 +1,1 @@
-export const baseURL: string = 'http://gestion-inventarios.ddns.net:52000/';
+export const baseURL: string = 'http://3.91.114.60:52000/';
