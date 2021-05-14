@@ -281,4 +281,18 @@ router.post("/api/modalrequiredstock", (req, res) => {
   });
 });
 
+/* QUERY APP */
+router.post('/api/barcode', (req, res) => {
+  console.log(req.body.Barcode);
+
+  let query = `UPDATE INVENTARIO_TIENDAS SET cantidad=0 WHERE numero_entrada = ${req.body.Barcode}`;
+
+  database.query(query, (err: MysqlError | null) => {
+    if (err) {
+      throw err;
+    }
+    res.end(JSON.stringify("SUCCESSFUL"));
+  });
+});
+
 export default router;

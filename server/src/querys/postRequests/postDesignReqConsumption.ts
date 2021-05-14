@@ -72,10 +72,4 @@ router.post('/api/getreferenceconsumption', (req, res) => {
   );
 });
 
-router.post('/api/barcode', (req, res) => {
-  console.log(req.body);
-
-  res.end(JSON.stringify("SUccessful"));
-});
-
 export default router;

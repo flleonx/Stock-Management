@@ -21,8 +21,7 @@
 }
 
 .leaflet-container {
-  margin: 0 auto;
   margin-top: 1%;
-  width: 90%;
-  height: 90%;
+  width: 30%;
+  height: 30%;
 }
