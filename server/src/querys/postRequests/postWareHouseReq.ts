@@ -256,6 +256,7 @@ router.post('/api/suppliesrequest', (req, res) => {
 });
 
 router.post('/api/savewarehousedecision', (req, res) => {
+  console.log("EL ID DECISION ES:", req.body.idDecision)
   let saveData = {
     referencia: req.body.referencia,
     cantidad: req.body.cantidad,

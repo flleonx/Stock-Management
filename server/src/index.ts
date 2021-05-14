@@ -59,6 +59,7 @@ import postDesignReqConsumption from './querys/postRequests/postDesignReqConsump
 import postBodegaReq from './querys/postRequests/postWareHouseReq';
 import postShopsReq from './querys/postRequests/postShopsReq';
 import postWareHouseProductsReq from './querys/postRequests/postWareHouseProductsReq';
+import postDashboardReq from './querys/postRequests/postDashboardReq';
 // AUTH ROUTES
 import authRoutes from './querys/authRequest';
 
@@ -77,6 +78,7 @@ app.use(postDesignReqConsumption);
 app.use(postBodegaReq);
 app.use(postShopsReq);
 app.use(postWareHouseProductsReq);
+app.use(postDashboardReq);
 
 // AUTH ROUTES APP.USE
 app.use(authRoutes);
