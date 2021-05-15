@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(
   cors({
-    origin: 'http://localhost:51000', // <-- location of the react app were connecting to
+    origin: ['http://localhost:51000', 'http://gestion-inventarios.ddns.net:51000'], // <-- location of the react app were connecting to
     credentials: true,
   })
 );
@@ -59,6 +59,7 @@ import postDesignReqConsumption from './querys/postRequests/postDesignReqConsump
 import postBodegaReq from './querys/postRequests/postWareHouseReq';
 import postShopsReq from './querys/postRequests/postShopsReq';
 import postWareHouseProductsReq from './querys/postRequests/postWareHouseProductsReq';
+import postDashboardReq from './querys/postRequests/postDashboardReq';
 // AUTH ROUTES
 import authRoutes from './querys/authRequest';
 
@@ -77,6 +78,7 @@ app.use(postDesignReqConsumption);
 app.use(postBodegaReq);
 app.use(postShopsReq);
 app.use(postWareHouseProductsReq);
+app.use(postDashboardReq);
 
 // AUTH ROUTES APP.USE
 app.use(authRoutes);

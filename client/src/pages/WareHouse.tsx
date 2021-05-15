@@ -203,12 +203,14 @@ function WareHouse() {
   };
 
   const handlerApprove = (payload: any) => {
+    console.log("HANDLER APROVE")
     let index = payload;
     console.log(payload);
     Axios.post(dbSuppliesURL, {
       actualAmount: dressMakingReq[index].cantidad,
       referenceSelection: dressMakingReq[index].referencia,
     }).then((response: AxiosResponse): void => {
+      console.log(response.data)
       if (response.data === "SUCCESSFUL_REQUEST") {
         // dispatch({ type: "SUCCESSFUL_REQUEST" });
         console.log("TODO NICE");

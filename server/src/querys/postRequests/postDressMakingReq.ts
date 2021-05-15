@@ -89,29 +89,6 @@ router.post("/api/updatedressmakingprocess", (req, res) => {
           res.end(JSON.stringify("SUCCESSFUL_SAVE_PRODUCT_WAREHOUSE"));
         }
       );
-      //EXISTING REFERENCE (UPDATE)
-      // } else {
-      // let queryUpdateProduct = `SELECT cantidad FROM InventoryManagement.BODEGA_PRODUCTOS WHERE referencia = ${dataProducts.referencia}`;
-      // database.query(
-      //   queryUpdateProduct,
-      //   async (err: MysqlError | null, result: any) => {
-      //     if (err) {
-      //       throw err;
-      //     }
-      //     let newAmount = result[0].cantidad + dataProducts.amount;
-      //     let querySaveNewProduct = `UPDATE InventoryManagement.BODEGA_PRODUCTOS SET cantidad = ${newAmount} WHERE referencia = ${dataProducts.referencia}`;
-      //     database.query(
-      //       querySaveNewProduct,
-      //       async (err: MysqlError | null, result: any) => {
-      //         if (err) {
-      //           throw err;
-      //         }
-      //         res.end(JSON.stringify("SUCCESSFUL_UPDATE_PRODUCT_WAREHOUSE"));
-      //       }
-      //     );
-      //   }
-      // );
-      // }
     }
   );
 });
