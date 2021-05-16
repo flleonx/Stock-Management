@@ -70,7 +70,7 @@
   margin-top: 1%;
   margin: 0 auto;
   width: 95%;
-  height: 87%;
+  height: 85%;
 }
 
 .month-filter-pie-chart-container {
@@ -148,4 +148,25 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.bar-chart-img-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bar-chart-img-container img{
+  width: 25%;
+  /* margin-top: 2em;; */
+}
+
+.modalHome {
+  font-size: 1rem;
+}
+
+.modalHomeImg {
+  width: 350px;
+  height: 350px;
 }

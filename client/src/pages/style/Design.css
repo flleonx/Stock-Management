@@ -337,6 +337,9 @@
     height: 6%;
     margin-left: 2.5em;
   }
+  .design-form #saveBTN {
+    margin-left: 2.5em;
+  }
 
   .supplies-added-design {
     margin-top: 6em;

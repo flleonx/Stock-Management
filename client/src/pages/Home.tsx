@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import { Chart } from "react-google-charts";
 import L from "leaflet";
+import Select from "react-select";
+import Axios from "axios";
+
+import { baseURL } from "../components/app/baseURL";
 import iconShopImg from "../assets/shop.png";
 import loadingImg from "../assets/Loading.svg";
 import DatePicker from "react-datepicker";
-import Select from "react-select";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 import monthsData from "../components/home/months.json";
+import Modal from "../components/Modal";
+import notifyImg from "../assets/notify.svg";
 
 import "./style/Home.css";
 import { tiendasData } from "../components/home/tiendasData";
@@ -19,6 +24,20 @@ const Home = () => {
   const [infoShopClicked, setInfoShopClicked] = useState({ id: "", name: "" });
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [dataDatesFilter, setDataDatesFilter] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalContent, setModalContent] = useState<string>("");
+  const [percentageSales, setPercentageSales] = useState([["Shop", "Ventas"]]);
+  const dashboardPieUrl: string = baseURL + "api/dashboard_pie";
+  const dashboardDateFilterURL: string = baseURL + "api/dashboard_date_filter";
+
+  useEffect(() => {
+    Axios.post(dashboardPieUrl, {
+      mes: "05",
+    }).then((response: any) => {
+      setPercentageSales(response.data);
+    });
+  }, []);
 
   function getIcon() {
     return L.icon({
@@ -28,7 +47,12 @@ const Home = () => {
   }
 
   const handleChange = (optionSelected: any) => {
-    console.log(optionSelected.value);
+    const monthValue = optionSelected.value;
+    Axios.post(dashboardPieUrl, {
+      mes: monthValue,
+    }).then((response: any) => {
+      setPercentageSales(response.data);
+    });
   };
 
   const handleFilter = () => {
@@ -38,9 +62,32 @@ const Home = () => {
     const endDateRef = document.getElementById(
       "end-date-picker"
     ) as HTMLInputElement;
-    console.log(startDateRef.value);
-    console.log(endDateRef.value);
-    console.log(infoShopClicked.id);
+
+    if (startDateRef.value !== "" || endDateRef.value !== "") {
+      Axios.post(dashboardDateFilterURL, {
+        fecha_inicial: startDateRef.value,
+        fecha_final: endDateRef.value,
+        idTienda: infoShopClicked.id,
+      }).then((response: any) => {
+        const dataDates = response.data;
+        console.log(dataDates);
+        if (dataDates.length > 1) {
+          setDataDatesFilter(response.data);
+        } else {
+          setDataDatesFilter([]);
+          setModalContent("No hay ventas en ese rango de fecha");
+          setIsModalOpen(true);
+        }
+      });
+    } else {
+      setModalContent("Por favor, digite las fechas bien");
+      setIsModalOpen(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalContent("");
   };
 
   return (
@@ -52,8 +99,9 @@ const Home = () => {
         <div className="map-home-container">
           <h3>Mapa</h3>
           <p>
-            En este apartado puedes hacer click sobre alguna de las tiendas para
-            desplegar la información de esa tienda en específico.
+            En este apartado puedes puedes ver las tiendas en el mapa. Si das
+            click en una de las tiendas, en la esquina inferior derecha
+            aparecerá información de las ventas de esta.
           </p>
           <MapContainer
             center={[11.004462, -74.814401]}
@@ -82,8 +130,8 @@ const Home = () => {
         <div className="stats-home-container">
           <h3>Estadísticas</h3>
           <p>
-            En este apartado puedes hacer click sobre alguna de las tiendas para
-            desplegar la información de esa tienda en específico.
+            En este apartado puedes ver el porcentaje de ventas de cada tienda.
+            Además, puedes filtrar por mes.
           </p>
           <div className="month-filter-pie-chart-container">
             <div className="month-select-container">
@@ -99,11 +147,7 @@ const Home = () => {
                 height={"300px"}
                 chartType="PieChart"
                 loader={<div>Loading Chart</div>}
-                data={[
-                  ["Shop", "Sales"],
-                  ["Norte", 60],
-                  ["Sur", 40],
-                ]}
+                data={percentageSales}
                 options={{
                   title: "Total ventas",
                   is3D: true,
@@ -131,8 +175,8 @@ const Home = () => {
                 <h3>Ventas de la {infoShopClicked.name}</h3>
                 <p>
                   En este apartado se muestra las ventas de la{" "}
-                  {infoShopClicked.name}. Además, puedes filtrar las ventas por
-                  fechas.{" "}
+                  {infoShopClicked.name}. Para ver el gráfico de barras, utiliza
+                  el filtro.
                 </p>
                 <div className="filter-date-container">
                   <DatePicker
@@ -165,57 +209,41 @@ const Home = () => {
                     id="filter-button"
                     onClick={handleFilter}
                   >
-                    Filtrar
+                    Filtrar por fecha
                   </button>
                 </div>
-                <div className="bar-chart-container">
-                  <Chart
-                    width={"500px"}
-                    height={"300px"}
-                    chartType="Bar"
-                    loader={<div>Loading Chart</div>}
-                    data={[
-                      ["Fechas", "Ventas"],
-                      ["2014", 1000],
-                      ["2015", 1170],
-                      ["2016", 660],
-                      ["2017", 1030],
-                      ["2014", 1000],
-                      ["2015", 1170],
-                      ["2016", 660],
-                      ["2017", 1030],
-                      ["2014", 1000],
-                      ["2015", 1170],
-                      ["2016", 660],
-                      ["2017", 1030],
-                      ["2014", 1000],
-                      ["2015", 1170],
-                      ["2016", 660],
-                      ["2017", 1030],
-                      ["2014", 1000],
-                      ["2015", 1170],
-                      ["2016", 660],
-                      ["2017", 1030],
-                      ["2014", 1000],
-                      ["2015", 1170],
-                      ["2016", 660],
-                      ["2017", 1030],
-                    ]}
-                    options={{
-                      // Material design options
-                      chart: {
-                        title: "Gráfico de barras de las ventas de la tienda ",
-                      },
-                    }}
-                    // For tests
-                    rootProps={{ "data-testid": "2" }}
-                  />
-                </div>
+                {dataDatesFilter.length === 0 && (
+                  <div className="bar-chart-img-container">
+                    <img src={loadingImg} alt="loading" />
+                  </div>
+                )}
+                {dataDatesFilter.length !== 0 && (
+                  <div className="bar-chart-container">
+                    <Chart
+                      width={"500px"}
+                      height={"300px"}
+                      chartType="Bar"
+                      loader={<div>Loading Chart</div>}
+                      data={dataDatesFilter}
+                      options={{
+                        chart: {
+                          title:
+                            "Gráfico de barras de las ventas de la tienda ",
+                        },
+                      }}
+                      rootProps={{ "data-testid": "2" }}
+                    />
+                  </div>
+                )}
               </>
             )}
           </div>
         </div>
       </div>
+      <Modal isOpen={isModalOpen} closeModal={closeModal}>
+        <h1 className="modalHome">{modalContent}</h1>
+        <img className="modalHomeImg" src={notifyImg} alt="modalImg" />
+      </Modal>
     </div>
   );
 };

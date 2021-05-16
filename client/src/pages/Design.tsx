@@ -41,6 +41,7 @@ const Design = () => {
   const dbWareHouseCodesURL: string = baseURL + "api/warehousecodes";
   const dbSaveNewReference: string = baseURL + "api/savenewreference";
   const productionAPIURL: string = baseURL + "api/production";
+  const [switchReRender, setSwitchReRender] = useState<boolean>(false);
   const [addReference, setAddReference] = useState<string>("");
   // const [addSize, setAddSize] = useState<string>('');
   const [addDescription, setAddDescription] = useState<string>("");
@@ -73,7 +74,7 @@ const Design = () => {
         });
       })
       .catch((error) => {});
-  }, []);
+  }, [switchReRender]);
 
   const handlerAddSupplies = () => {
     setModalAddSupplies(true);
@@ -125,6 +126,7 @@ const Design = () => {
             if (response.data === "SUCCESSFUL_REQUEST") {
               setEmptyValues();
               dispatch({ type: "SUCCESSFUL_REQUEST" });
+              setSwitchReRender(!switchReRender);
             }
             if (response.data === "FAILED_REQUEST") {
               dispatch({ type: "FAILED_REQUEST" });
