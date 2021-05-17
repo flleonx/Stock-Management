@@ -26,8 +26,6 @@ const Routes = ({rol, isAuth, enableRoutes}: any) => {
               isAuth={isAuth}
             />
           )}
-          {/* {rol.idRol === 2 && (
-          )} */}
           <ProtectedRoute exact path="/" component={Home} isAuth={isAuth} />
           <Route exact path="/dressmaking" component={DressMaking} />
           <ProtectedRoute

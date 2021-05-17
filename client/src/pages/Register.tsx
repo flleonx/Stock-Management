@@ -81,9 +81,6 @@ const Register = () => {
                   dispatch({type: 'SUCCESFUL_POST'});
                 }
               })
-              .catch((error) => {
-                console.log(error);
-              });
           } else {
             dispatch({type: 'PASSWORDS_DO_NOT_MATCH'});
           }

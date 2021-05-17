@@ -119,10 +119,8 @@ function WareHouse() {
         newCloth,
       })
         .then((response: AxiosResponse) => {
-          console.log(response.data);
           if (response.data == "SUCCESSFUL_ADDING") {
             dispatch({ type: "SUCCESSFUL_FORM" });
-            // dispatch({ type: "SUCCESSFUL_ADDING" });
             codigoInput.value = "";
             colorInput.value = "";
             amountInput.value = "";
@@ -187,7 +185,6 @@ function WareHouse() {
         inputUpdateAmount.value = "";
         Axios.post(updateInventoryWareHouseURL, payloadUpdate).then(
           (response: any) => {
-            console.log(response);
             if (response.data == "SUCCESSFUL_UPDATE") {
               dispatch({ type: "SUCCESSFUL_UPDATE" });
               setSwitchUseEffect(!switchUseEffect);
@@ -203,60 +200,43 @@ function WareHouse() {
   };
 
   const handlerApprove = (payload: any) => {
-    console.log("HANDLER APROVE")
     let index = payload;
-    console.log(payload);
     Axios.post(dbSuppliesURL, {
       actualAmount: dressMakingReq[index].cantidad,
       referenceSelection: dressMakingReq[index].referencia,
     }).then((response: AxiosResponse): void => {
-      console.log(response.data)
       if (response.data === "SUCCESSFUL_REQUEST") {
-        // dispatch({ type: "SUCCESSFUL_REQUEST" });
-        console.log("TODO NICE");
         Axios.post(dbSaveDecision, {
           ...dressMakingReq[index],
           idDecision: 1,
         }).then((response: AxiosResponse): void => {
-          console.log(response.data);
         });
         let filterResult = dressMakingReq.filter(
           (item: any) => item.id != dressMakingReq[index].id
         );
         setDressMakingReq(filterResult);
       }
-      // else {
-      //   dispatch({type: 'INSUFFICIENT_SUPPLIES', payload: response.data});
-      //   console.log('BARRILETE');
-      // }
     });
   };
 
   const handlerRefuse = (payload: any) => {
     let index = payload;
-    console.log(index);
     Axios.post(dbSaveDecision, {
       ...dressMakingReq[index],
       idDecision: 0,
     }).then((response: AxiosResponse): void => {
       if (response.data === "SUCCESSFUL_SAVING") {
-        console.log("TODO NICE");
         let filterResult = dressMakingReq.filter(
           (item: any) => item.id != dressMakingReq[index].id
         );
         setDressMakingReq(filterResult);
       } else {
-        console.log("BARRILETE");
       }
     });
 
-    // setDressMakingReq(dressMakingReq.splice[index])
   };
 
   const handlerDecision = (index: any) => {
-    console.log(index);
-    console.log(dressMakingReq[index].cantidad);
-    console.log(dressMakingReq[index].referencia);
     setInfoRequest({
       index,
       amount: dressMakingReq[index].cantidad,
@@ -270,7 +250,6 @@ function WareHouse() {
         setIsOpenDecision(true);
       } else {
         dispatch({ type: "INSUFFICIENT_SUPPLIES", payload: response.data });
-        console.log("BARRILETE");
       }
     });
   };
@@ -602,30 +581,6 @@ const triggerListeners = (setType: any, setUpdateCode: any) => {
     });
   });
 
-  // var selectedCodeUpdateInventory: any = document.querySelector(
-  //   '.selected-update-inventory'
-  // );
-  // var optionsUpdateInventory: any = document.querySelectorAll(
-  //   '.option-update-inventory'
-  // );
-
-  // selectedCodeUpdateInventory.addEventListener('click', () => {
-  //   selectedCodeUpdateInventory.parentElement.classList.toggle('active-bodega');
-  // });
-
-  // optionsUpdateInventory.forEach((option: any) => {
-  //   option.addEventListener('click', () => {
-  //     setTimeout(() => {
-  //       selectedCodeUpdateInventory.innerHTML = option.innerHTML;
-  //       // SET CURRENT REFERENCE VALUE
-  //       setUpdateCode(option.innerHTML);
-  //     }, 300);
-
-  //     selectedCodeUpdateInventory.parentElement.classList.remove(
-  //       'active-bodega'
-  //     );
-  //   });
-  // });
 };
 
 export default withRouter(WareHouse);

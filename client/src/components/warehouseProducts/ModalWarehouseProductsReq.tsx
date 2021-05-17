@@ -27,7 +27,6 @@ const ModalWarehouseProductsReq = (props: any) => {
     props.handlerAccept(props.index);
     props.closeModal();
   };
-  console.log(props.infoReq);
 
   if (!props.isOpen) return null;
   if (props.checkReqNumber === 1) {

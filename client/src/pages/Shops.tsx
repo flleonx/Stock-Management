@@ -2,9 +2,7 @@ import React, { useState, useEffect, useReducer, useRef } from "react";
 import Axios, { AxiosResponse } from "axios";
 import SuccessfulModalDressMaking from "../components/dressmaking/SuccessfulModalDressMaking";
 // REDUCER
-// import {reducer} from '../components/dressmaking/ReducerDressMaking';
 import "./style/Shops.css";
-// import '../components/dressmaking/style/buttonStyle.css';
 import { baseURL } from "../components/app/baseURL";
 import FilterDropdown from "../components/FilterDropdown";
 import Modal from "../components/Modal";
@@ -124,14 +122,12 @@ const Shops = () => {
   useEffect(() => {
     Axios.get(dbReferencesURL).then((response: AxiosResponse) => {
       setReferences(response.data);
-      // triggerListeners('.selected-option-shops', '.option', 0);
     });
 
     Axios.get(dbShopsInfoURL).then((response: AxiosResponse) => {
       setShops(response.data);
       setShopsOrigin(response.data);
       setShopsDestination(response.data);
-      // triggerListeners('.selected-option-shopsinfo', '.option-shopsinfo', 1);
     });
 
     Axios.get(dbActualInventory).then((response: AxiosResponse) => {
@@ -140,12 +136,10 @@ const Shops = () => {
 
     Axios.get(dbDeliveryState).then((response: AxiosResponse) => {
       setInfoDeliveryState(response.data);
-      console.log(response.data);
     });
 
     Axios.get(dbActualRequestsBetweenShops).then((response: AxiosResponse) => {
       setInfoRequestsBetweenShops(response.data);
-      console.log(response.data);
     });
 
     const triggerListeners = (
@@ -222,9 +216,6 @@ const Shops = () => {
     // CHECK IN DATABASE ==> return boolean
     isReferenceExist = await check_existing_value(0, valueReferenceSelected); // O: referencia
     isShopExist = await check_existing_value(1, valueShopSelected); // 1: idTienda
-    console.log(amount, valueReferenceSelected, valueShopSelected);
-
-    console.log(valueShopSelected);
 
     let enableInput = valueShopSelected !== "";
     let enableInput2 = valueReferenceSelected !== "";
@@ -241,7 +232,6 @@ const Shops = () => {
         referenceSelection: valueReferenceSelected,
         idShop: valueShopSelected,
       }).then((response: AxiosResponse): void => {
-        console.log(response.data);
         dispatch({ type: "SUCCESSFUL_REQUEST" });
         setValueReferenceSelect(null);
         setValueShopSelect(null);
@@ -270,7 +260,6 @@ const Shops = () => {
   const query_post = async (url: string, payload: any) => {
     try {
       const response: AxiosResponse = await Axios.post(url, payload);
-      console.log("RESPONSE", response.data);
       return response.data;
     } catch (err) {
       console.error("There is an error", err);
@@ -332,20 +321,9 @@ const Shops = () => {
     } else {
       dispatch({ type: "WRONG_INPUT" });
     }
-
-    // const payload = {
-    //   referencia: value_reference_request,
-    //   cantidad: amount_request,
-    //   tienda_origen: value_origin_shop,
-    //   tienda_destino: value_destination_shop,
-    // };
-    // Axios.post(dbRequestBetweenShops).then((response: AxiosResponse) => {
-    //   console.log(response.data);
-    // });
   };
 
   const handler_required_stock = async (index: number) => {
-    console.log(infoRequestsBetweenShops[index]);
     const actualTarget = infoRequestsBetweenShops[index];
     const response: AxiosResponse[] = await query_post(dbRequestBetweenShops, {
       ...infoRequestsBetweenShops[index],
@@ -360,26 +338,22 @@ const Shops = () => {
       const required_stock_size: number = response.length;
       const amount_number: number = parseInt(auxiliar[0]);
       if (required_stock_size < amount_number) {
-        console.log("FALTAN", amount_number - required_stock_size);
         setCheckReqNumber(2);
         setIsOpenModalReq(true);
         setStockMissingAmount(amount_number - required_stock_size);
         setStockAvailableAmount(required_stock_size);
       } else {
-        console.log("TODO BIEN");
         setCheckReqNumber(1);
         setRequiredStock(response);
         setIsOpenModalReq(true);
       }
     } else {
-      console.log("NO HAY EXISTENCIAS");
       setCheckReqNumber(3);
       setIsOpenModalReq(true);
     }
   };
 
   const handler_final_decision = async (id_decision: number) => {
-    console.log("MANEJO DECISION", id_decision);
     if (id_decision === 1) {
       // ACCEPT
       const response_decision_state: AxiosResponse | undefined =
@@ -392,7 +366,6 @@ const Shops = () => {
           },
         });
       setSwitchUseEffect(!switchUseEffect);
-      console.log(response_decision_state);
     } else if (id_decision === 0) {
       // REFUSE
       const response_decision_state: AxiosResponse | undefined =
@@ -400,7 +373,6 @@ const Shops = () => {
           data: { numero_peticion: auxiliar[2], id_decision },
         });
       setSwitchUseEffect(!switchUseEffect);
-      console.log(response_decision_state);
     } else if (id_decision === 2) {
       const response_decision_state: AxiosResponse | undefined =
         await query_post(dbDecisionBetweenShops, {
@@ -413,7 +385,6 @@ const Shops = () => {
           },
         });
       setSwitchUseEffect(!switchUseEffect);
-      console.log(response_decision_state);
     }
   };
 
@@ -738,7 +709,6 @@ const Shops = () => {
                       className="btn activeRequestBetweenShopsCard__deploy"
                       key={index}
                       data-index={index}
-                      // onClick={() => setIsOpenModalReq(true)}
                       onClick={() => handler_required_stock(index)}
                     >
                       Desplegar requerimientos

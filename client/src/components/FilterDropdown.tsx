@@ -56,7 +56,6 @@ const Dropdown = ({options, id, label, prompt, value, onChange}: any) => {
         <div className={`arrow ${open ? 'open' : null}`} />
       </div>
       <div className={`options ${open ? 'open' : null}`}>
-        {/* <input onClick={() => setOpen(true)} /> */}
         {filter(options).map((option: any) => {
           return (
             <div

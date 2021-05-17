@@ -43,7 +43,6 @@ const Design = () => {
   const productionAPIURL: string = baseURL + "api/production";
   const [switchReRender, setSwitchReRender] = useState<boolean>(false);
   const [addReference, setAddReference] = useState<string>("");
-  // const [addSize, setAddSize] = useState<string>('');
   const [addDescription, setAddDescription] = useState<string>("");
   const [addColor, setAddColor] = useState<string>("");
   const [addImageName, setAddImageName] = useState<string>("");
@@ -55,9 +54,6 @@ const Design = () => {
     { codigo: "4", label: "4" },
   ];
   let addSize: any = "";
-  // const [addedInformation, setAddedInformation] = useState<
-  //   ISupplyInformation[]
-  // >([]);
   const [addedInformationFromModal, setAddedInformationFromModal] =
     useState<any>([]);
   const [state, dispatch] = useReducer(reducer, defaultState);
@@ -152,7 +148,6 @@ const Design = () => {
     let addReferenceOption: any = document.querySelector(
       ".add-reference-input"
     );
-    // let addSizeOption: any = document.querySelector('.selected-option-size');
     let addDescriptionOption: any = document.querySelector(
       ".add-description-input"
     );
@@ -160,7 +155,6 @@ const Design = () => {
     let addImageNameOption: any = document.querySelector(
       ".add-imagename-input"
     );
-    // let : any = document.querySelector(".selected-option");
 
     addReferenceOption.value = "";
     setValueSizeSelect(null);

@@ -23,22 +23,9 @@ const SuccessfulModalDressMaking = ({
       closeModal();
     }, 40000);
   });
-  // if (checkNumber == 1 || checkNumber == 2) {
-  //   return <AnotherMessages modalContent={modalContent} />;
-  // }
 
   return <NotSuccessfulRequest modalContent={modalContent} />;
 };
-
-// const AnotherMessages = (modalContent: any, index: number) => {
-//   return (
-//     <>
-//       <div key={index} className="SuccessfulModalDressMaking">
-//         <p>AVISO: {modalContent.modalContent}</p>
-//       </div>
-//     </>
-//   );
-// };
 
 const NotSuccessfulRequest = (modalContent: any) => {
   const showAmount = (props: IWareHouseElements): number | undefined => {

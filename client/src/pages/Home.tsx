@@ -70,7 +70,6 @@ const Home = () => {
         idTienda: infoShopClicked.id,
       }).then((response: any) => {
         const dataDates = response.data;
-        console.log(dataDates);
         if (dataDates.length > 1) {
           setDataDatesFilter(response.data);
         } else {
@@ -138,13 +137,14 @@ const Home = () => {
               <Select
                 options={monthsData}
                 placeholder="Filtrar por mes"
+                className="month-select-container__select"
                 onChange={handleChange}
               />
             </div>
             <div className="pie-chart-container">
               <Chart
-                width={"400px"}
-                height={"300px"}
+                width={"100%"}
+                height={"100%"}
                 chartType="PieChart"
                 loader={<div>Loading Chart</div>}
                 data={percentageSales}

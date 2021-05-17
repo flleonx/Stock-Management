@@ -85,7 +85,6 @@ const WareHouseProducts = () => {
         setIndexModal(index);
         setIsOpenModalReq(true);
       } else if (response.data === "NO EXISTE") {
-        console.log("NO EXISTE REGISTRO");
         setCheckReqNumber(3);
         setIndexModal(index);
         setIsOpenModalReq(true);
@@ -100,14 +99,11 @@ const WareHouseProducts = () => {
 
   const handlerApprove = (payload: any) => {
     let index = payload;
-    // dispatch({ type: "SUCCESSFUL_REQUEST" });
-    console.log("TODO NICE");
     Axios.post(dbSaveDecision, {
       ...actualShopRequests[index],
       neededStock: shopRequestInfo,
       idDecision: 1,
     }).then((response: AxiosResponse): void => {
-      console.log(response.data);
     });
     let filterResult = actualShopRequests.filter(
       (item: IShopRequests) =>
@@ -123,18 +119,14 @@ const WareHouseProducts = () => {
       idDecision: 0,
     }).then((response: AxiosResponse): void => {
       if (response.data === "SUCCESSFUL_SAVING") {
-        console.log("TODO NICE");
         let filterResult = actualShopRequests.filter(
           (item: IShopRequests) =>
             item.numero_de_orden !== actualShopRequests[index].numero_de_orden
         );
         setActualShopRequest(filterResult);
-      } else {
-        console.log("BARRILETE");
-      }
+      } 
     });
 
-    // setDressMakingReq(dressMakingReq.splice[index])
   };
 
   const handlerPartialDelivery = (index: number) => {
@@ -143,7 +135,6 @@ const WareHouseProducts = () => {
       neededStock: shopRequestInfo,
       idDecision: 1,
     }).then((response: AxiosResponse) => {
-      console.log(response.data);
     });
   };
 
@@ -299,30 +290,6 @@ const WareHouseProducts = () => {
               )}
             </div>
           </div>
-          {/* <div className="productsContainer">
-            {wareHouseProducts.map((item) => {
-              return (
-                <div className="productCard">
-                  <h4 className="productCard__h4"> Información del producto</h4>
-                  <div className="productCard__lot">
-                    Numero de Lote: {item.numero_lote}
-                  </div>
-                  <div className="productCard__reference">
-                    Referencia: {item.referencia}
-                  </div>
-                  <div className="productCard__Order">
-                    # de orden: {item.numero_de_orden}
-                  </div>
-                  <div className="productCard__amount">
-                    Cantidad: {item.cantidad}
-                  </div>
-                  <div className="productCard__date">
-                    Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}
-                  </div>
-                </div>
-              );
-            })}
-          </div> */}
         </div>
         <div
           className="shops-request-warehouseproducts-section"
@@ -379,7 +346,6 @@ const WareHouseProducts = () => {
                       className="btn shopRequestCard__deploy"
                       key={index}
                       data-index={index}
-                      // onClick={() => setIsOpenModalReq(true)}
                       onClick={() => handlerShowInfo(index)}
                     >
                       Desplegar requerimientos
@@ -391,18 +357,6 @@ const WareHouseProducts = () => {
           )}
         </div>
       </div>
-      {/* <div>PARA CUMPLIR EL PEDIDO SE NECESITAN:</div>
-      {shopRequestInfo.map((item) => {
-        return (
-          <div>
-            <div>Numero de Lote: {item.numero_lote}</div>
-            <div>Referencia: {item.referencia}</div>
-            <div>Cantidad: {item.cantidad}</div>
-            <div>Fecha: {item.timestamp.replace('T', ' ').slice(0, 16)}</div>
-            <div>Restante: {item.restante ? item.restante : '0'}</div>
-          </div>
-        );
-      })} */}
       <ModalWarehouseProductsReq
         isOpen={isOpenModalReq}
         closeModal={closeModal}
