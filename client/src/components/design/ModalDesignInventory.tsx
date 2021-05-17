@@ -31,15 +31,11 @@ const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
   const handlerInfoModal = (payload: any) => {
     setIsModalOpen(true);
     setReferenceNumber(payload);
-    console.log(payload);
     const referenceSelection = payload;
     Axios.post(getreferenceconsumptionURL, { referenceSelection })
       .then((response) => {
         setReferenceArray(response.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
   };
 
   const closeModalInfo = () => {

@@ -70,7 +70,6 @@ const Home = () => {
         idTienda: infoShopClicked.id,
       }).then((response: any) => {
         const dataDates = response.data;
-        console.log(dataDates);
         if (dataDates.length > 1) {
           setDataDatesFilter(response.data);
         } else {

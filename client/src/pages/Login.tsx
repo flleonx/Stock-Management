@@ -55,9 +55,6 @@ const Login = () => {
             window.location.href = '/';
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
     } else {
       dispatch({type: 'LOGIN_INFORMATION_INCOMPLETE'});
     }

@@ -22,8 +22,6 @@ const ModalShopsReq = (props: any) => {
     props.closeModal();
   };
 
-  console.log(props.checkReqNumber);
-
   useEffect(() => {
     if (props.checkReqNumber !== 3) {
       Axios.post(url, requiredStock).then((response: any) => {

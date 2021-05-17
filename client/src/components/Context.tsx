@@ -20,9 +20,6 @@ function Context(props: PropsWithChildren<any>) {
       .then((response) => {
         setUser(response.data);
       })
-      .catch((err) => {
-        console.log(err);
-      });
   }, []);
 
   return <myContext.Provider value={user}>{props.children}</myContext.Provider>;

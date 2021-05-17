@@ -17,10 +17,6 @@ function Navbar({switchActive}: any) {
         setUser(userInfo.user);
         setEnable(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
-    // window.addEventListener('load', triggerListeners);
   }, [enable]);
 
   if (enable) {
@@ -28,7 +24,6 @@ function Navbar({switchActive}: any) {
     return (
       <div className="navbar-user-container">
         <NavbarContainer user={user} />
-        {/* <UserSection username={user} /> */}
       </div>
     );
   }
@@ -69,9 +64,9 @@ const Brand = () => {
   return (
     <div className="navbar-brand">
       <div className="navbar-brand__icon">
-        <i className="gg-atlasian"></i>
+        <i className="gg-read"></i>
       </div>
-      <h5 className="navbar-brand__h5">Atlasian</h5>
+      <h5 className="navbar-brand__h5">Rutnev</h5>
     </div>
   );
 };

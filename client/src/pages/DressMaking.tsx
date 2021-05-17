@@ -136,7 +136,6 @@ const DressMaking: React.FC = () => {
     const inputCondition = valueInput > 0 && Number.isInteger(valueInput);
     if (inputCondition) {
       let diff = parseFloat(amount) - valueInput;
-      console.log(diff);
       if (diff >= 0) {
         setIsOpenARYModal(true);
         setInfoProcess({
@@ -164,7 +163,6 @@ const DressMaking: React.FC = () => {
       diff,
       amount: infoProcess.valueInput,
     }).then((response: AxiosResponse) => {
-      console.log(response.data);
 
       infoProcess.valueInput = null;
       Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {

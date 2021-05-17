@@ -6,8 +6,7 @@
 .navbar-home {
   height: 55px;
   width: 100%;
-  background-color: #ffffff;
-  border-left: 1px solid rgb(204, 204, 204);
+  background-color: transparent;
   position: sticky;
   z-index: 0;
   top: 0;

@@ -22,9 +22,6 @@ const ModalDecisionSupplies = (props: any) => {
         .then((response: any) => {
           setInformationSupplies(response.data);
         })
-        .catch((err: any) => {
-          console.log(err);
-        });
     }
   }, [props.isOpen]);
 
