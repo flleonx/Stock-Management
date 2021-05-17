@@ -137,7 +137,7 @@ router.post("/api/requestsbetweenshops", (req, res) => {
   const query_inventory_list = `SELECT NULL AS numero_entrada, NULL AS numero_lote , NULL AS referencia, NULL AS numero_de_orden, NULL AS total FROM dual WHERE (@total := 0)
   UNION SELECT numero_entrada, numero_lote, referencia, numero_de_orden, @total := @total + cantidad AS total
   FROM InventoryManagement.INVENTARIO_TIENDAS WHERE @total < ${req.body.cantidad} AND referencia = ${req.body.referencia} AND idTienda = ${req.body.tienda_origen}
-  AND id_estado = 1`;
+  AND id_estado = 1 AND cantidad IS NOT (0)`;
   const db_call = async () => {
     const result = await databaseQuery(query_inventory_list);
     res.end(JSON.stringify(result));

@@ -130,7 +130,7 @@ const Home = () => {
         <div className="stats-home-container">
           <h3>Estadísticas</h3>
           <p>
-            En este apartado puedes ver el porcentaje de ventas de cada tienda.
+            En este apartado puedes ver el porcentaje de ventas correspondiente a cada tienda.
             Además, puedes filtrar por mes.
           </p>
           <div className="month-filter-pie-chart-container">
