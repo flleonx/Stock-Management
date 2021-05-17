@@ -29,7 +29,6 @@ router.post("/api/shoprequestproducts", (req, res) => {
       if (err) {
         throw err;
       }
-      console.log(wareHouseProducts);
       if (wareHouseProducts[0] !== undefined) {
         let arrayLength = wareHouseProducts.length;
         let index = 0;
@@ -72,7 +71,6 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
   const amount = parseInt(req.body.actualAmount);
   const idTienda = parseInt(req.body.idShop);
   let timestamp = timestamp_generator();
-  console.log(timestamp);
   let reqData = {
     referencia: reference,
     cantidad: amount,
@@ -82,8 +80,6 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
 
   const querySaveNewRequest =
     "INSERT INTO InventoryManagement.PETICIONES_ACTIVAS_TIENDAS SET ?";
-  console.log(querySaveNewRequest);
-  console.log(reqData);
   database.query(
     querySaveNewRequest,
     [reqData],
@@ -97,7 +93,6 @@ router.post("/api/shopwarehouseproductsrequest", (req, res) => {
 });
 
 router.post("/api/updatereceivedstate", (req, res) => {
-  console.log(req.body);
   let queryUpdateState = `UPDATE INVENTARIO_TIENDAS SET id_estado = 1 WHERE numero_de_orden = ${req.body.numero_de_orden}`;
   database.query(queryUpdateState, async (err: MysqlError | null, result) => {
     if (err) {
@@ -140,7 +135,6 @@ router.post("/api/requestsbetweenshops", (req, res) => {
   AND id_estado = 1 AND cantidad NOT IN (0)`;
   const db_call = async () => {
     const result = await databaseQuery(query_inventory_list);
-    console.log(result)
     res.end(JSON.stringify(result));
   };
 
@@ -256,9 +250,7 @@ router.post("/api/check_existing_value", (req, res) => {
 router.post("/api/save_newshop_request", (req, res) => {
   const timestamp = timestamp_generator();
   const insertion = { ...req.body, timestamp, id_decision: 2 };
-  console.log(insertion);
   let query_save_request = `INSERT INTO PETICIONES_ENTRE_TIENDAS SET ?`;
-  console.log(query_save_request);
   database.query(query_save_request, [insertion], (err: MysqlError | null) => {
     if (err) throw err;
     res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
@@ -277,14 +269,12 @@ router.post("/api/modalrequiredstock", (req, res) => {
   let query_required_stock = `SELECT it.*, SUM(cantidad) as cantidadTotal FROM INVENTARIO_TIENDAS it WHERE numero_entrada IN (${numeros_de_entrada}) GROUP BY numero_lote`;
   database.query(query_required_stock, (err: MysqlError | null, result) => {
     if (err) throw err;
-    console.log(result);
     res.end(JSON.stringify(result));
   });
 });
 
 /* QUERY APP */
 router.post('/api/barcode', (req, res) => {
-  console.log(req.body.Barcode);
 
   let query = `UPDATE INVENTARIO_TIENDAS SET cantidad=0 WHERE numero_entrada = ${req.body.Barcode}`;
 

@@ -336,12 +336,13 @@ const Shops = () => {
     setIndexModal(index);
     if (response[0] !== undefined) {
       const required_stock_size: number = response.length;
-      const amount_number: number = parseInt(auxiliar[0]);
+      const amount_number: number = parseInt(actualTarget.cantidad);
       if (required_stock_size < amount_number) {
         setCheckReqNumber(2);
-        setIsOpenModalReq(true);
         setStockMissingAmount(amount_number - required_stock_size);
         setStockAvailableAmount(required_stock_size);
+        setRequiredStock(response);
+        setIsOpenModalReq(true);
       } else {
         setCheckReqNumber(1);
         setRequiredStock(response);
@@ -374,6 +375,7 @@ const Shops = () => {
         });
       setSwitchUseEffect(!switchUseEffect);
     } else if (id_decision === 2) {
+      // PARTIAL
       const response_decision_state: AxiosResponse | undefined =
         await query_post(dbDecisionBetweenShops, {
           numeros_de_entrada: requiredStock,
@@ -381,7 +383,7 @@ const Shops = () => {
             tienda_destino: auxiliar[1],
             numero_peticion: auxiliar[2],
             id_decision,
-            envio_real: stockMissingAmount,
+            envio_real: stockAvailableAmount,
           },
         });
       setSwitchUseEffect(!switchUseEffect);
