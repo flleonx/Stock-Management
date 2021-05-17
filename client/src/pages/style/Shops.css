@@ -4,7 +4,7 @@
 }
 
 .scroll-shops-section {
-  height: 94vh;
+  height: 93vh;
   overflow: hidden;
   /* overflow-y: scroll; */
   scroll-behavior: smooth;
