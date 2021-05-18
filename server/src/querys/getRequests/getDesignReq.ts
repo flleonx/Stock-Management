@@ -29,7 +29,7 @@ router.get('/api/warehousecodes', (req, res) => {
 
 router.get('/api/production', (req, res) => {
   let sampleQuery =
-    'SELECT m.referencia, t.talla, m.descripcion, m.color, m.nombre_imagen FROM MUESTRAS_PRODUCCION m, TALLA t WHERE m.id_talla=t.id_talla';
+    'SELECT * FROM MUESTRAS_PRODUCCION m, TALLA t WHERE m.id_talla=t.id_talla';
 
   let dbQuery = database.query(
     sampleQuery,

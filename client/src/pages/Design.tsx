@@ -166,7 +166,7 @@ const Design = () => {
     addDescriptionOption.value = "";
     addColorOption.value = "";
     addImageNameOption.value = "";
-    addValuePerUnit= "";
+    addValuePerUnit.value= "";
     setAddedInformationFromModal([]);
     setAddReference("");
     setAddDescription("");
@@ -260,7 +260,7 @@ const Design = () => {
             </p>
             <input
               className="add-reference-input"
-              type="text"
+              type="number"
               placeholder="Referencia"
               onChange={(e) => setAddReference(e.target.value)}
             />
@@ -295,7 +295,7 @@ const Design = () => {
             <input
               className="value-per-unit-input"
               id="value-per-unit-input"
-              type="text"
+              type="number"
               placeholder="Valor de la unidad"
               onChange={(e) => setAddValuePerUnit(e.target.value)}
             />

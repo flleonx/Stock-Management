@@ -145,7 +145,8 @@
 .items-information-ref,
 .items-information-size,
 .items-information-description, 
-.items-information-color {
+.items-information-color,
+.items-information-valuePerUnit {
   display: flex;
   justify-content: center;
   align-items: center;

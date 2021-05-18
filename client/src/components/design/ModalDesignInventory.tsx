@@ -92,6 +92,9 @@ const ModalDesignInventory = ({ modalContent, closeModal }: any) => {
                   <div className="items-information-color">
                     Color: {props.color}
                   </div>
+                  <div className="items-information-valuePerUnit">
+                    Valor de la unidad: {props.valor_unidad}
+                  </div>
                   <button
                     className="btn"
                     id="handleInfoModal"
