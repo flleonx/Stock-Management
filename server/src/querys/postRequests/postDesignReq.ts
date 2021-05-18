@@ -57,6 +57,7 @@ router.post("/api/savenewreference", (req, res) => {
           color: req.body.addColor,
           nombre_imagen: req.body.addImageName,
           codigoycantidad: CodesAndConsumption,
+          valor_unidad: req.body.valuePerUnit,
         };
         let querySaveNewReference = `INSERT INTO InventoryManagement.MUESTRAS_PRODUCCION SET ?`;
         database.query(
