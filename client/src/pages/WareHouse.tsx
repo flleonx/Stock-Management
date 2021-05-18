@@ -186,7 +186,7 @@ function WareHouse() {
     }
 
     queryData.map((val: any) => {
-      if (val.codigo === parseFloat(codeSelected)) {
+      if (val.codigo === codeSelected) {
         isCodeExist += 1;
         return isCodeExist;
       } else {
@@ -196,6 +196,7 @@ function WareHouse() {
 
     let enableAmount =
       Number.isInteger(parseInt(updateAmount)) && parseInt(updateAmount) > 0;
+      console.log(enableAmount);
     let enableCode = codeSelected !== "";
 
     if (enableAmount && enableCode) {
@@ -206,6 +207,7 @@ function WareHouse() {
         };
         setValueCode(null);
         inputUpdateAmount.value = "";
+        setUpdateAmount("0");
         Axios.post(updateInventoryWareHouseURL, payloadUpdate).then(
           (response: any) => {
             if (response.data == "SUCCESSFUL_UPDATE") {
