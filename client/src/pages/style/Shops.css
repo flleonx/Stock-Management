@@ -117,12 +117,16 @@
   margin-top: 1.7em;
 }
 
-.makeReqShopsContainer #actualAmount {
+.makeReqShopsContainer__actualAmount {
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.7rem;
-  height: 10%;
+  height: 8%;
   padding-left: .9em;
   margin-top: 1.7em;
+  width: 90%;
+  margin-left: 2em;
+  border: 1px solid #a8b4b9;
+  border-radius: 1px;
 }
 
 .makeReqShopsContainer__dropdownShop {
@@ -363,12 +367,16 @@
   margin-top: 1.7em;
 }
 
-.reqs-between-shops #actualAmount {
+.reqs-between-shops__actualAmount {
   font-family: 'Ubuntu', sans-serif;
   font-size: 0.7rem;
-  height: 10%;
+  height: 8%;
   padding-left: .9em;
   margin-top: 1.7em;
+  width: 90%;
+  margin-left: 2em;
+  border: 1px solid #a8b4b9;
+  border-radius: 1px;
 }
 
 .reqs-between-shops__dropdownShop {
@@ -614,9 +622,9 @@
     font-size: 1.8rem;
   }
 
-  #actualAmount {
-    margin-left: 2em;
-  }
+  /* #actualAmount {
+    margin-left: 2em; 
+  } */
 
   .reqs-between-shops__dropdownReference,
   .reqs-between-shops__dropdownShop {

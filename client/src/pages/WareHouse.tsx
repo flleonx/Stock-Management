@@ -42,6 +42,7 @@ function WareHouse() {
   const [infoRequest, setInfoRequest] = useState({});
   const [isOpenDecision, setIsOpenDecision] = useState<boolean>(false);
   const [valueCode, setValueCode] = useState<any>(null);
+  const [valueSupplieDropdown, setValueSupplieDropdown] = useState<any>(null)
   const [toggleState, setToggleState] = useState(1);
   const [switchUseEffect, setSwitchUseEffect] = useState<boolean>(false);
   const saveClothAPIURL: string = baseURL + "api/savecloth";
@@ -52,11 +53,22 @@ function WareHouse() {
   const getDressMakingRequest: string = baseURL + "api/dressmakingrequest";
   const dbSuppliesURL: string = baseURL + "api/suppliesrequest";
   const dbSaveDecision: string = baseURL + "api/savewarehousedecision";
+  const suppliesDataDropdown = [
+    {
+      id: "1",
+      value: "Tela",
+    },
+    {
+      id: "2",
+      value: "Insumo",
+    },
+  ];
 
   useEffect(() => {
     Axios.get(invetoryWareHouseAPIURL).then((response: AxiosResponse) => {
       setQueryData(response.data);
-      triggerListeners(setType, setUpdateCode);
+      console.log(response.data);
+      // triggerListeners(setType, setUpdateCode);
     });
 
     Axios.get(getDressMakingRequest).then((response: AxiosResponse) => {
@@ -83,15 +95,26 @@ function WareHouse() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    let enableAmount = false;
+    let supplieSelected = "";
+    let isCodeExist = 0;
+
+    if (valueSupplieDropdown === null) {
+      supplieSelected = "";
+    } else if (typeof valueSupplieDropdown === "object") {
+      supplieSelected = valueSupplieDropdown.value.toString();
+    } else if (typeof valueSupplieDropdown === "string") {
+      supplieSelected = valueSupplieDropdown;
+    }
+
     const newCloth: ICloth = {
       code,
       color,
       amount,
       description,
       img,
-      type,
+      type: supplieSelected,
     };
-    let enableAmount = false;
 
     if (type == "Tela") {
       enableAmount = parseFloat(amount) > 0;
@@ -99,11 +122,11 @@ function WareHouse() {
       enableAmount = Number.isInteger(parseInt(amount)) && parseInt(amount) > 0;
     }
     let enableItems =
-      code !== "Codigo" &&
-      color !== "Color" &&
-      description !== "Descripción" &&
-      img !== "URL de la imágen" &&
-      type !== "Seleccionar tela o insumo";
+      code !== "" &&
+      color !== "" &&
+      description !== "" &&
+      img !== "" &&
+      supplieSelected !== "";
     if (enableAmount && enableItems) {
       let codigoInput = document.getElementById("codigo") as HTMLInputElement;
       let colorInput = document.getElementById("color") as HTMLInputElement;
@@ -126,7 +149,7 @@ function WareHouse() {
             amountInput.value = "";
             descripcionInput.value = "";
             imgInput.value = "";
-            selectedOption.innerHTML = "Seleccionar tela o insumo";
+            setValueSupplieDropdown(null);
             Axios.get(invetoryWareHouseAPIURL).then(
               (response: AxiosResponse) => {
                 setQueryData(response.data);
@@ -209,8 +232,7 @@ function WareHouse() {
         Axios.post(dbSaveDecision, {
           ...dressMakingReq[index],
           idDecision: 1,
-        }).then((response: AxiosResponse): void => {
-        });
+        }).then((response: AxiosResponse): void => {});
         let filterResult = dressMakingReq.filter(
           (item: any) => item.id != dressMakingReq[index].id
         );
@@ -233,7 +255,6 @@ function WareHouse() {
       } else {
       }
     });
-
   };
 
   const handlerDecision = (index: any) => {
@@ -369,14 +390,15 @@ function WareHouse() {
                 placeholder="URL de la imágen"
                 onChange={(e: any) => setImg(e.target.value)}
               />
-              <div className="select-container-bodega">
-                <p className="selected-option-bodega">
-                  Seleccionar tela o insumo
-                </p>
-                <ul className="options-container-bodega">
-                  <li className="option-bodega">Tela</li>
-                  <li className="option-bodega">Insumo</li>
-                </ul>
+              <div className="filterDropdownSupplieWarehouse">
+                <FilterDropdown
+                  options={suppliesDataDropdown}
+                  id="id"
+                  label="value"
+                  prompt="Seleccionar tela o insumo"
+                  value={valueSupplieDropdown}
+                  onChange={(val: any) => setValueSupplieDropdown(val)}
+                />
               </div>
               <button className="btn" onClick={handleSubmit}>
                 Enviar
@@ -580,7 +602,6 @@ const triggerListeners = (setType: any, setUpdateCode: any) => {
       selectedOption.parentElement.classList.remove("active-bodega");
     });
   });
-
 };
 
 export default withRouter(WareHouse);
