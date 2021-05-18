@@ -116,7 +116,7 @@ const ModalDesignAddSupplies = (props: any) => {
     }
 
     dBWareHouseSupplies.map((val: any) => {
-      if (val.codigo === parseInt(valueSelectComp)) {
+      if (val.codigo === valueSelectComp) {
         inputSelectIterator += 1;
         return inputSelectIterator;
       } else {

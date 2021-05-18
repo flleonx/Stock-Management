@@ -46,6 +46,7 @@ const Design = () => {
   const [addDescription, setAddDescription] = useState<string>("");
   const [addColor, setAddColor] = useState<string>("");
   const [addImageName, setAddImageName] = useState<string>("");
+  const [addValuePerUnit, setAddValuePerUnit] = useState<string>("");
   const [valueSizeSelect, setValueSizeSelect] = useState<any>(null);
   const sizesArray: any = [
     { codigo: "1", label: "1" },
@@ -105,6 +106,7 @@ const Design = () => {
       addDescription: addDescription,
       addColor: addColor,
       addImageName: addImageName,
+      valuePerUnit: addValuePerUnit,
       addedInformationFromModal,
     };
 
@@ -114,6 +116,7 @@ const Design = () => {
       addDescription != "" &&
       addColor != "" &&
       addImageName != "" &&
+      addValuePerUnit != "" &&
       addedInformationFromModal.length != 0;
     if (enable) {
       if (isCodeExist === 1) {
@@ -156,12 +159,20 @@ const Design = () => {
       ".add-imagename-input"
     );
 
+    let addValuePerUnit: any = document.getElementById("value-per-unit-input");
+
     addReferenceOption.value = "";
     setValueSizeSelect(null);
     addDescriptionOption.value = "";
     addColorOption.value = "";
     addImageNameOption.value = "";
+    addValuePerUnit= "";
     setAddedInformationFromModal([]);
+    setAddReference("");
+    setAddDescription("");
+    setAddColor("");
+    setAddImageName("");
+    setAddValuePerUnit("");
   };
 
   const handleInventory = () => {
@@ -280,6 +291,13 @@ const Design = () => {
               type="text"
               placeholder="URL de la imágen"
               onChange={(e) => setAddImageName(e.target.value)}
+            />
+            <input
+              className="value-per-unit-input"
+              id="value-per-unit-input"
+              type="text"
+              placeholder="Valor de la unidad"
+              onChange={(e) => setAddValuePerUnit(e.target.value)}
             />
             <button
               type="button"
