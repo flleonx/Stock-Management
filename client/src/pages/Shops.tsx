@@ -499,9 +499,9 @@ const Shops = () => {
             </div>
             <input
               ref={refInputReqToWarehouseProducts}
-              id="actualAmount"
+              id="makeReqShopsContainer__actualAmount"
               name="actualAmount"
-              className="actualAmount"
+              className="makeReqShopsContainer__actualAmount"
               placeholder="Digite la cantidad"
               type="number"
               autoComplete="off"
@@ -595,9 +595,9 @@ const Shops = () => {
             </div>
             <input
               ref={refInputBetweenShops}
-              id="actualAmount"
+              id="reqs-between-shops__actualAmount"
               name="actualAmount"
-              className="actualAmount"
+              className="reqs-between-shops__actualAmount"
               placeholder="Digite la cantidad"
               type="number"
               autoComplete="off"

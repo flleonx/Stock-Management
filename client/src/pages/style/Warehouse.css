@@ -164,6 +164,11 @@
   height: 10%;
 }
 
+.filterDropdownSupplieWarehouse {
+  width: 90%;
+  margin-left: 1.5em;
+}
+
 .select-container-bodega {
   width: 90%;
   margin: 15px auto;
