@@ -119,7 +119,16 @@ const Home = () => {
                 eventHandlers={{
                   click: () => {
                     setInfoShopClicked(tienda);
+                    setDataDatesFilter([]);
                     setIsShopClicked(true);
+                    const startDateRef = document.getElementById(
+                      "start-date-picker"
+                    ) as HTMLInputElement;
+                    const endDateRef = document.getElementById(
+                      "end-date-picker"
+                    ) as HTMLInputElement;
+                    startDateRef.value = "";
+                    endDateRef.value = "";
                   },
                 }}
               />
@@ -129,8 +138,8 @@ const Home = () => {
         <div className="stats-home-container">
           <h3>Estadísticas</h3>
           <p>
-            En este apartado puedes ver el porcentaje de ventas correspondiente a cada tienda.
-            Además, puedes filtrar por mes.
+            En este apartado puedes ver el porcentaje de ventas correspondiente
+            a cada tienda. Además, puedes filtrar por mes.
           </p>
           <div className="month-filter-pie-chart-container">
             <div className="month-select-container">

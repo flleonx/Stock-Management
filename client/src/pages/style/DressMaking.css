@@ -619,4 +619,24 @@
   .label-history-request-dressmanking__timestamp {
     margin-left: 19.5%;
   }
+
+  
+}
+
+@media  screen and (min-width: 1080px) {
+  .request-card-container__reference {
+    margin-left: 1.5em;
+  }
+  
+  .request-card-container__amount {
+    margin-left: 1.5em;
+  }
+  
+  .request-card-container__decision {
+    margin-left: -1.5em;
+  }
+  
+  .request-card-container__date {
+    margin-left: 0em;
+  }
 }

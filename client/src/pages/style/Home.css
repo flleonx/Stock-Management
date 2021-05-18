@@ -52,6 +52,11 @@
   font-size: 1.5em;
 }
 
+.stats-home-container {
+  overflow-y: hidden;
+  overflow-y: scroll;
+}
+
 .map-home-container p,
 .stats-home-container p {
   display: flex;

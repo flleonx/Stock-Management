@@ -84,5 +84,6 @@ export const reducer = (state: any, action: any) => {
     isFormModalOpen: false,
     isModalUpdateOpen: false,
     isOpenNoSupplies: false,
+    isModalSuppliesOpen: false
   };
 };

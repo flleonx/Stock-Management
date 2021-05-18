@@ -134,7 +134,10 @@ const Register = () => {
         <select id="idRol" onChange={(e: any) => setIdRol(e.target.value)}>
           <option value="0">Seleccionar rol</option>
           <option value="1">Administrador</option>
-          <option value="2">Trabajador</option>
+          <option value="2">Diseñador</option>
+          <option value="3">Encargado Bodega</option>
+          <option value="4">Cortador</option>
+          <option value="5">Vendedor</option>
         </select>
         <button onClick={handleSubmit} className="btn">
           Registrarse

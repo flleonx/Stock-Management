@@ -93,7 +93,7 @@ const DressMaking: React.FC = () => {
     }
 
     references.map((val: any) => {
-      if (val.referencia === parseFloat(ReferenceSelected)) {
+      if (val.referencia === ReferenceSelected) {
         isReferenceExist += 1;
         return isReferenceExist;
       } else {

@@ -444,7 +444,7 @@ const Shops = () => {
               href="#products-process-shops-section"
               onClick={handleNavbarClick}
             >
-              Productos en procesos
+              Inventario tiendas
             </a>
           </div>
           <div
