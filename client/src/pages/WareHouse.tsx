@@ -229,6 +229,7 @@ function WareHouse() {
     Axios.post(dbSuppliesURL, {
       actualAmount: dressMakingReq[index].cantidad,
       referenceSelection: dressMakingReq[index].referencia,
+      checkAccept: true,
     }).then((response: AxiosResponse): void => {
       if (response.data === "SUCCESSFUL_REQUEST") {
         Axios.post(dbSaveDecision, {
@@ -268,6 +269,7 @@ function WareHouse() {
     Axios.post(dbSuppliesURL, {
       actualAmount: dressMakingReq[index].cantidad,
       referenceSelection: dressMakingReq[index].referencia,
+      checkAccept: false,
     }).then((response: AxiosResponse): void => {
       if (response.data === "SUCCESSFUL_REQUEST") {
         setIsOpenDecision(true);
@@ -416,7 +418,7 @@ function WareHouse() {
               agregar estos insumos nuevos al inventario. Sólo digita el código
               con el cual identificarás el insumo, el color, metros o cantidad
               dependiendo si es tela o otro elemento (botones, correderas, etc),
-              una descripción, el URL de la imágen y seleccina si es tela o
+              una descripción, el URL de la imágen y selecciona si es tela o
               insumo (si es un botón, corredera, etc). Por último, presiona el
               botón de enviar y listo :)
             </p>

@@ -12,6 +12,7 @@ const ModalinsufficientSupplies = (props: any) => {
     props.handlerReject(props.infoRequest.index);
     props.closeModal();
   };
+  console.log(props.arrayNoSupplies);
   const handleClose = () => {
     props.closeModal();
   };
@@ -37,28 +38,28 @@ const ModalinsufficientSupplies = (props: any) => {
           <div className="tableNoSupplies_title">Insumos insuficientes</div>
           <div className="tableNoSupplies_header">Insumo insuficiente</div>
           <div className="tableNoSupplies_header">Imagen</div>
-          {props.arrayNoSupplies.map((props: any) => {
+          {props.arrayNoSupplies.map((val: any) => {
             return (
-              <div className="itemsNoSupplies_container" key={props.codigo}>
+              <div className="itemsNoSupplies_container" key={val.codigo}>
                 <div className="sub_itemsNoSupplies_container">
                   <div className="sub_sub_itemsNoSupplies_container">
                     <div className="tableNoSupplies_item">
-                      Item: {props.codigo}
+                      Item: {val.codigo}
                     </div>
                     <div className="tableNoSupplies_item">
-                      Descripción: {props.descripcion}
+                      Descripción: {val.descripcion}
                     </div>
                     <div className="tableNoSupplies_item">
-                      Existencias: {props.metros}
+                      Existencias: {val.cantidad != null ? val.cantidad : val.metros}
                     </div>
                     <div className="tableNoSupplies_item">
-                      Faltante: {props.remainingAmount}
+                      Faltante: {val.remainingAmount}
                     </div>
                   </div>
                   <div className="tableNoSupplies_item">
                     <img
                       className="tableNoSupplies_img"
-                      src={props.nombre_imagen}
+                      src={val.nombre_imagen}
                     />
                   </div>
                 </div>

@@ -182,30 +182,34 @@ router.post("/api/suppliesrequest", (req, res) => {
                     if (err) {
                       throw err;
                     }
-                    const triggerF = (diff: number, type: string) => {
-                      let saveDifference = `UPDATE InventoryManagement.BODEGA_INSUMOS SET ${type} = ${diff} WHERE codigo = ${code}`;
-                      database.query(
-                        saveDifference,
-                        async (err: MysqlError | null, result: any) => {
-                          if (err) {
-                            throw err;
+                    if (req.body.checkAccept) {
+                      const triggerF = (diff: number, type: string) => {
+                        let saveDifference = `UPDATE InventoryManagement.BODEGA_INSUMOS SET ${type} = ${diff} WHERE codigo = ${code}`;
+                        database.query(
+                          saveDifference,
+                          async (err: MysqlError | null, result: any) => {
+                            if (err) {
+                              throw err;
+                            }
                           }
-                        }
-                      );
-                    };
-                    // SEND THE DIFF AND THE TYPE (METROS OR CANTIDAD)
-                    if (result[0].metros != null) {
-                      const diff: number =
-                        parseFloat(result[0].metros) - amountProduction[x];
-                      const type: string = "metros";
-                      triggerF(diff, type);
+                        );
+                      };
+
+                      // SEND THE DIFF AND THE TYPE (METROS OR CANTIDAD)
+                      if (result[0].metros != null) {
+                        const diff: number =
+                          parseFloat(result[0].metros) - amountProduction[x];
+                        const type: string = "metros";
+                        triggerF(diff, type);
+                      }
+                      if (result[0].cantidad != null) {
+                        const diff: number =
+                          parseFloat(result[0].cantidad) - amountProduction[x];
+                        const type: string = "cantidad";
+                        triggerF(diff, type);
+                      }
                     }
-                    if (result[0].cantidad != null) {
-                      const diff: number =
-                        parseFloat(result[0].cantidad) - amountProduction[x];
-                      const type: string = "cantidad";
-                      triggerF(diff, type);
-                    }
+
                     if (x + 1 == suppliesCodes.length) {
                       res.end(JSON.stringify("SUCCESSFUL_REQUEST"));
                     }
