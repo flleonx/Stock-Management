@@ -99,8 +99,7 @@ const ModalWarehouseProductsReq = (props: any) => {
             Cantidad insuficiente
           </h2>
           <p>
-            No se puede aceptar esta petición debido a que no hay cantidad
-            suficiente del siguiente producto.
+            No se tienen todos los productos necesarios en bodega. Sin embargo, puedes enviar la cantidad que hay actualmente.
           </p>
           {props.infoReq.map((info: any) => {
             return (
@@ -128,10 +127,10 @@ const ModalWarehouseProductsReq = (props: any) => {
           })}
           <div className="buttonRejectContainer">
             <button
-              className="btn buttonRejectContainer__Reject"
+              className="btn buttonRejectContainer__approve"
               onClick={handlerPartialDelivery}
             >
-              PET PARCIAL
+              Aceptar petición parcial
             </button>
             <button
               className="btn buttonRejectContainer__Reject"

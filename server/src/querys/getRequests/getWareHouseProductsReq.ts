@@ -19,6 +19,22 @@ router.get("/api/getwarehouseproducts", (req, res) => {
   );
 });
 
+router.get("/api/getwarehouseproducts_record", (req, res) => {
+  let queryWareHouseProducts =
+    "SELECT bp.*, mp.nombre_imagen FROM BODEGA_PRODUCTOS bp, MUESTRAS_PRODUCCION mp WHERE cantidad = 0 AND bp.referencia = mp.referencia";
+
+  database.query(
+    queryWareHouseProducts,
+    async (err: MysqlError | null, wareHouseProducts: any) => {
+      if (err) {
+        throw err;
+      }
+      console.log(wareHouseProducts)
+      res.end(JSON.stringify(wareHouseProducts));
+    }
+  );
+});
+
 router.get("/api/getactualshoprequests", (req, res) => {
   interface IShopRequests{
     numero_de_orden: number;
@@ -30,7 +46,7 @@ router.get("/api/getactualshoprequests", (req, res) => {
     direccion: string;
   }
   let queryShopsRequests =
-    "SELECT pa.*, t.nombre_tienda, t.direccion FROM PETICIONES_ACTIVAS_TIENDAS pa, tienda t WHERE pa.idTienda = t.idTienda";
+    "SELECT pa.*, t.nombre_tienda, t.direccion FROM PETICIONES_ACTIVAS_TIENDAS pa, tienda t WHERE pa.idTienda = t.idTienda ORDER BY numero_de_orden";
   database.query(
     queryShopsRequests,
     async (err: MysqlError | null, result: IShopRequests) => {

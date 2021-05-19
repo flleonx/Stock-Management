@@ -56,7 +56,7 @@ router.get('/api/getapprovedrequests', (req, res) => {
 
 router.get('/api/getRequestHistoryDressmaking', (req, res) => {
   let requestHistoryQuery =
-    'SELECT p.numero_de_orden, p.referencia, p.cantidad, d.decision, p.timestamp FROM PETICIONES_PROCESADAS_CONFECCION p, decision d WHERE p.idDecision=d.idDecision';
+    'SELECT p.numero_de_orden, p.referencia, p.cantidad, d.decision, p.timestamp FROM PETICIONES_PROCESADAS_CONFECCION p, decision d WHERE p.idDecision=d.idDecision ORDER BY numero_de_orden';
 
   let dbQuery = database.query(
     requestHistoryQuery,

@@ -7,6 +7,7 @@ const modalID: any = document.getElementById('modal');
 
 const Modal = (props: any) => {
   const handleClose = () => {
+    console.log("ENTREEEEEEEE")
     props.closeModal();
   };
   if (!props.isOpen) {

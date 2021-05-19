@@ -31,6 +31,7 @@ router.post("/api/requesttowarehouse", (req, res) => {
 });
 
 router.post("/api/updatedressmakingprocess", (req, res) => {
+  console.log(req.body)
   if (req.body.diff !== 0) {
     let queryUpdateDressMakingProcess = `UPDATE InventoryManagement.PROCESO_CONFECCION SET cantidad = ${req.body.diff} WHERE id = ${req.body.id}`;
     console.log(queryUpdateDressMakingProcess);
@@ -59,7 +60,7 @@ router.post("/api/updatedressmakingprocess", (req, res) => {
   let timestamp = timestamp_generator();
 
   let dataNewProduct = {
-    numero_de_orden: dataProducts.id,
+    numero_de_orden: dataProducts.numero_de_orden,
     referencia: dataProducts.referencia,
     cantidad: dataProducts.amount,
     timestamp,

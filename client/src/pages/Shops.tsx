@@ -25,7 +25,7 @@ const reducer = (state: any, action: any) => {
   if (action.type === "WRONG_INPUT") {
     return {
       ...state,
-      modalContent: "Error: Digite los campos bien",
+      modalContent: "Error: Digite todos los campos correctamente",
       isModalOpen: true,
       imgCheckNumber: 2,
     };

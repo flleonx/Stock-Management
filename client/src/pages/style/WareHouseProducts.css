@@ -53,12 +53,12 @@
 }
 
 .navbar-warehouseproducts-otpions {
-  width: 30%;
+  width: 35%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 4em;
+  margin-right: 5em;
 }
 
 .tabs-warehouseproducts {
@@ -452,6 +452,207 @@
 .shopRequestCard__approve:focus {
   outline: none;
 }
+
+#history-warehouseproducts-section {
+  width: 100%;
+  height: 94vh;
+}
+
+.products-finished-warehouseproducts-section__h3 {
+  font-family: "Ubuntu", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1em;
+}
+
+.products-finished-warehouseproducts-section__p {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1rem;
+  color: black;
+  display: flex;
+  justify-content: center;
+}
+
+/* TABLE */
+
+.container_table-warehouseproducts {
+  width: 55%;
+  background: white;
+  margin: 0 auto;
+  margin-top: -40px;
+  box-shadow: 4px 0px 15px rgb(192, 188, 188);
+  height: 470px;
+  margin-top: 2%;
+}
+
+.table_title-warehouseproducts {
+  height: 38px;
+  background: #ffffff;
+  color: #1da597;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+
+.search-warehouseproducts-container {
+  display: flex;
+  height: 40px;
+  background-color: #daf7ee;
+}
+
+.gg-search {
+  color: #404040;
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: scale(var(--ggs, 1));
+  width: 15px;
+  height: 15px;
+  border: 2px solid;
+  border-radius: 100%;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.gg-search::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 8px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 12px;
+}
+
+.search-filter-warehouseproducts {
+  padding-left: 2%;
+  height: 40px;
+  width: 98%;
+  background: #daf7ee;
+  border: 0;
+  color: #404040;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.search-filter-warehouseproducts:focus {
+  outline: none;
+  border-right: 0;
+  border-left: 0;
+}
+
+.search-filter-warehouseproducts::-webkit-input-placeholder {
+  color: #404040;
+}
+
+.sample-image-warehouseproducts-container {
+  display: flex;
+  width: 100%;
+}
+
+.table_header-warehouseproducts-sample {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_header-warehouseproducts-img {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_header-warehouseproducts-sample {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: "Ubuntu", sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.table_header-warehouseproducts-img {
+  font-weight: 500;
+  font-size: 1em;
+  color: #1da597;
+  font-family: "Ubuntu", sans-serif;
+  border: 2px solid #daf7ee;
+  border-style: hidden hidden solid hidden;
+}
+
+.scroll-modal-warehouseproducts {
+  width: 100%;
+  overflow-y: hidden;
+  overflow-y: scroll;
+  max-height: 360px;
+}
+
+.scroll-modal-warehouseproducts::-webkit-scrollbar {
+  width: 8px;
+  background: #daf7ee;
+  border-radius: 0 8px 8px 0;
+}
+
+.scroll-modal-warehouseproducts::-webkit-scrollbar-thumb {
+  background: #daf7ee;
+  border-radius: 0 3px 3px 0;
+}
+
+.items_container-warehouseproducts {
+  display: flex;
+  width: 100%;
+}
+
+.items-information-wproducts-container {
+  width: 50%;
+  height: 50%;
+  margin-bottom: 1%;
+}
+
+.items-information-wp-lot,
+.items-information-wp-ref,
+.items-information-wp-order,
+.items-information-amount,
+.items-information-timestamp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_item-warehouseproduct {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table_img-warehouseproduct {
+  width: 100px;
+  height: 100px;
+}
+
+.notfoundImg-warehouseproducts {
+  margin-left: 20%;
+}
+
+#handleInfoModal {
+  font-size: 0.78rem;
+  width: 65%;
+  height: 50%;
+  margin-left: 20%;
+}
+
+/* FINAL TABLE */
 
 /* RESPONSIVE */
 

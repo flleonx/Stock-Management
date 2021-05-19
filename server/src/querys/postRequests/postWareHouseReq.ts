@@ -287,6 +287,7 @@ router.post("/api/savewarehousedecision", (req, res) => {
       referencia: req.body.referencia,
       cantidad: req.body.cantidad,
       timestamp: req.body.timestamp,
+      numero_de_orden: req.body.id,
     };
     let queryInsertDressMaking = "INSERT INTO PROCESO_CONFECCION SET ?";
     database.query(

@@ -16,7 +16,7 @@ router.get("/api/shopsinformation", (req, res) => {
 
 router.get("/api/deliverystate", (req, res) => {
   let queryShopsInfo =
-    "SELECT it.*, es.nombre_estado, mp.nombre_imagen, ti.nombre_tienda, SUM(cantidad) as cantidadTotal FROM INVENTARIO_TIENDAS it, estados es, MUESTRAS_PRODUCCION mp, tienda ti  WHERE it.id_estado = 0 AND it.id_estado = es.id_estado AND it.referencia = mp.referencia AND ti.idTienda = it.idTienda GROUP BY numero_de_orden";
+    "SELECT it.*, es.nombre_estado, mp.nombre_imagen, ti.nombre_tienda, SUM(cantidad) as cantidadTotal FROM INVENTARIO_TIENDAS it, estados es, MUESTRAS_PRODUCCION mp, tienda ti  WHERE it.id_estado = 0 AND it.id_estado = es.id_estado AND it.referencia = mp.referencia AND ti.idTienda = it.idTienda GROUP BY numero_de_orden, idTienda ORDER BY numero_lote";
 
   database.query(queryShopsInfo, async (err: MysqlError | null, result) => {
     if (err) {
@@ -28,7 +28,7 @@ router.get("/api/deliverystate", (req, res) => {
 
 router.get("/api/getactualinventory", (req, res) => {
   let queryShopsInfo =
-    "SELECT it.*, es.nombre_estado, mp.nombre_imagen, ti.nombre_tienda, SUM(cantidad) as cantidadTotal FROM INVENTARIO_TIENDAS it, estados es, MUESTRAS_PRODUCCION mp, tienda ti WHERE it.id_estado = 1 AND it.id_estado = es.id_estado AND it.referencia = mp.referencia AND ti.idTienda = it.idTienda GROUP BY numero_de_orden";
+    "SELECT it.*, es.nombre_estado, mp.nombre_imagen, ti.nombre_tienda, SUM(cantidad) as cantidadTotal FROM INVENTARIO_TIENDAS it, estados es, MUESTRAS_PRODUCCION mp, tienda ti WHERE it.id_estado = 1 AND it.id_estado = es.id_estado AND it.referencia = mp.referencia AND ti.idTienda = it.idTienda GROUP BY numero_de_orden, idTienda ORDER BY numero_lote";
 
   database.query(queryShopsInfo, async (err: MysqlError | null, result) => {
     if (err) {

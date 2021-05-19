@@ -10,9 +10,9 @@
 
 .login-form {
   width: 30%;
-  height: 50vh;
+  height: 40vh;
   background-color: white;
-  margin-top: 11%;
+  margin-top: 14%;
   margin-left: 13%;
   box-shadow: 4px 0px 15px rgb(235, 235, 235);
   border: 1px solid transparent;
@@ -23,7 +23,7 @@
   font-size: 1.2rem;
   color: #374663;
   margin-left: 43%;
-  margin-top: 3%;
+  margin-top: 5%;
 }
 
 .login-form .border-div {

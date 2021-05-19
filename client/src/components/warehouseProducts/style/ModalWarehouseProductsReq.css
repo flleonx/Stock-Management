@@ -137,6 +137,25 @@
   align-items: center;
 }
 
+.btn.buttonRejectContainer__approve {
+  width: 40%;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 0.8rem;
+  height: 22%;
+  background-color: #d1e7dd;
+  border: 1px solid #0f5132;
+  color: #0f5132;
+}
+
+.buttonRejectContainer__approve:hover {
+  background-color: #009751;
+  color: white;
+}
+
+.buttonRejectContainer__approve:focus {
+  outline: none;
+}
+
 .buttonRejectContainer__Reject {
   width: 40%;
   font-family: 'Ubuntu', sans-serif;

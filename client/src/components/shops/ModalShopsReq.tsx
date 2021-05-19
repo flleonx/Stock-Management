@@ -95,7 +95,7 @@ const ModalShopsReq = (props: any) => {
           </h2>
           <p>
             Para cumplir con este pedido faltarían {props.stockMissingAmount}{" "}
-            productos. Si así lo deseas pueden pedir la cantidad disponible:{" "}
+            productos. Si así lo deseas pueden enviar la cantidad disponible:{" "}
             {props.stockAvailableAmount} productos.
           </p>
           {requiredStockOrdered.map((info: any) => {

@@ -41,6 +41,9 @@ const WareHouseProducts = () => {
   const [wareHouseProducts, setWareHouseProducts] = useState<
     IWareHouseProducts[]
   >([]);
+  const [wareHouseProducts_record, setWareHouseProducts_record] = useState<
+    IWareHouseProducts[]
+  >([]);
   const [shopRequestInfo, setShopRequestInfo] = useState<any>([]);
   const [actualShopRequests, setActualShopRequest] = useState<IShopRequests[]>(
     []
@@ -52,8 +55,10 @@ const WareHouseProducts = () => {
   const [indexModal, setIndexModal] = useState<number>(0);
   const [searchTerm, setSearchTerm] = useState('');
   const [toggleState, setToggleState] = useState(1);
+  const [switch_actual_shop_request, set_switch_actual_shop_request] = useState<boolean>(false);
 
   const dbWareHouseProducts: string = baseURL + "api/getwarehouseproducts";
+  const dbWareHouseProducts_record: string = baseURL + "api/getwarehouseproducts_record";
   const dbShopsRequestProducts: string = baseURL + "api/shoprequestproducts";
   const dbAcceptShopRequest: string = baseURL + "api/acceptshoprequest";
   const dbActualShopsRequests: string = baseURL + "api/getactualshoprequests";
@@ -69,10 +74,14 @@ const WareHouseProducts = () => {
       setWareHouseProducts(response.data);
     });
 
+    Axios.get(dbWareHouseProducts_record).then((response: AxiosResponse) => {
+      setWareHouseProducts_record(response.data);
+    });
+
     Axios.get(dbActualShopsRequests).then((response: AxiosResponse) => {
       setActualShopRequest(response.data);
     });
-  }, []);
+  }, [switch_actual_shop_request]);
 
   const handlerShowInfo = (index: number) => {
     Axios.post(dbShopsRequestProducts, {
@@ -104,12 +113,13 @@ const WareHouseProducts = () => {
       neededStock: shopRequestInfo,
       idDecision: 1,
     }).then((response: AxiosResponse): void => {
+      set_switch_actual_shop_request(!switch_actual_shop_request);
     });
-    let filterResult = actualShopRequests.filter(
-      (item: IShopRequests) =>
-        item.numero_de_orden != actualShopRequests[index].numero_de_orden
-    );
-    setActualShopRequest(filterResult);
+    // let filterResult = actualShopRequests.filter(
+    //   (item: IShopRequests) =>
+    //     item.numero_de_orden != actualShopRequests[index].numero_de_orden
+    // );
+    // setActualShopRequest(filterResult);
   };
 
   const handlerRefuse = (payload: any) => {
@@ -119,11 +129,12 @@ const WareHouseProducts = () => {
       idDecision: 0,
     }).then((response: AxiosResponse): void => {
       if (response.data === "SUCCESSFUL_SAVING") {
-        let filterResult = actualShopRequests.filter(
-          (item: IShopRequests) =>
-            item.numero_de_orden !== actualShopRequests[index].numero_de_orden
-        );
-        setActualShopRequest(filterResult);
+        set_switch_actual_shop_request(!switch_actual_shop_request);
+        // let filterResult = actualShopRequests.filter(
+        //   (item: IShopRequests) =>
+        //     item.numero_de_orden !== actualShopRequests[index].numero_de_orden
+        // );
+        // setActualShopRequest(filterResult);
       } 
     });
 
@@ -135,6 +146,7 @@ const WareHouseProducts = () => {
       neededStock: shopRequestInfo,
       idDecision: 1,
     }).then((response: AxiosResponse) => {
+      set_switch_actual_shop_request(!switch_actual_shop_request);
     });
   };
 
@@ -197,6 +209,21 @@ const WareHouseProducts = () => {
               onClick={handleNavbarClick}
             >
               Peticiones
+            </a>
+          </div>
+          <div
+            className={
+              toggleState === 3
+                ? "tabs-warehouseproducts active-tabs-warehouseproducts"
+                : "tabs-warehouseproducts"
+            }
+            onClick={() => toggleTab(3)}
+          >
+            <a
+              href="#history-warehouseproducts-section"
+              onClick={handleNavbarClick}
+            >
+              Historial
             </a>
           </div>
         </div>
@@ -355,6 +382,95 @@ const WareHouseProducts = () => {
               })}
             </div>
           )}
+        </div>
+
+        <div
+          className="history-warehouseproducts-section"
+          id="history-warehouseproducts-section"
+        >
+          <h3 className="products-finished-warehouseproducts-section__h3">
+            Historial
+          </h3>
+          <p className="products-finished-warehouseproducts-section__p">
+            En este apartado se muestra el historial de los productos que han sido enviado a las tiendas.
+          </p>
+          <div className="container_table-warehouseproducts">
+            <div className="table_title-warehouseproducts ">Información</div>
+            <div className="search-warehouseproducts-container">
+              <i className="gg-search"></i>
+              <input
+                type="search"
+                placeholder="Buscar por referencia..."
+                className="search-filter-warehouseproducts"
+                onChange={(e: any) => handlerSearch(e.target.value)}
+              ></input>
+            </div>
+            <div className="sample-image-warehouseproducts-container">
+              <div className="table_header-warehouseproducts-sample">
+                Producto
+              </div>
+              <div className="table_header-warehouseproducts-img">Imagen</div>
+            </div>
+            <div className="scroll-modal-warehouseproducts">
+              {wareHouseProducts_record
+                .filter((val: any) => {
+                  iterator += 1;
+                  if (searchTerm === "") {
+                    return val;
+                  } else if (
+                    val.referencia
+                      .toString()
+                      .slice(0, searchTerm.length)
+                      .includes(searchTerm)
+                  ) {
+                    enableEmpty = false;
+                    return val;
+                  } else if (iterator == wareHouseProducts_record.length && enableEmpty == true) {
+                    showEmptySearch = true;
+                  }
+                })
+                .map((props: any) => {
+                  return (
+                    <div
+                      className="items_container-warehouseproducts"
+                      key={props.referencia}
+                    >
+                      <div className="items-information-wproducts-container">
+                        <div className="items-information-wp-lot">
+                          Numero de lote: {props.numero_lote}
+                        </div>
+                        <div className="items-information-wp-ref">
+                          Referencia: {props.referencia}
+                        </div>
+                        <div className="items-information-wp-order">
+                          Numero de orden: {props.numero_de_orden}
+                        </div>
+                        <div className="items-information-amount">
+                          Cantidad: {props.cantidad}
+                        </div>
+                        <div className="items-information-timestamp">
+                          Fecha:{" "}
+                          {props.timestamp.replace("T", " ").slice(0, 16)}
+                        </div>
+                      </div>
+                      <div className="table_item-warehouseproduct">
+                        <img
+                          className="table_img-warehouseproduct"
+                          src={props.nombre_imagen}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              {showEmptySearch && (
+                <img
+                  className="notfoundImg-warehouseproducts"
+                  src={notFoundImage}
+                  alt="Not Found"
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <ModalWarehouseProductsReq

@@ -130,8 +130,11 @@ const DressMaking: React.FC = () => {
     referencia: any,
     id: any,
     amount: any,
+    numero_de_orden: any,
     HTMLElement: any
   ) => {
+    console.log("REFERENCIA", referencia)
+    console.log("REFERENCIA", numero_de_orden)
     const valueInput = parseFloat(HTMLElement.value);
     const inputCondition = valueInput > 0 && Number.isInteger(valueInput);
     if (inputCondition) {
@@ -143,6 +146,7 @@ const DressMaking: React.FC = () => {
           id,
           amount,
           valueInput,
+          numero_de_orden,
           HTMLElement,
         });
       } else {
@@ -157,13 +161,14 @@ const DressMaking: React.FC = () => {
   const handlerSubtract = () => {
     let diff = infoProcess.amount - infoProcess.valueInput;
     infoProcess.HTMLElement.value = "";
+    console.log("INFO PROCESS:", infoProcess)
     Axios.post(dbUpdateDressMakingProcess, {
       referencia: infoProcess.reference,
       id: infoProcess.id,
       diff,
       amount: infoProcess.valueInput,
+      numero_de_orden: infoProcess.numero_de_orden,
     }).then((response: AxiosResponse) => {
-
       infoProcess.valueInput = null;
       Axios.get(dbApprovedRequests).then((response: AxiosResponse) => {
         setApprovedRequests(response.data);
@@ -347,6 +352,7 @@ const DressMaking: React.FC = () => {
                           item.referencia,
                           item.id,
                           item.cantidad,
+                          item.numero_de_orden,
                           document.querySelector(".h" + item.id)
                         );
                       }}

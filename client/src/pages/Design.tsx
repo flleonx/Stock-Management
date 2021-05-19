@@ -42,6 +42,7 @@ const Design = () => {
   const dbSaveNewReference: string = baseURL + "api/savenewreference";
   const productionAPIURL: string = baseURL + "api/production";
   const [switchReRender, setSwitchReRender] = useState<boolean>(false);
+  const [isModalDesignOpen, setIsModalDesignOpen] = useState<boolean>(false);
   const [addReference, setAddReference] = useState<string>("");
   const [addDescription, setAddDescription] = useState<string>("");
   const [addColor, setAddColor] = useState<string>("");
@@ -126,25 +127,31 @@ const Design = () => {
               setEmptyValues();
               dispatch({ type: "SUCCESSFUL_REQUEST" });
               setSwitchReRender(!switchReRender);
+              setIsModalDesignOpen(true);
             }
             if (response.data === "FAILED_REQUEST") {
               dispatch({ type: "FAILED_REQUEST" });
+              setIsModalDesignOpen(true);
             }
             if (response.data === "INVALID_REFERENCE") {
               dispatch({ type: "INVALID_REFERENCE" });
+              setIsModalDesignOpen(true);
             }
           }
         );
       } else {
         dispatch({ type: "CODE_DOES_NOT_EXIST" });
+        setIsModalDesignOpen(true);
       }
     } else {
       dispatch({ type: "WRONG_INPUT" });
+      setIsModalDesignOpen(true);
     }
   };
 
   const closeModal = () => {
     dispatch({ tpye: "CLOSE_MODAL" });
+    setIsModalDesignOpen(false);
   };
 
   const setEmptyValues = () => {
@@ -360,7 +367,8 @@ const Design = () => {
           />
         </div>
       </div>
-      <Modal isOpen={state.isModalOpen} closeModal={closeModal}>
+     {isModalDesignOpen && (
+        <Modal isOpen={true} closeModal={closeModal}>
         <h1 className="modalWarehouseh1">{state.modalContent}</h1>
         {state.imgCheckNumber === 1 && (
           <img
@@ -373,6 +381,7 @@ const Design = () => {
           <img className="modalWarehouseImg" src={errorImage} alt="modalImg" />
         )}
       </Modal>
+     )}
       <ModalAddSupplies
         isOpen={modalAddSupplies}
         // isOpen={true}

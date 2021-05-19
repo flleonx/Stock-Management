@@ -69,13 +69,13 @@ const InfoShopsInventory = (props: any) => {
                       Referencia: {props.referencia}
                     </div>
                     <div className="items-information-shops__order">
-                      Numero de orden: {props.numero_de_orden}
+                      Numero de orden tiendas: {props.numero_de_orden}
                     </div>
                     <div className="items-information-shops__shop">
                       Tienda destino: {props.nombre_tienda}
                     </div>
                     <div className="items-information-shops__amount">
-                      Cantidad: {props.cantidad}
+                      Cantidad: {props.cantidadTotal}
                     </div>
                     <div className="items-information-shops__timestamp">
                       Fecha: {props.timestamp.replace("T", " ").slice(0, 16)}
@@ -157,13 +157,13 @@ const InfoShopsInventory = (props: any) => {
                       Referencia: {props.referencia}
                     </div>
                     <div className="items-information-shops__order">
-                      Numero de orden: {props.numero_de_orden}
+                      Numero de orden tiendas: {props.numero_de_orden}
                     </div>
                     <div className="items-information-shops__shop">
                       Tienda: {props.nombre_tienda}
                     </div>
                     <div className="items-information-shops__amount">
-                      Cantidad: {props.cantidad}
+                      Cantidad: {props.cantidadTotal}
                     </div>
                     <div className="items-information-shops__timestamp">
                       Fecha: {props.timestamp.replace("T", " ").slice(0, 16)}
