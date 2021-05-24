@@ -277,7 +277,7 @@ const Design = () => {
                 options={sizesArray}
                 id="codigo"
                 label="label"
-                prompt="Seleccionar el codigo de talla"
+                prompt="Seleccionar la talla"
                 value={valueSizeSelect}
                 onChange={(val: any) => setValueSizeSelect(val)}
               />
