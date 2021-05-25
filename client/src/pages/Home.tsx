@@ -98,7 +98,7 @@ const Home = () => {
         <div className="map-home-container">
           <h3>Mapa</h3>
           <p>
-            En este apartado puedes puedes ver las tiendas en el mapa. Si das
+            En este apartado puedes ver las tiendas en el mapa. Si das
             click en una de las tiendas, en la esquina inferior derecha
             aparecerá información de las ventas de esta.
           </p>

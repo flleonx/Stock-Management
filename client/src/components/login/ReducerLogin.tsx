@@ -12,7 +12,7 @@ export const reducer = (state: IState, action: IActions) => {
     return {
       ...state,
       isModalOpen: true,
-      modalContent: 'Error: No ha digitado todos los campos',
+      modalContent: 'Error: No se ha digitado todos los campos',
     };
   }
 
@@ -20,7 +20,7 @@ export const reducer = (state: IState, action: IActions) => {
     return {
       ...state,
       isModalOpen: true,
-      modalContent: 'Error: El Usuario y/o la contraseña son incorrectos',
+      modalContent: 'El Usuario y/o la contraseña son incorrectos',
     };
   }
 
