@@ -50,10 +50,11 @@ const Design = () => {
   const [addValuePerUnit, setAddValuePerUnit] = useState<string>("");
   const [valueSizeSelect, setValueSizeSelect] = useState<any>(null);
   const sizesArray: any = [
-    { codigo: "1", label: "1" },
-    { codigo: "2", label: "2" },
-    { codigo: "3", label: "3" },
-    { codigo: "4", label: "4" },
+    { codigo: "1", label: "XS" },
+    { codigo: "2", label: "S" },
+    { codigo: "3", label: "M" },
+    { codigo: "4", label: "L" },
+    { codigo: "5", label: "XL" },
   ];
   let addSize: any = "";
   const [addedInformationFromModal, setAddedInformationFromModal] =
@@ -275,8 +276,8 @@ const Design = () => {
               <FilterDropdown
                 options={sizesArray}
                 id="codigo"
-                label="codigo"
-                prompt="Seleccionar el codigo de talla"
+                label="label"
+                prompt="Seleccionar la talla"
                 value={valueSizeSelect}
                 onChange={(val: any) => setValueSizeSelect(val)}
               />
