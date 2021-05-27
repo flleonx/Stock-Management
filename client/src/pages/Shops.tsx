@@ -174,6 +174,13 @@ const Shops = () => {
     };
   }, [switchUseEffect]);
 
+
+  setInterval(() => {
+    Axios.get(dbActualInventory).then((response: AxiosResponse) => {
+      setInfoActualInventory(response.data);
+    });
+  }, 5000)
+
   // GENERAL DATABASE CHECK
   const check_existing_value = async (check_case: number, payload: string) => {
     try {
